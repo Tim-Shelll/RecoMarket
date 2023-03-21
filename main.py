@@ -35,7 +35,17 @@ def index():
 
 @site.route('/checkout')
 def checkout():
-    return render_template('checkout.html')
+    return render_template('cart.html')
+
+
+@site.route('/register')
+def register():
+    return render_template('register.html')
+
+
+@site.route('/login')
+def login():
+    return render_template('login.html')
 
 
 @site.route('/create', methods=['POST', 'GET'])
