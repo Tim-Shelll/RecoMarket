@@ -12,8 +12,8 @@ class Product(db.Model):
     title = db.Column(db.String(50), nullable=False)
     desc = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    
-    
+
+
 class Order(db.Model):
     idOrder = db.Column(db.Integer, primary_key=True)
     client = db.Column(db.String(100), nullable=False)
@@ -50,7 +50,8 @@ def create():
             db.session.add(item)
             db.session.commit()
             return redirect('/')
-        except: "Error"
+        except:
+            return "Error"
     else:
         return render_template('create.html')
 
