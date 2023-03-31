@@ -1,10 +1,26 @@
+from datetime import datetime, timezone
+
 from flask import Flask, render_template, request, redirect
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 site = Flask(__name__)
 site.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
 site.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# site.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+# site.config['MAIL_PORT'] = 587
+# site.config['MAIL_USE_TLS'] = True
+# site.config['MAIL_USERNAME'] = 'youmail@gmail.com'
+# site.config['MAIL_DEFAULT_SENDER'] = 'youmail@gmail.com'
+# site.config['MAIL_PASSWORD'] = 'password'
+
+# manager = Manager(site)
+# manager.add_command('db', MigrateCommand)
 db = SQLAlchemy(site)
+# migrate = Migrate(site, db)
+# mail = Mail(site)
+# login_manager = LoginManager(site)
 
 
 class Product(db.Model):
@@ -12,6 +28,7 @@ class Product(db.Model):
     title = db.Column(db.String(50), nullable=False)
     desc = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    img = db.Column(db.String, nullable=False)
 
 
 class Order(db.Model):
@@ -25,6 +42,19 @@ class ItemsInOrder(db.Model):
     idItem = db.Column(db.Integer, primary_key=True)
     idOrder = db.Column(db.Integer, primary_key=True)
     numItems = db.Column(db.Integer, nullable=False)
+
+
+class User(db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(100))
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    password_hash = db.Column(db.String(100), nullable=False)
+    created_on = db.Column(db.DateTime(), default=datetime.now(timezone.utc))
+    updated_on = db.Column(db.DateTime(), default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+
+    def __repr__(self):
+        return "<{}:{}>".format(self.id, self.username)
 
 
 @site.route('/')
