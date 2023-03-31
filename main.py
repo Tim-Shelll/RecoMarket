@@ -26,7 +26,7 @@ db = SQLAlchemy(site)
 class Product(db.Model):
     idItem = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
-    desc = db.Column(db.String(200), nullable=False)
+    desc = db.Column(db.String(200))
     price = db.Column(db.Integer, nullable=False)
     img = db.Column(db.String, nullable=False)
 
@@ -60,7 +60,7 @@ class User(db.Model):
 @site.route('/')
 def index():
     items = Product.query.order_by(Product.price).all()
-    return render_template('index.html', data=items)
+    return render_template('index.html', products=items)
 
 
 @site.route('/checkout')
