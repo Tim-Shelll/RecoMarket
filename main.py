@@ -60,7 +60,8 @@ class User(db.Model):
 @site.route('/')
 def index():
     items = Product.query.order_by(Product.price).all()
-    return render_template('index.html', products=items)
+    recomendations = Product.query.order_by(Product.img).limit(4)
+    return render_template('index.html', products=items, recomendations=recomendations)
 
 
 @site.route('/checkout')

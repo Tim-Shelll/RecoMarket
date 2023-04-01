@@ -6,21 +6,35 @@
 
 {% block body %}
 <main>
+  {% if recomendations %}
+    <section class="py-5 text-center container">
+      <p>Вам рекомендованы следующие товары</p>
+      <div class="album py-5 bg-light">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          {% for recomendation in recomendations %}
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src={{recomendation.img}}>
+              <div class="card-body">
+                <p class="card-text">{{recomendation.title}}</p>
+                <p class="card-text">{{recomendation.desc}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary">Pick</button>
+                  </div>
+                  <small class="text-muted">9 mins</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
 
-  <section class="py-5 text-center container">
-    <div class="row py-lg-5">
-      <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Online Market</h1>
-        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        </div>
       </div>
     </div>
-    <a href="/register">
-      <button style="font-size:20px;height:50px;width:200px" class="badge bg-primary ">Sign up</button>
-    </a>
-    <a href="/login">
-      <button style="font-size:20px;height:50px;width:200px" class="badge bg-primary ">Sign in</button>
-    </a>
-  </section>
+    </section>
+  {% endif %}
 
    <div class="album py-5 bg-light">
       <div class="container">

@@ -14,18 +14,20 @@ images = [
 
 price_product = [49 + 10 * inc for inc in range(len(name_product))]
 
-from main import db, Product
+from main import db, Product, site
 
 
 def insert_data_product(data_product):
     for id in range(len(data_product)):
-        sql = """
-            INSERT INTO Product('title', 'desc', 'price', 'img') 
-            VALUES ({}, {}, {}, {})
-            """.format(data_product[id], "", price_product[id], images[0])
-        db.session.execute(sql)
+        product = Product(
+            title=name_product[id],
+            desc="",
+            price=price_product[id],
+            img="/static/images/{}.jpg".format(id+1)
+        )
+        db.session.add(product)
 
         db.session.commit()
 
-
-insert_data_product(name_product)
+with site.app_context():
+    insert_data_product(name_product)
