@@ -33,14 +33,14 @@ class Product(db.Model):
 
 class Order(db.Model):
     idOrder = db.Column(db.Integer, primary_key=True)
-    client = db.Column(db.String(100), nullable=False)
-    date = db.Column(db.Text, nullable=False)
+    client = db.Column(db.Integer, nullable=False)
+    date = db.Column(db.String, nullable=False)
     shopCode = db.Column(db.Integer, nullable=False)
 
 
 class ItemsInOrder(db.Model):
-    idItem = db.Column(db.Integer, primary_key=True)
-    idOrder = db.Column(db.Integer, primary_key=True)
+    idOrder = db.Column(db.Integer, primary_key=True, unique=False)
+    idItem = db.Column(db.Integer, primary_key=True, unique=False)
     numItems = db.Column(db.Integer, nullable=False)
 
 
@@ -77,6 +77,10 @@ def register():
 @site.route('/login')
 def login():
     return render_template('login.html')
+
+@site.route('/history_order')
+def history_order():
+    return render_template('history.html')
 
 
 @site.route('/create', methods=['POST', 'GET'])
