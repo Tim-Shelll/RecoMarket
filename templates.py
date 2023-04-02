@@ -1,6 +1,3 @@
-from main import db, site
-from sqlalchemy.sql import text
-
 ORDERS_TO_USER = """
     SELECT * FROM (
         SELECT O.client, i_i_o.idOrder, i_i_o.idItem, P.title, O.date, P.price, P.img  
@@ -11,12 +8,3 @@ ORDERS_TO_USER = """
     
     WHERE t.client = {user_id}
 """
-
-def query():
-    sql = ORDERS_TO_USER.format(user_id=0)
-    cursor = db.session.execute(text(sql))
-    for row in cursor.fetchall():
-        print(row)
-
-with site.app_context():
-    query()

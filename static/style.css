@@ -1,0 +1,14 @@
+.card {
+    height: 300px;
+    width: 200px;
+    margin-left: 10px
+}
+
+.col {
+    height: 350px;
+    width: auto;
+}
+
+.row > .card-text {
+    width: 300px;
+}

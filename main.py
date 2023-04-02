@@ -1,8 +1,12 @@
 from datetime import datetime, timezone
-
 from flask import Flask, render_template, request, redirect
-from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import text
+
+from model import *
+from templates import ORDERS_TO_USER
+from helpers import get_valid_order
+
+
 
 site = Flask(__name__)
 site.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
@@ -17,10 +21,13 @@ site.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # manager = Manager(site)
 # manager.add_command('db', MigrateCommand)
-db = SQLAlchemy(site)
+
 # migrate = Migrate(site, db)
 # mail = Mail(site)
 # login_manager = LoginManager(site)
+
+
+db = SQLAlchemy(site)
 
 
 class Product(db.Model):
@@ -36,6 +43,13 @@ class Order(db.Model):
     client = db.Column(db.Integer, nullable=False)
     date = db.Column(db.String, nullable=False)
     shopCode = db.Column(db.Integer, nullable=False)
+
+    @staticmethod
+    def select_data_order_to_user(user_id):
+        sql = ORDERS_TO_USER.format(user_id=user_id)
+        cursor = db.session.execute(text(sql))
+
+        return cursor.all()
 
 
 class ItemsInOrder(db.Model):
@@ -55,6 +69,7 @@ class User(db.Model):
 
     def __repr__(self):
         return "<{}:{}>".format(self.id, self.username)
+
 
 
 @site.route('/')
@@ -78,7 +93,17 @@ def register():
 def login():
     return render_template('login.html')
 
-@site.route('/history_order')
+
+@site.route('/history_orders/<int:user_id>')
+def history_orders(user_id):
+    purchases = Order.select_data_order_to_user(user_id)
+    history = get_valid_order(purchases)
+    print(history)
+
+    return render_template('history.html', history=history)
+
+
+@site.route('/history_orders')
 def history_order():
     return render_template('history.html')
 
