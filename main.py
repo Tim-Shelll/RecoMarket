@@ -1,33 +1,55 @@
+#region Import
+
 from datetime import datetime, timezone
 from flask import Flask, render_template, request, redirect
 from sqlalchemy.sql import text
+from flask_sqlalchemy import SQLAlchemy
+from forms import LoginForm, RegistrationForm
+from flask_login import logout_user, current_user, login_user, UserMixin, LoginManager
+from werkzeug.security import generate_password_hash, check_password_hash
 
-from model import *
 from templates import ORDERS_TO_USER
 from helpers import get_valid_order
 
+#endregion
 
+
+#region Application
+
+__table_args__ = {'extend_existing': True}
 
 site = Flask(__name__)
+site.config['SECRET_KEY'] = "I'm Andrey"
 site.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
 site.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# site.config['MAIL_SERVER'] = 'smtp.googlemail.com'
-# site.config['MAIL_PORT'] = 587
-# site.config['MAIL_USE_TLS'] = True
-# site.config['MAIL_USERNAME'] = 'youmail@gmail.com'
-# site.config['MAIL_DEFAULT_SENDER'] = 'youmail@gmail.com'
-# site.config['MAIL_PASSWORD'] = 'password'
+login_manager = LoginManager()
+login_manager.init_app(site)
 
-# manager = Manager(site)
-# manager.add_command('db', MigrateCommand)
+#endregion
 
-# migrate = Migrate(site, db)
-# mail = Mail(site)
-# login_manager = LoginManager(site)
 
+#region Database
 
 db = SQLAlchemy(site)
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer(), primary_key=True)
+    username = db.Column(db.String(120), index=True)
+    email = db.Column(db.String(120), index=True, unique=True)
+    login = db.Column(db.String(120), index=True)
+    password_hash = db.Column(db.String(128))
+    photo = db.Column(db.String, default=None)
+    created_on = db.Column(db.DateTime(), default=datetime.now(timezone.utc))
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def __repr__(self):
+        return "<{}:{}>".format(self.id, self.username)
 
 
 class Product(db.Model):
@@ -58,25 +80,27 @@ class ItemsInOrder(db.Model):
     numItems = db.Column(db.Integer, nullable=False)
 
 
-class User(db.Model):
-    id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(100))
-    username = db.Column(db.String(50), nullable=False, unique=True)
-    email = db.Column(db.String(100), nullable=False, unique=True)
-    password_hash = db.Column(db.String(100), nullable=False)
-    created_on = db.Column(db.DateTime(), default=datetime.now(timezone.utc))
-    updated_on = db.Column(db.DateTime(), default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+#endregion
 
-    def __repr__(self):
-        return "<{}:{}>".format(self.id, self.username)
 
+#region Redirect
+
+@login_manager.user_loader
+def load_user(user):
+    return User.query.get(int(user))
+
+@site.route('/logout')
+def logout():
+    logout_user()
+    return redirect('index')
 
 
 @site.route('/')
+@site.route('/index')
 def index():
-    items = Product.query.order_by(Product.price).all()
+    products = Product.query.order_by(Product.price).all()
     recomendations = Product.query.order_by(Product.img).limit(4)
-    return render_template('index.html', products=items, recomendations=recomendations)
+    return render_template('index.html', products=products, recomendations=recomendations)
 
 
 @site.route('/checkout')
@@ -84,21 +108,10 @@ def checkout():
     return render_template('cart.html')
 
 
-@site.route('/register')
-def register():
-    return render_template('register.html')
-
-
-@site.route('/login')
-def login():
-    return render_template('login.html')
-
-
 @site.route('/history_orders/<int:user_id>')
 def history_orders(user_id):
     purchases = Order.select_data_order_to_user(user_id)
     history = get_valid_order(purchases)
-    print(history)
 
     return render_template('history.html', history=history)
 
@@ -108,29 +121,42 @@ def history_order():
     return render_template('history.html')
 
 
-@site.route('/create', methods=['POST', 'GET'])
-def create():
-    if request.method == "POST":
-        title = request.form['title']
-        price = request.form['price']
+@site.route('/login', methods=['POST', 'GET'])
+def signin():
+    form = LoginForm()
+    """if not current_user.is_authenticated:
+        form = LoginForm()
+        if request.method == 'POST':
+            return redirect('/index')
 
-        item = Product(title=title, price=price)
-
-        try:
-            db.session.add(item)
-            db.session.commit()
-            return redirect('/')
-        except:
-            return "Error"
+        return render_template('login.html', form=form)
     else:
-        return render_template('create.html')
+        return redirect('/index')"""
+    return render_template('login.html', form=form)
+
+
+
+@site.route('/registration', methods=['POST', 'GET'])
+def registration():
+    form = RegistrationForm()
+    """if not current_user.is_authenticated:
+        form = RegistrationForm()
+        message = ""
+        if request.method == 'POST':
+            return redirect('/index')
+
+        return render_template('registration.html', form=form)
+    else:
+        return redirect('/index')"""
+    return render_template('registration.html', form=form)
+#endregion
 
 
 if __name__ == "__main__":
     site.run(debug=True)
 
 # Завтрашние задачи
-# Отцентрировать изображения продуктов в карточках
-# Создать страничку сайта с историей покупок пользователя, чтобы была видна статистика ( история заказов, не товаров )
-# Разобраться с выгрузкой рекомендаций по модели
-# Автоматизировать работу базы данных по заполнению данными о товарах и рекоменддациях
+# ✔ Отцентрировать изображения продуктов в карточках
+# ️✔ Создать страничку сайта с историей покупок пользователя, чтобы была видна статистика ( история заказов, не товаров )
+# ️✔ Автоматизировать работу базы данных по заполнению данными о товарах и рекоменддациях
+# ️Разобраться с выгрузкой рекомендаций по модели

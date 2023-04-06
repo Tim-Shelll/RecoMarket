@@ -7,4 +7,5 @@ ORDERS_TO_USER = """
     ) t
     
     WHERE t.client = {user_id}
+    ORDER BY 5
 """

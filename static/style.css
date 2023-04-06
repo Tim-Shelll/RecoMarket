@@ -7,8 +7,18 @@
 .col {
     height: 350px;
     width: auto;
+    margin: 25px 5px 0 5px;
+    transition: .5s;
+}
+
+.col:hover {
+    transform: scale(1.025);
+    cursor: pointer;
 }
 
 .row > .card-text {
-    width: 300px;
+    margin-top: 25px;
+    margin-left: 25px;
+    width: 100px;
+
 }

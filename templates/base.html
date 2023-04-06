@@ -18,12 +18,20 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
         <strong>Online Market</strong>
       </a>
+        {% if not current_user.is_authenticated %}
         <h4 class="d-flex justify-content-around align-items-center mb-3">
-            <a href="/history_orders" class="badge bg-primary rounded-pill">Profile</a>
-            <a href="/checkout">
-                <button class="badge bg-primary rounded-pill">Cart</button>
+            <a href="/login">
+                <button class="badge bg-primary rounded-pill">Login</button>
+            </a>
+            <a href="/registration">
+                <button class="badge bg-primary rounded-pill">Registration</button>
             </a>
         </h4>
+        {% else %}
+        <h4 class="d-flex justify-content-around align-items-center mb-3">
+            <a href="/history_orders" class="badge bg-primary rounded-pill">Profile</a>
+        </h4>
+        {% endif %}
     </div>
   </div>
 </header>

@@ -1,6 +1,28 @@
 from constant import name_product, price_product
-from main import db, Product, site
+from main import db, Product, site, ItemsInOrder, Order
 import pandas as pd
+
+
+def get_data_history_user(path, user_id):
+    orders = pd.read_csv(path, sep=',')
+    orders_lst = {}
+    # order_id, product_item, num_items, date, shop_code
+    orders_user_id = orders[orders.user_id == user_id] if user_id != -1 else orders.copy()
+    for order_id in orders_user_id.order_id.unique():
+        current_order = orders_user_id[orders_user_id.order_id == order_id]
+        current_order_values = current_order.values
+        orders_lst[order_id] = [
+            [
+                c_o_v[-3],
+                c_o_v[-1],
+                c_o_v[6],
+                c_o_v[1],
+                c_o_v[2],
+                c_o_v[5]
+            ] for c_o_v in current_order_values
+        ]
+
+    return orders_lst
 
 
 def insert_data_product(data_product):
@@ -16,8 +38,8 @@ def insert_data_product(data_product):
         db.session.commit()
 
 
-def insert_data_items_product(path='dataset/orders_v2.csv', user_id=0):
-    history = history_order(path=path, user_id=user_id)
+def insert_data_items_product(path, user_id):
+    history = get_data_history_user(path=path, user_id=user_id)
 
     for order_id in history.keys():
         for order in history[order_id]:
@@ -31,7 +53,7 @@ def insert_data_items_product(path='dataset/orders_v2.csv', user_id=0):
             db.session.commit()
 
 
-def insert_data_order(path='dataset/orders_v2.csv', user_id=-1):
+def insert_data_order(path):
     orders = pd.read_csv(path, sep=',')
 
     columns = ['order_id', 'user_id', 'date', 'time', 'shop']
@@ -48,5 +70,13 @@ def insert_data_order(path='dataset/orders_v2.csv', user_id=-1):
         db.session.commit()
 
 
-with site.app_context():
+def insert_data():
+    path = 'dataset/orders_v2.csv'
+
     insert_data_product(name_product)
+    insert_data_order(path=path)
+    insert_data_items_product(path=path, user_id=0)
+
+
+with site.app_context():
+    insert_data()
