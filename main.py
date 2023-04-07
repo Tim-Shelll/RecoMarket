@@ -98,7 +98,6 @@ def logout():
 @site.route('/')
 @site.route('/index')
 def index():
-    print(current_user)
     products = Product.query.order_by(Product.price).all()
     recomendations = Product.query.order_by(Product.img).limit(4)
     return render_template('index.html', products=products, recomendations=recomendations)
