@@ -98,6 +98,7 @@ def logout():
 @site.route('/')
 @site.route('/index')
 def index():
+    print(current_user)
     products = Product.query.order_by(Product.price).all()
     recomendations = Product.query.order_by(Product.img).limit(4)
     return render_template('index.html', products=products, recomendations=recomendations)
@@ -124,14 +125,21 @@ def history_order():
 @site.route('/login', methods=['POST', 'GET'])
 def signin():
     form = LoginForm()
-    """if not current_user.is_authenticated:
+    if not current_user.is_authenticated:
         form = LoginForm()
         if request.method == 'POST':
+            user = User.query.filter_by(login=form.login.data).first()
+            if user is None or not user.check_password(form.password.data):
+                message = 'Invalid username or password'
+                return render_template('login.html', message=message, form=form)
+
+            login_user(user, remember=form.remember_me.data)
             return redirect('/index')
 
         return render_template('login.html', form=form)
     else:
-        return redirect('/index')"""
+        return redirect('/index')
+
     return render_template('login.html', form=form)
 
 

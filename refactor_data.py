@@ -1,5 +1,5 @@
 from constant import name_product, price_product
-from main import db, Product, site, ItemsInOrder, Order
+from main import db, Product, site, ItemsInOrder, Order, User
 import pandas as pd
 
 
@@ -70,13 +70,34 @@ def insert_data_order(path):
         db.session.commit()
 
 
-def insert_data():
-    path = 'dataset/orders_v2.csv'
+def insert_data_user(path):
+    user_data = [
+        ['Иванов Иван Иваныч', 'ivanov@mail.ru', 'ivan'],
+        ['Петров Петр Петрович', 'petrov@mail.ru', 'petr'],
+        ['Смирнов Даниил Андреевич', 'smirnov@mail.ru', 'daniil'],
+        ['Фурманов Илья Денисович', 'furmanov@mail.ru', 'ilya'],
+        ['Павлов Михаил Петрович', 'pavlov@mail.ru', 'mihail']
+    ]
 
-    insert_data_product(name_product)
-    insert_data_order(path=path)
-    insert_data_items_product(path=path, user_id=0)
+    passwords = ['ivan123', 'petr123', 'daniil123', 'ilya123', 'mihail123']
 
+    users = []
+    for id in range(5):
+        user = User()
+        user.id = id
+        user.username = user_data[id][0]
+        user.email = user_data[id][1]
+        user.login = user_data[id][2]
+        user.set_password(passwords[id])
+        user.photo = '/static/users/'
+
+        users.append(user)
+
+    db.session.add_all(users)
+    db.session.commit()
+
+
+path = 'dataset/orders_v2.csv'
 
 with site.app_context():
-    insert_data()
+    ...

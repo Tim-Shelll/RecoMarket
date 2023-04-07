@@ -29,7 +29,8 @@
         </h4>
         {% else %}
         <h4 class="d-flex justify-content-around align-items-center mb-3">
-            <a href="/history_orders" class="badge bg-primary rounded-pill">Profile</a>
+            <a href="/history_orders/{{current_user.id}}" class="badge bg-primary rounded-pill">Profile</a>
+            <a href="/logout" class="badge bg-primary rounded-pill">Exit</a>
         </h4>
         {% endif %}
     </div>

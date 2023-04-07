@@ -6,34 +6,36 @@
 
 {% block body %}
 <main>
-  {% if recomendations %}
-    <section class="py-5 text-center container">
-      <p>Вам рекомендованы следующие товары</p>
-      <div class="album py-5 bg-light">
-      <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          {% for recomendation in recomendations %}
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src={{recomendation.img}}>
-              <div class="card-body">
-                <p class="card-text">{{recomendation.title}}</p>
-                <p class="card-text">{{recomendation.desc}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Pick</button>
+  {% if current_user.is_authenticated %}
+    {% if recomendations %}
+      <section class="py-5 text-center container">
+        <p>Вам рекомендованы следующие товары</p>
+        <div class="album py-5 bg-light">
+        <div class="container">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for recomendation in recomendations %}
+            <div class="col">
+              <div class="card shadow-sm">
+                <img src={{recomendation.img}}>
+                <div class="card-body">
+                  <p class="card-text">{{recomendation.title}}</p>
+                  <p class="card-text">{{recomendation.desc}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Pick</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
                   </div>
-                  <small class="text-muted">9 mins</small>
                 </div>
               </div>
             </div>
-          </div>
-          {% endfor %}
+            {% endfor %}
 
+          </div>
         </div>
       </div>
-    </div>
-    </section>
+      </section>
+    {% endif %}
   {% endif %}
 
    <div class="album py-5 bg-light">
