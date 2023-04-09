@@ -6,3 +6,5 @@ flask_wtf
 wtforms
 opencv-python
 lightfm
+pickle
+gzip

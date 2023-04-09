@@ -2,6 +2,8 @@ import pandas as pd
 from scipy import sparse
 from sklearn.model_selection import train_test_split, cross_validate
 from lightfm import cross_validation, LightFM
+import pickle
+import gzip
 
 path = 'dataset/orders_v2.csv'
 n_user = 5
@@ -17,7 +19,7 @@ def validate_data(path):
     return orders_purch_sort
 
 
-def set_rank_product(orders_purch_sort):
+def set_rank_product(orders_purch_sort: pd.DataFrame):
     orders_purch_sort_data = orders_purch_sort.values
     user_id = orders_purch_sort_data[0][0]
     prod_id = orders_purch_sort_data[0][1]
@@ -43,13 +45,14 @@ def set_rank_product(orders_purch_sort):
     orders_purch_sort.loc[:, 'rank'] = count_bay
     orders_purch_sort = orders_purch_sort[orders_purch_sort['rank'] < 11]
     orders_purch_sort['rank_baseline'] = 11 - orders_purch_sort['rank']
+    print(orders_purch_sort)
 
     return orders_purch_sort
 
 
 def split_data(orders_purch_sort):
-    # Коэффициент разбиения примем равный 0.8
 
+    # Коэффициент разбиения примем равный 0.8
     orders_train, orders_test = train_test_split(orders_purch_sort, train_size=.8)
     return orders_train, orders_test
 
@@ -77,13 +80,10 @@ def create_pivot_table(orders_train):
     return sData, orders_train_pivot, orders_test_pivot
 
 
-def model(orders_train_pivot):
-    # В качестве функции потерь были предложены следующие:
-    # "logistic", "warp", "bpr", "warp-kos"
-    # Выберем "warp"
-
-    model_LightFM = LightFM(loss='warp')
-    model_LightFM.fit(orders_train_pivot, epochs=1000, num_threads=2)
+def model(path_to_model):
+    model_LightFM: LightFM
+    with open(path, "rb") as file:
+        model_LightFM = pickle.load(file)
 
     return model_LightFM
 
@@ -118,6 +118,10 @@ orders_purch_sort = validate_data(path)
 orders_purch_sort = set_rank_product(orders_purch_sort)
 orders_train, orders_test = split_data(orders_purch_sort)
 sData, orders_train_pivot, orders_test_pivot = create_pivot_table(orders_train)
-model_LightFM = model(orders_train_pivot)
+
+
+model_LightFM = model(path_to_model='model/model_LightFM.pkl')
+print("model success")
 recom_users = recomendations(model_LightFM, sData)
+print("recomendations success")
 print(recom_users)
