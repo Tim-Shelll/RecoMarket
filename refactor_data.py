@@ -100,4 +100,7 @@ def insert_data_user(path):
 path = 'dataset/orders_v2.csv'
 
 with site.app_context():
-    ...
+    insert_data_order(path=path)
+    print('table order is full')
+    insert_data_items_product(path=path, user_id=-1)
+    print('table items_in_order is full')

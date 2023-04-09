@@ -109,14 +109,16 @@ def recomendations(model_LightFM, sData):
 
     return recom_users
 
+def recomendations_all():
+    orders_purch_sort = validate_data(path)
+    orders_purch_sort = set_rank_product(orders_purch_sort)
+    orders_train, orders_test = split_data(orders_purch_sort)
+    sData, orders_train_pivot, orders_test_pivot = create_pivot_table(orders_train)
 
-orders_purch_sort = validate_data(path)
-orders_purch_sort = set_rank_product(orders_purch_sort)
-orders_train, orders_test = split_data(orders_purch_sort)
-sData, orders_train_pivot, orders_test_pivot = create_pivot_table(orders_train)
+    path_to_model = 'model/model_LightFM.joblib'
+    model_LightFM: LightFM = model(path_to_model=path_to_model)
+    rec_users = recomendations(model_LightFM, sData)
 
+    return rec_users
 
-model_LightFM = model(path_to_model='model/model_LightFM.joblib')
-recom_users = recomendations(model_LightFM, sData)
-print("recomendations success")
-print(recom_users)
+print(recomendations_all())
