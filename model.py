@@ -2,8 +2,7 @@ import pandas as pd
 from scipy import sparse
 from sklearn.model_selection import train_test_split, cross_validate
 from lightfm import cross_validation, LightFM
-import pickle
-import gzip
+import joblib
 
 path = 'dataset/orders_v2.csv'
 n_user = 5
@@ -45,7 +44,6 @@ def set_rank_product(orders_purch_sort: pd.DataFrame):
     orders_purch_sort.loc[:, 'rank'] = count_bay
     orders_purch_sort = orders_purch_sort[orders_purch_sort['rank'] < 11]
     orders_purch_sort['rank_baseline'] = 11 - orders_purch_sort['rank']
-    print(orders_purch_sort)
 
     return orders_purch_sort
 
@@ -81,9 +79,7 @@ def create_pivot_table(orders_train):
 
 
 def model(path_to_model):
-    model_LightFM: LightFM
-    with open(path, "rb") as file:
-        model_LightFM = pickle.load(file)
+    model_LightFM = joblib.load(path_to_model)
 
     return model_LightFM
 
@@ -120,8 +116,7 @@ orders_train, orders_test = split_data(orders_purch_sort)
 sData, orders_train_pivot, orders_test_pivot = create_pivot_table(orders_train)
 
 
-model_LightFM = model(path_to_model='model/model_LightFM.pkl')
-print("model success")
+model_LightFM = model(path_to_model='model/model_LightFM.joblib')
 recom_users = recomendations(model_LightFM, sData)
 print("recomendations success")
 print(recom_users)
