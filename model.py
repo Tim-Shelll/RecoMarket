@@ -5,7 +5,7 @@ from lightfm import cross_validation, LightFM
 import joblib
 
 path = 'dataset/orders_v2.csv'
-n_user = 5
+n_user = 10
 
 
 def validate_data(path):
@@ -99,26 +99,37 @@ def recomendations(model_LightFM, sData):
                 ar_list.append(prod_ids[m])
                 ar_list.append(ar[i, m])
                 predict.append(ar_list)
+
     predict_df = pd.DataFrame(predict, columns=['user_id', 'prod_id', 'pred_rang'])
 
     recom_users = {i: [] for i in range(n_user)}
 
     for user_id, product_id, rank in predict_df.values:
         if len(recom_users[user_id]) < 5:
-            recom_users[user_id].append({product_id: rank})
+            recom_users[user_id].append((product_id, rank))
 
     return recom_users
 
+
+def convert_data_to_tuple(rec_users):
+    recs = []
+
+    for user_id in rec_users.keys():
+        for row in rec_users[user_id]:
+            recs.append([user_id, row[0]])
+
+    return recs
+
 def recomendations_all():
+    global path, n_user
     orders_purch_sort = validate_data(path)
     orders_purch_sort = set_rank_product(orders_purch_sort)
     orders_train, orders_test = split_data(orders_purch_sort)
     sData, orders_train_pivot, orders_test_pivot = create_pivot_table(orders_train)
 
-    path_to_model = 'model/model_LightFM.joblib'
+    path_to_model = 'models/model_LightFM.joblib'
     model_LightFM: LightFM = model(path_to_model=path_to_model)
     rec_users = recomendations(model_LightFM, sData)
 
-    return rec_users
-
-print(recomendations_all())
+    recoms = pd.DataFrame(columns=['user_id', 'prod_id'], data=convert_data_to_tuple(rec_users))
+    recoms.to_csv('dataset/recomendations.csv')

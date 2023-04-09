@@ -9,3 +9,9 @@ ORDERS_TO_USER = """
     WHERE t.client = {user_id}
     ORDER BY 5
 """
+
+PRODUCTS_TO_RECOMENDATIONS = """
+    SELECT * FROM product
+    WHERE idItem in {prod_ids}
+    ORDER BY 1
+"""

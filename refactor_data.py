@@ -43,13 +43,15 @@ def insert_data_items_product(path, user_id):
 
     for order_id in history.keys():
         for order in history[order_id]:
-            itemsOrder = ItemsInOrder(
-                idOrder=int(order_id),
-                idItem=order[0],
-                numItems=order[1]
-            )
+            itemsOrder = ItemsInOrder(idOrder=int(order_id), idItem=order[0], numItems=order[1])
 
-            db.session.add(itemsOrder)
+            row = (int(order_id), order[0], order[1])
+            rows = ItemsInOrder.query.filter_by(idOrder=row[0], idItem=row[1]).first()
+            if rows is not None:
+                rows.numItems += row[2]
+            else:
+                db.session.add(itemsOrder)
+
             db.session.commit()
 
 
@@ -100,7 +102,4 @@ def insert_data_user(path):
 path = 'dataset/orders_v2.csv'
 
 with site.app_context():
-    insert_data_order(path=path)
-    print('table order is full')
-    insert_data_items_product(path=path, user_id=-1)
-    print('table items_in_order is full')
+    ...

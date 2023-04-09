@@ -7,9 +7,11 @@ from flask_sqlalchemy import SQLAlchemy
 from forms import LoginForm, RegistrationForm
 from flask_login import logout_user, current_user, login_user, UserMixin, LoginManager
 from werkzeug.security import generate_password_hash, check_password_hash
+import pandas as pd
 
-from templates import ORDERS_TO_USER
+from templates import ORDERS_TO_USER, PRODUCTS_TO_RECOMENDATIONS
 from helpers import get_valid_order
+from model import recomendations_all
 
 #endregion
 
@@ -25,6 +27,8 @@ site.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 login_manager = LoginManager()
 login_manager.init_app(site)
+
+recomends = pd.read_csv('dataset/recomendations.csv', sep=',')
 
 #endregion
 
@@ -58,6 +62,16 @@ class Product(db.Model):
     desc = db.Column(db.String(200))
     price = db.Column(db.Integer, nullable=False)
     img = db.Column(db.String, nullable=False)
+
+    @staticmethod
+    def select_data_product_to_recoms(prod_ids):
+
+
+        sql = PRODUCTS_TO_RECOMENDATIONS.format(prod_ids=prod_ids)
+        cursor = db.session.execute(text(sql))
+
+        return cursor.all()
+
 
 
 class Order(db.Model):
@@ -99,13 +113,26 @@ def logout():
 @site.route('/index')
 def index():
     products = Product.query.order_by(Product.price).all()
-    recomendations = Product.query.order_by(Product.img).limit(4)
-    return render_template('index.html', products=products, recomendations=recomendations)
+    if current_user.is_authenticated:
+        rec_cur_user = recomends[recomends.user_id == current_user.id]
+        print(rec_cur_user)
+        prod_ids = tuple(rec_cur_user['prod_id'].values)
+        recoms = Product.select_data_product_to_recoms(prod_ids)
+    else:
+        recoms = None
+
+    return render_template('index.html', products=products, recomendations=recoms)
 
 
 @site.route('/profile')
-def checkout():
+def profile_current():
     user = User.query.get(int(current_user.id))
+    return render_template('profile.html', user=user)
+
+
+@site.route('/profile/<int:user_id>')
+def profile(user_id):
+    user = User.query.get(user_id)
     return render_template('profile.html', user=user)
 
 
