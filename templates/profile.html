@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Checkout Form</title>
+{% endblock %}
+
+{% block body %}
+<body class="bg-light">
+
+<div class="container">
+  <main>
+
+    <b> Имя пользователя: </b> {{ user.username }} <br>
+    <b> Электронная почта: </b> {{ user.email }} <br>
+    <b> Никнейм: </b> {{ user.login }} <br>
+    <b> <img src="{{ user.photo }}"> </b> <br>
+    <b> Аккаунт создан: </b> {{ user.created_on}} <br>
+
+    <a href="/history_orders" class="badge bg-primary rounded-pill">История покупок</a>
+    <br>
+    <a href="/logout" class="badge bg-primary rounded-pill">Exit</a>
+  </main>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">© 2023 Company Name</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#">Privacy</a></li>
+      <li class="list-inline-item"><a href="#">Terms</a></li>
+      <li class="list-inline-item"><a href="#">Support</a></li>
+    </ul>
+  </footer>
+</div>
+
+</body>
+{% endblock %}

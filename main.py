@@ -103,9 +103,10 @@ def index():
     return render_template('index.html', products=products, recomendations=recomendations)
 
 
-@site.route('/checkout')
+@site.route('/profile')
 def checkout():
-    return render_template('cart.html')
+    user = User.query.get(int(current_user.id))
+    return render_template('profile.html', user=user)
 
 
 @site.route('/history_orders/<int:user_id>')
@@ -118,7 +119,10 @@ def history_orders(user_id):
 
 @site.route('/history_orders')
 def history_order():
-    return render_template('history.html')
+    purchases = Order.select_data_order_to_user(current_user.id)
+    history = get_valid_order(purchases)
+
+    return render_template('history.html', history=history)
 
 
 @site.route('/login', methods=['POST', 'GET'])
@@ -160,10 +164,10 @@ def registration():
 
 
 if __name__ == "__main__":
-    site.run(debug=True)
+    site.run(host='192.168.1.43', port='8080' ,debug=True)
 
 # Завтрашние задачи
 # ✔ Отцентрировать изображения продуктов в карточках
 # ️✔ Создать страничку сайта с историей покупок пользователя, чтобы была видна статистика ( история заказов, не товаров )
 # ️✔ Автоматизировать работу базы данных по заполнению данными о товарах и рекоменддациях
-# ️Разобраться с выгрузкой рекомендаций по модели
+# ️# Разобраться с выгрузкой рекомендаций по модели

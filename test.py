@@ -1,4 +1,6 @@
-from main import site, db
+import pandas as pd
 
-with site.app_context():
-    db.create_all()
+data = pd.read_csv('dataset/orders_v2.csv')
+data['rank_baseline'] = 11 - data['prod_id']
+
+print(data)
