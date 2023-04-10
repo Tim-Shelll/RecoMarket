@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Online Market</title>
+{% endblock %}
+
+{% block body %}
+<main>
+    <br>
+    <div class="cor">
+        <a href="/profile" class="badge bg-primary rounded-pill">Назад в профиль</a>
+    </div>
+    <br><br>
+    {% if history %}
+        {% for year, months in history.items() %}
+            <div class="container">
+                <p class="card-text"><b>{{year}} год</b></p>
+                {% for month, days in months.items() %}
+                    <div class="column row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        {% for (day, time), orders in days.items() %}
+                            <p class="card-text">{{day}} {{month}}</p>
+                            <p class="card-text">{{time}}</p>
+                            <div class="flex_row">
+                                {% for item in orders %}
+                                    <div class="col">
+                                        <div class="card shadow-sm">
+                                            <img src={{item[6]}}>
+                                            <div class="card-body">
+                                                <p class="card-text">{{item[3]}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% endif %}
+</main>
+{% endblock %}
