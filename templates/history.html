@@ -14,12 +14,14 @@
     {% if history %}
         {% for year, months in history.items() %}
             <div class="container">
-                <p class="card-text"><b>{{year}} год</b></p>
+                <h2><p class="card-text"><b>{{year}} год</b></p></h2>
                 {% for month, days in months.items() %}
                     <div class="column row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         {% for (day, time), orders in days.items() %}
-                            <p class="card-text">{{day}} {{month}}</p>
-                            <p class="card-text">{{time}}</p>
+                            <h4>
+                                <p class="card-text">{{day}} {{month}}</p>
+                                <p class="card-text">{{time}}</p>
+                            </h4>
                             <div class="flex_row">
                                 {% for item in orders %}
                                     <div class="col">
