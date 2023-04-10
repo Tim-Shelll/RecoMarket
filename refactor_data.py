@@ -1,4 +1,4 @@
-from constant import name_product, price_product
+from constant import name_product, price_product, user_data, passwords
 from main import db, Product, site, ItemsInOrder, Order, User
 import pandas as pd
 
@@ -73,25 +73,16 @@ def insert_data_order(path):
 
 
 def insert_data_user(path):
-    user_data = [
-        ['Иванов Иван Иваныч', 'ivanov@mail.ru', 'ivan'],
-        ['Петров Петр Петрович', 'petrov@mail.ru', 'petr'],
-        ['Смирнов Даниил Андреевич', 'smirnov@mail.ru', 'daniil'],
-        ['Фурманов Илья Денисович', 'furmanov@mail.ru', 'ilya'],
-        ['Павлов Михаил Петрович', 'pavlov@mail.ru', 'mihail']
-    ]
-
-    passwords = ['ivan123', 'petr123', 'daniil123', 'ilya123', 'mihail123']
 
     users = []
-    for id in range(5):
+    for id in range(len(user_data)):
         user = User()
         user.id = id
         user.username = user_data[id][0]
         user.email = user_data[id][1]
         user.login = user_data[id][2]
         user.set_password(passwords[id])
-        user.photo = '/static/users/'
+        user.photo = '/static/users/andrey.jpg'
 
         users.append(user)
 
@@ -99,7 +90,19 @@ def insert_data_user(path):
     db.session.commit()
 
 
-path = 'dataset/orders_v2.csv'
+def insert_data_all_table(path, user_id):
+    insert_data_product(name_product)
+    print('Insert data product table complited')
+    insert_data_user(path=path)
+    print('Insert data user table complited')
+    insert_data_order(path=path)
+    print('Insert data order table complited')
+    insert_data_items_product(path=path, user_id=-1)
+    print('Insert data items_product complited')
+
+
+path_to_orders = 'dataset/orders_v2.csv'
 
 with site.app_context():
-    ...
+    insert_data_all_table(path=path_to_orders, user_id=-1)
+    print('Insert data all tables complited')

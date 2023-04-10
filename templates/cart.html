@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Online Market</title>
+{% endblock %}
+
+{% block body %}
+<main>
+    {% if current_user.is_authenticated %}
+    <div class="container" id="cart">
+        {% if items_in_bag_with_num %}
+            <section class="py-5 text-center container">
+                <div class="album py-5 bg-light">
+                    <div class="container">
+                            {% for (item, num) in items_in_bag_with_num %}
+                            <div class="col">
+                                <div class="card shadow-sm">
+                                    <img src={{item[4]}}>
+                                    <div class="card-body">
+                                        <p class="card-text">{{item[1]}}</p>
+                                        <p class="card-text">{{item[2]}}</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">Количество: {{num}}</small>
+                                        </div>
+                                    </div>
+                              </div>
+                            </div>
+                            {% endfor %}
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    </div>
+    {% endif %}
+</main>
+{% endblock %}

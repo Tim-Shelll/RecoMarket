@@ -9,8 +9,8 @@ from flask_login import logout_user, current_user, login_user, UserMixin, LoginM
 from werkzeug.security import generate_password_hash, check_password_hash
 import pandas as pd
 
-from templates import ORDERS_TO_USER, PRODUCTS_TO_RECOMENDATIONS
-from helpers import get_valid_order
+from templates import ORDERS_TO_USER, PRODUCTS_IN_PROD_IDS
+from helpers import get_valid_order, product_with_numItems, create_beautiful_history, month
 from model import recomendations_all
 
 #endregion
@@ -64,14 +64,11 @@ class Product(db.Model):
     img = db.Column(db.String, nullable=False)
 
     @staticmethod
-    def select_data_product_to_recoms(prod_ids):
-
-
-        sql = PRODUCTS_TO_RECOMENDATIONS.format(prod_ids=prod_ids)
+    def select_data_product_by_ids(prod_ids):
+        sql = PRODUCTS_IN_PROD_IDS.format(prod_ids=prod_ids)
         cursor = db.session.execute(text(sql))
 
         return cursor.all()
-
 
 
 class Order(db.Model):
@@ -94,6 +91,12 @@ class ItemsInOrder(db.Model):
     numItems = db.Column(db.Integer, nullable=False)
 
 
+class ItemsInBag(db.Model):
+    idUser = db.Column(db.Integer, primary_key=True, unique=False)
+    idItem = db.Column(db.Integer, primary_key=True, unique=False)
+    numItems = db.Column(db.Integer, nullable=False)
+
+
 #endregion
 
 
@@ -102,6 +105,7 @@ class ItemsInOrder(db.Model):
 @login_manager.user_loader
 def load_user(user):
     return User.query.get(int(user))
+
 
 @site.route('/logout')
 def logout():
@@ -117,7 +121,7 @@ def index():
         rec_cur_user = recomends[recomends.user_id == current_user.id]
         print(rec_cur_user)
         prod_ids = tuple(rec_cur_user['prod_id'].values)
-        recoms = Product.select_data_product_to_recoms(prod_ids)
+        recoms = Product.select_data_product_by_ids(prod_ids)
     else:
         recoms = None
 
@@ -140,16 +144,19 @@ def profile(user_id):
 def history_orders(user_id):
     purchases = Order.select_data_order_to_user(user_id)
     history = get_valid_order(purchases)
+    beautiful_history = create_beautiful_history(history)
 
-    return render_template('history.html', history=history)
+    return render_template('history.html', history=beautiful_history)
 
 
 @site.route('/history_orders')
 def history_order():
     purchases = Order.select_data_order_to_user(current_user.id)
     history = get_valid_order(purchases)
+    beautiful_history = create_beautiful_history(history)
+    print(beautiful_history)
 
-    return render_template('history.html', history=history)
+    return render_template('history.html', history=beautiful_history)
 
 
 @site.route('/login', methods=['POST', 'GET'])
@@ -173,7 +180,6 @@ def signin():
     return render_template('login.html', form=form)
 
 
-
 @site.route('/registration', methods=['POST', 'GET'])
 def registration():
     form = RegistrationForm()
@@ -188,6 +194,18 @@ def registration():
         return redirect('/index')"""
     return render_template('registration.html', form=form)
 #endregion
+
+
+@site.route('/cart')
+def bag():
+    if current_user.is_authenticated:
+        items_in_cart = ItemsInBag.query.filter_by(idUser=current_user.id)
+        items_in_bag = Product.select_data_product_by_ids(tuple([item.idItem for item in items_in_cart]))
+        iib_with_num = product_with_numItems(items_in_bag, (item.numItems for item in items_in_cart))
+
+        return render_template('cart.html', items_in_bag_with_num=iib_with_num)
+    else:
+        return render_template('cart.html')
 
 
 if __name__ == "__main__":

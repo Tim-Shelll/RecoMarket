@@ -1,3 +1,5 @@
 from main import db, site
-site.app_context().push()
-db.create_all()
+
+# Creat database to app
+with site.app_context():
+    db.create_all()

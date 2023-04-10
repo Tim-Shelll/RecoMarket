@@ -24,5 +24,11 @@
 }
 
 .cor {
-    padding-left: 8.5%;
+    padding-left: 7.5%;
 }
+
+.flex_row {
+    display: flex;
+    flex-direction: row;
+}
+

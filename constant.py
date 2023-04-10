@@ -9,3 +9,19 @@ name_product = [
 ]
 
 price_product = [49 + 10 * inc for inc in range(len(name_product))]
+
+user_data = [
+        ['Иванов Иван Иваныч', 'ivanov@mail.ru', 'ivan'],
+        ['Петров Петр Петрович', 'petrov@mail.ru', 'petr'],
+        ['Смирнов Даниил Андреевич', 'smirnov@mail.ru', 'daniil'],
+        ['Фурманов Илья Денисович', 'furmanov@mail.ru', 'ilya'],
+        ['Павлов Михаил Петрович', 'pavlov@mail.ru', 'mihail'],
+        ['Романов Глеб Игоревич', 'romanov@mail.ru', 'gleb'],
+        ['Соколов Олег Михайлович', 'sokolov@mail.ru', 'oleg'],
+        ['Находкин Николай Александрович', 'nahodkin@mail.ru', 'nikolay'],
+        ['Промптов Игорь Николаевич', 'promptov@mail.ru', 'igor'],
+        ['Алертов Вячеслав Вячеславович', 'alertov@mail.ru', 'slava'],
+    ]
+
+passwords = ['ivan123', 'petr123', 'daniil123', 'ilya123', 'mihail123',
+             'gleb123', 'oleg123', 'nikolay123', 'igor123', 'slava123']

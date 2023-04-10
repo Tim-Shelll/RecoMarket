@@ -7,6 +7,7 @@ import joblib
 path = 'dataset/orders_v2.csv'
 n_user = 10
 
+#region manipulationData
 
 def validate_data(path):
     orders = pd.read_csv(path, sep=',')
@@ -119,6 +120,8 @@ def convert_data_to_tuple(rec_users):
             recs.append([user_id, row[0]])
 
     return recs
+
+#endregion
 
 def recomendations_all():
     global path, n_user

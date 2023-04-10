@@ -21,15 +21,20 @@
         {% if not current_user.is_authenticated %}
         <h4 class="d-flex justify-content-around align-items-center mb-3">
             <a href="/login">
-                <button class="badge bg-primary rounded-pill">Login</button>
+                <button class="badge bg-primary rounded-pill">Войти</button>
             </a>
             <a href="/registration">
-                <button class="badge bg-primary rounded-pill">Registration</button>
+                <button class="badge bg-primary rounded-pill">Регистрация</button>
             </a>
         </h4>
         {% else %}
         <h4 class="d-flex justify-content-around align-items-center mb-3">
-            <a href="/profile" class="badge bg-primary rounded-pill">Profile</a>
+            <a href="/profile">
+                <button class="badge bg-primary rounded-pill">Профиль</button>
+            </a>
+            <a href="/cart">
+                <button class="badge bg-primary rounded-pill">Корзина</button>
+            </a>
         </h4>
         {% endif %}
     </div>

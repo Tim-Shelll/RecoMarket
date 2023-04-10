@@ -7,10 +7,10 @@ ORDERS_TO_USER = """
     ) t
     
     WHERE t.client = {user_id}
-    ORDER BY 5
+    ORDER BY 5 DESC
 """
 
-PRODUCTS_TO_RECOMENDATIONS = """
+PRODUCTS_IN_PROD_IDS = """
     SELECT * FROM product
     WHERE idItem in {prod_ids}
     ORDER BY 1
