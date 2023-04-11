@@ -10,8 +10,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import pandas as pd
 
 from templates import ORDERS_TO_USER, PRODUCTS_IN_PROD_IDS
-from helpers import get_valid_order, product_with_numItems, create_beautiful_history, month
-from model import recomendations_all
+from helpers import get_valid_order, product_with_numItems, create_beautiful_history
+from model import path
 
 #endregion
 
@@ -116,16 +116,28 @@ def logout():
 @site.route('/')
 @site.route('/index')
 def index():
-    products = Product.query.order_by(Product.price).all()
+    products = Product.query.order_by(Product.idItem).all()
     if current_user.is_authenticated:
         rec_cur_user = recomends[recomends.user_id == current_user.id]
-        print(rec_cur_user)
-        prod_ids = tuple(rec_cur_user['prod_id'].values)
-        recoms = Product.select_data_product_by_ids(prod_ids)
+        recomendations = Product.select_data_product_by_ids(tuple(rec_cur_user['prod_id'].values))
     else:
-        recoms = None
+        recomendations = None
 
-    return render_template('index.html', products=products, recomendations=recoms)
+    return render_template('index.html', products=products, recomendations=recomendations)
+
+
+@site.route('/index/<int:idItem>', methods=['POST', 'GET'])
+def item(idItem):
+    print(idItem)
+    iteminbag = ItemsInBag.query.filter_by(idUser=current_user.id, idItem=idItem).first()
+    if iteminbag:
+        iteminbag.numItems += 1
+    else:
+        db.session.add(ItemsInBag(idUser=current_user.id, idItem=idItem, numItems=1))
+
+    db.session.commit()
+
+    return redirect('/')
 
 
 @site.route('/profile')
@@ -193,26 +205,49 @@ def registration():
     else:
         return redirect('/index')"""
     return render_template('registration.html', form=form)
-#endregion
 
 
-@site.route('/cart')
+@site.route('/cart', methods=['POST', 'GET'])
 def bag():
+    print(request.method == 'POST')
+    if request.method == 'POST':
+        itemsinbag = ItemsInBag.query.filter_by(idUser=current_user.id)
+        if itemsinbag:
+            insert_dataset_data(itemsinbag)
+
     if current_user.is_authenticated:
         items_in_cart = ItemsInBag.query.filter_by(idUser=current_user.id)
-        items_in_bag = Product.select_data_product_by_ids(tuple([item.idItem for item in items_in_cart]))
+        prod_ids = "(" + ", ".join([str(item.idItem) for item in items_in_cart]) + ")"
+        items_in_bag = Product.select_data_product_by_ids(prod_ids)
         iib_with_num = product_with_numItems(items_in_bag, (item.numItems for item in items_in_cart))
 
         return render_template('cart.html', items_in_bag_with_num=iib_with_num)
     else:
         return render_template('cart.html')
 
+#endregion
+
+
+#region BL
+
+def insert_dataset_data(itemsinbag):
+    datetime_now = str(datetime.now().date()) + ' ' + str(datetime.now().time()).split('.')[0]
+    order = Order(
+        client=current_user.id,
+        date=datetime.strptime(datetime_now, "%Y-%m-%d %H:%M:%S"),
+        shopCode=1
+    )
+    db.session.add(order)
+    db.session.commit()
+
+    for iteminbag in itemsinbag:
+        iteminorder = ItemsInOrder(idOrder=order.idOrder, idItem=iteminbag.idItem, numItems=iteminbag.numItems)
+        db.session.add(iteminorder)
+        db.session.delete(iteminbag)
+
+    db.session.commit()
+
+#endregion
 
 if __name__ == "__main__":
     site.run(host='192.168.1.43', port='8080' ,debug=True)
-
-# Завтрашние задачи
-# ✔ Отцентрировать изображения продуктов в карточках
-# ️✔ Создать страничку сайта с историей покупок пользователя, чтобы была видна статистика ( история заказов, не товаров )
-# ️✔ Автоматизировать работу базы данных по заполнению данными о товарах и рекоменддациях
-# ️# Разобраться с выгрузкой рекомендаций по модели

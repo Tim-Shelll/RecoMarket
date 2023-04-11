@@ -21,10 +21,10 @@
                   <p class="card-text">{{recomendation.title}}</p>
                   <p class="card-text">{{recomendation.desc}}</p>
                   <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">Pick</button>
-                    </div>
-                    <small class="text-muted">9 mins</small>
+                    <form action="/index/{{recomendation.idItem}}" enctype="application/json" method="POST">
+                        <input type="hidden" name="index" value="{{recomendation.idItem}}">
+                        <input type="submit" class="btn btn-dark" value="Нажать 2">
+                    </form>
                   </div>
                 </div>
               </div>

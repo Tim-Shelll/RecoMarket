@@ -32,3 +32,6 @@
     flex-direction: row;
 }
 
+.btn .btn-dark:hover {
+    cursor: crosshair;
+}
