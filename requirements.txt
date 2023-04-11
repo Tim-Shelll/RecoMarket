@@ -1,4 +1,4 @@
-flask # Фреймворк python'a для
+flask # Фреймворк python'a для backend'a
 flask_login # Библиотека для логинизации пользователей
 flask_sqlalchemy # Библиотека для базы данных, которая соединяется с flask'ом на SQLite
 pandas # Библиотека для анализа данных
