@@ -1,11 +1,9 @@
-flask
-flask_login
-flask_sqlalchemy
-pandas
-flask_wtf
-wtforms
-opencv-python
-lightfm
-pickle
-gzip
-joblib
+flask # Фреймворк python'a для
+flask_login # Библиотека для логинизации пользователей
+flask_sqlalchemy # Библиотека для базы данных, которая соединяется с flask'ом на SQLite
+pandas # Библиотека для анализа данных
+flask_wtf # Библиотека для создания форм во flask
+wtforms # Библиотека, которая содержит формы
+opencv-python # Библиотека с помощью которой можно решать задачи компьютерного зрения
+lightfm # Библиотека, с помощью которой обрабатываются данные методом коллаборативной фильтрации
+joblib # Библиотека для загрузки и выгрузки моделей глубокого обучения
