@@ -15,7 +15,7 @@ def get_valid_order(purchases):
 
 def refactor_img(path):
     img = cv2.imread(path)
-    if  img is None:
+    if img is None:
         print('img is None')
     else:
         ref_img = cv2.resize(img, (img.shape[1] // 3 * 2, img.shape[0] // 3 * 2))

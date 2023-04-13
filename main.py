@@ -128,7 +128,6 @@ def index():
 
 @site.route('/index/<int:idItem>', methods=['POST', 'GET'])
 def item(idItem):
-    print(idItem)
     iteminbag = ItemsInBag.query.filter_by(idUser=current_user.id, idItem=idItem).first()
     if iteminbag:
         iteminbag.numItems += 1
@@ -166,7 +165,6 @@ def history_order():
     purchases = Order.select_data_order_to_user(current_user.id)
     history = get_valid_order(purchases)
     beautiful_history = create_beautiful_history(history)
-    print(beautiful_history)
 
     return render_template('history.html', history=beautiful_history)
 
@@ -209,7 +207,6 @@ def registration():
 
 @site.route('/cart', methods=['POST', 'GET'])
 def bag():
-    print(request.method == 'POST')
     if request.method == 'POST':
         itemsinbag = ItemsInBag.query.filter_by(idUser=current_user.id)
         if itemsinbag:

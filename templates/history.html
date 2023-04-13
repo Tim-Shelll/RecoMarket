@@ -8,21 +8,22 @@
 <main>
     <br>
     <div class="cor">
-        <a href="/profile" class="badge bg-primary rounded-pill">Назад в профиль</a>
+        <h2><a href="/profile" class="badge bg-primary rounded-pill">Назад в профиль</a></h2>
     </div>
     <br><br>
     {% if history %}
         {% for year, months in history.items() %}
             <div class="container">
-                <h2><p class="card-text"><b>{{year}} год</b></p></h2>
+                <h2><button id='{{year}}' type="button" onclick="onclickYear('{{year}}')">{{year}} год</button></h2>
                 {% for month, days in months.items() %}
-                    <div class="column row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                        {% for (day, time), orders in days.items() %}
-                            <h4>
+                    {% for (day, time), orders in days.items() %}
+                    <div class="column row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style="display: none">
+                            <button id="{{year}}_{{day}}_{{month}}"type="button"
+                                    onclick="onclickMonth('{{year}}', '{{day}}', '{{month}}')">
                                 <p class="card-text">{{day}} {{month}}</p>
                                 <p class="card-text">{{time}}</p>
-                            </h4>
-                            <div class="flex_row">
+                            </button>
+                            <div class="flex_row" style="display: none">
                                 {% for item in orders %}
                                     <div class="col">
                                         <div class="card shadow-sm">
@@ -34,11 +35,13 @@
                                     </div>
                                 {% endfor %}
                             </div>
+                        </div>
                         {% endfor %}
-                    </div>
                 {% endfor %}
             </div>
         {% endfor %}
     {% endif %}
 </main>
+
+<script src="/static/script/script.js"></script>
 {% endblock %}
