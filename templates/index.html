@@ -1,9 +1,5 @@
 {% extends 'base.html' %}
 
-{% block style %}
-<link rel="stylesheet" href='/static/style/index.css'/>
-{% endblock %}
-
 {% block title %}
 <title>Online Market</title>
 {% endblock %}
@@ -48,19 +44,16 @@
         <button type="button" class="btn btn-primary" onclick="searchItItems()">
             <i id="fas fa-search"></i>
         </button>
-
+        <button type="button" class="btn btn-primary"
+                onclick="filterItems(-1)">Все</button>
         {% for category in categories %}
             <button type="button" class="btn btn-primary"
                 onclick="filterItems('{{category.idCategory}}')">{{category.name}}</button>
         {% endfor %}
-        <button type="button" class="btn btn-primary"
-                onclick="filterItems(-1)">Все</button>
+
+        <p class="card-text" style="margin: 7.5px">25 / 25</p>
 
     </div>
-
-
-
-
 
     <div id="album py-5 bg-light">
         <div class="container">
