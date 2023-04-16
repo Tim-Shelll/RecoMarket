@@ -1,5 +1,5 @@
 from constant import name_product, price_product, user_data, passwords
-from main import db, Product, site, ItemsInOrder, Order, User
+from app import *
 import pandas as pd
 
 
@@ -72,21 +72,21 @@ def insert_data_order(path):
         db.session.commit()
 
 
-def insert_data_user(path):
+def insert_data_user():
 
-    users = []
-    for id in range(len(user_data)):
-        user = User()
-        user.id = id
-        user.username = user_data[id][0]
-        user.email = user_data[id][1]
-        user.login = user_data[id][2]
-        user.set_password(passwords[id])
-        user.photo = '/static/users/andrey.jpg'
+    #users = []
+    #for id in range(len(user_data)):
+    user = User()
+    user.username = "Овсянов Андрей Борисович"
+    user.email = "ovsyanov@mail.ru"
+    user.login = "andrey"
+    user.set_password("andrey123")
+    user.photo = '/static/users/andrey.jpg'
 
-        users.append(user)
+    #users.append(user)
 
-    db.session.add_all(users)
+    #db.session.add_all(users)
+    db.session.add(user)
     db.session.commit()
 
 
@@ -101,8 +101,21 @@ def insert_data_all_table(path, user_id):
     print('Insert data items_product complited')
 
 
-path_to_orders = 'dataset/orders_v2.csv'
+def insert_dataset_data(itemsinbag, client_id):
+    datetime_now = str(datetime.now().date()) + ' ' + str(datetime.now().time()).split('.')[0]
+    order = Order(
+        client=client_id,
+        date=datetime.strptime(datetime_now, "%Y-%m-%d %H:%M:%S"),
+        shopCode=1
+    )
+    db.session.add(order)
+    db.session.commit()
 
-with site.app_context():
-    insert_data_all_table(path=path_to_orders, user_id=-1)
-    print('Insert data all tables complited')
+    for iteminbag in itemsinbag:
+        iteminorder = ItemsInOrder(idOrder=order.idOrder, idItem=iteminbag.idItem, numItems=iteminbag.numItems)
+        db.session.add(iteminorder)
+        db.session.delete(iteminbag)
+
+    db.session.commit()
+
+    return order.idOrder

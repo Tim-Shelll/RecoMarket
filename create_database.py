@@ -1,5 +1,5 @@
-from main import db, site
+from app import db, app
 
 # Creat database to app
-with site.app_context():
+with app.app_context():
     db.create_all()

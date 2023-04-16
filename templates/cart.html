@@ -1,42 +1,46 @@
 {% extends 'base.html' %}
 
+{% block style %}<link rel="stylesheet" href='/static/style/cart_style.css'/>{% endblock %}
+
 {% block title %}
 <title>Online Market</title>
 {% endblock %}
 
 {% block body %}
 <main>
-    {% if current_user.is_authenticated %}
-    <div class="container" id="cart">
-        {% if items_in_bag_with_num %}
-            <section class="py-5 text-center container">
-                <div class="album py-5 bg-light">
-                    <div class="row">
-                        <div class="container">
-                            {% for (item, num) in items_in_bag_with_num %}
-                            <div class="col">
-                                <div class="card shadow-sm">
-                                    <img src={{item[4]}}>
-                                    <div class="card-body">
-                                        <p class="card-text">{{item[1]}}</p>
-                                        <p class="card-text">{{item[2]}}</p>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <small class="text-muted">Количество: {{num}}</small>
-                                        </div>
+    <section class="cart">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-sm-6">
+                    <div class="cart-wrap">
+                        <h2>Корзина товаров</h2>
+                    </div>
+                </div>
+            </div>
+            {% if items_in_bag_with_num %}
+                <div class="col-sm-6">
+                    {% for (item, num) in items_in_bag_with_num %}
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <img src={{item[4]}}>
+                                <div class="card-body">
+                                    <p class="card-text">{{item[1]}}</p>
+                                    <p class="card-text">{{item[2]}}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">Количество: {{num}}</small>
                                     </div>
                                 </div>
                             </div>
-                            {% endfor %}
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-            </section>
-        {% endif %}
-        <form action="/cart" enctype="application/json" method="POST">
-            <input type="hidden" name="index" value="1">
-            <input type="submit" class="btn btn-dark" value="Совершить заказ">
-        </form>
-    </div>
-    {% endif %}
+            {% endif %}
+        </div>
+    </section>
+
+    <form action="/cart" enctype="application/json" method="POST">
+        <input type="hidden" name="index" value="1">
+        <input type="submit" class="btn btn-dark" value="Совершить заказ">
+    </form>
 </main>
 {% endblock %}

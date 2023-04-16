@@ -17,7 +17,7 @@
                 <h2><button id='{{year}}' type="button" onclick="onclickYear('{{year}}')">{{year}} год</button></h2>
                 {% for month, days in months.items() %}
                     {% for (day, time), orders in days.items() %}
-                    <div class="column row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style="display: none">
+                        <div class="column row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style="display: none">
                             <button id="{{year}}_{{day}}_{{month}}"type="button"
                                     onclick="onclickMonth('{{year}}', '{{day}}', '{{month}}')">
                                 <p class="card-text">{{day}} {{month}}</p>
@@ -25,23 +25,23 @@
                             </button>
                             <div class="flex_row" style="display: none">
                                 {% for item in orders %}
-                                    <div class="col">
-                                        <div class="card shadow-sm">
-                                            <img src={{item[6]}}>
-                                            <div class="card-body">
-                                                <p class="card-text">{{item[3]}}</p>
-                                            </div>
+                                <div class="col">
+                                    <div class="card shadow-sm">
+                                        <img src={{item[6]}}>
+                                        <div class="card-body">
+                                            <p class="card-text">{{item[3]}}</p>
                                         </div>
                                     </div>
+                                </div>
                                 {% endfor %}
                             </div>
                         </div>
-                        {% endfor %}
+                    {% endfor %}
                 {% endfor %}
             </div>
         {% endfor %}
     {% endif %}
 </main>
 
-<script src="/static/script/script.js"></script>
+<script src="/static/script/historyOrder.js"></script>
 {% endblock %}

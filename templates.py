@@ -15,3 +15,11 @@ PRODUCTS_IN_PROD_IDS = """
     WHERE idItem in {prod_ids}
     ORDER BY 1
 """
+
+DISTINCT_USERS = """
+    SELECT COUNT(DISTINCT id) FROM user
+"""
+
+DISTINCT_PRODUCTS = """
+    SELECT COUNT(*) FROM product
+"""
