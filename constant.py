@@ -25,3 +25,11 @@ user_data = [
 
 passwords = ['ivan123', 'petr123', 'daniil123', 'ilya123', 'mihail123',
              'gleb123', 'oleg123', 'nikolay123', 'igor123', 'slava123']
+
+category = {
+    1: "Горячее",
+    2: "Салаты",
+    3: "Холодные напитки",
+    4: "Горячие напитки",
+    5: "Блины "
+}

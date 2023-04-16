@@ -1,30 +1,9 @@
-/*
-document.addEventListener('DOMContentLoader', () => {
-    document.getElementById("#button").onclick = (event) => {
-        event.preventDefault();
-        let xml = new XMLHttpRequest();
-        xml.onload() => {
-            const item = JSON.parse(xml.responseText);
-            console.log(item)
-            if (item.success) {
-                console.log("Success")
-            } else {
-                console.log("Error")
-            }
-
-            const data = new FormData();
-            data.append('')
-        }
-    }
-
-})
-*/
-
 const searchFocus = document.getElementById('search-focus');
 const keys = [
   { keyCode: 'AltLeft', isTriggered: false },
   { keyCode: 'ControlLeft', isTriggered: false },
 ];
+
 
 window.addEventListener('keydown', (e) => {
   keys.forEach((obj) => {
@@ -40,6 +19,7 @@ window.addEventListener('keydown', (e) => {
   }
 });
 
+
 window.addEventListener('keyup', (e) => {
   keys.forEach((obj) => {
     if (obj.keyCode === e.code) {
@@ -48,19 +28,32 @@ window.addEventListener('keyup', (e) => {
   });
 });
 
+
 let storage = document.getElementById('album py-5 bg-light')
 let container = storage.childNodes[1].childNodes[1].childNodes
 
 let search = document.getElementById('search-focus')
 
-function searchItItems() {
+
+function check() {
     if (search.value == "") {
         onload()
         return;
     }
+}
+
+
+search.oninput = function () {
+    check();
+}
+
+
+function searchItItems() {
+    check();
+    onload();
 
     container.forEach(function(element) {
-        if (element.tagName == 'DIV') {
+        if (element.tagName == 'DIV' && element.style.display != 'none') {
             let text = element.childNodes[1].childNodes[3].childNodes[1].textContent
 
             if (text.toLowerCase().indexOf(search.value.trim().toLowerCase()) > -1) {
@@ -73,10 +66,25 @@ function searchItItems() {
     });
 }
 
+
 function onload() {
     container.forEach(function(element) {
         if (element.tagName == 'DIV') {
              element.style.display = ''
         }
     })
+}
+
+
+function filterItems(idCategory) {
+    onload();
+    if (idCategory == -1)
+        return;
+    container.forEach(function(element) {
+        if (element.tagName == 'DIV' && element.style.display != 'none') {
+            let text = element.childNodes[1].childNodes[3].childNodes[5]
+                .childNodes[1].childNodes[1].value
+            element.style.display = (text == idCategory) ?  '' : 'none'
+        }
+    });
 }

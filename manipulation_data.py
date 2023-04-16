@@ -10,8 +10,9 @@ from constant import price_product
 
 path = 'dataset/orders_v2.csv'
 
-n_user = User.select_distinct_users()[0]
-n_product = Product.select_distinct_products()[0]
+with app.app_context():
+    n_user = User.select_distinct_users()[0]
+    n_product = Product.select_distinct_products()[0]
 
 #region manipulationData
 

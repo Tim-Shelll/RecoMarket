@@ -34,8 +34,7 @@ class User(UserMixin, db.Model):
 
     @staticmethod
     def select_distinct_users():
-        with app.app_context():
-            return db.session.execute(text(DISTINCT_USERS)).first()
+        return db.session.execute(text(DISTINCT_USERS)).first()
 
     def __repr__(self):
         return "<{}:{}:{}:{}>".format(self.id, self.username, self.email, self.login)
@@ -47,6 +46,7 @@ class Product(db.Model):
     desc = db.Column(db.String(200))
     price = db.Column(db.Integer, nullable=False)
     img = db.Column(db.String, nullable=False)
+    idCategory = db.Column(db.Integer, nullable=False)
 
     @staticmethod
     def select_data_product_by_ids(prod_ids):
@@ -57,8 +57,12 @@ class Product(db.Model):
 
     @staticmethod
     def select_distinct_products():
-        with app.app_context():
-            return db.session.execute(text(DISTINCT_PRODUCTS)).first()
+        return db.session.execute(text(DISTINCT_PRODUCTS)).first()
+
+
+class Category(db.Model):
+    idCategory = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
 
 
 class Order(db.Model):

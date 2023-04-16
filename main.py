@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, redirect
 from flask_login import logout_user, current_user, login_user, LoginManager
 
-from app import app, db, User, Product, Order, ItemsInOrder, ItemsInBag
+from app import app, db, User, Product, Order, ItemsInOrder, ItemsInBag, Category
 from forms import LoginForm, RegistrationForm
 from helpers import get_valid_order, product_with_numItems, create_beautiful_history
 from refactor_data import insert_dataset_data
@@ -36,15 +36,17 @@ def logout():
 @app.route('/index')
 def index():
     products = Product.query.order_by(Product.idItem).all()
+    categories = Category.query.all()
     if current_user.is_authenticated:
         recs = pd.read_csv('dataset/recomendations.csv', sep=',')
         rec_cur_user = recs[recs.user_id == current_user.id]
         prod_ids = "(" + ", ".join([str(rec) for rec in rec_cur_user['prod_id'].values]) + ")"
         recomendations = Product.select_data_product_by_ids(prod_ids)
+
     else:
         recomendations = None
 
-    return render_template('index.html', products=products, recomendations=recomendations)
+    return render_template('index.html', categories=categories, products=products, recomendations=recomendations)
 
 
 @app.route('/index/<int:idItem>', methods=['POST', 'GET'])
@@ -63,7 +65,7 @@ def item(idItem):
 
 @app.route('/profile')
 def profile_current():
-    if current_user.isauthenticated:
+    if current_user.is_authenticated:
         user = User.query.get(int(current_user.id))
         return render_template('profile.html', user=user)
     else:

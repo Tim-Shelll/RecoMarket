@@ -1,4 +1,4 @@
-from constant import name_product, price_product, user_data, passwords
+from constant import name_product, price_product, user_data, passwords, category
 from app import *
 import pandas as pd
 
@@ -31,7 +31,8 @@ def insert_data_product(data_product):
             title=name_product[id],
             desc="",
             price=price_product[id],
-            img="/static/images/{}.jpg".format(id+1)
+            img="/static/images/{}.jpg".format(id+1),
+            idCategory=(id + 1) // 5 + (1 if (id + 1) % 5 != 0 else 0)
         )
 
         db.session.add(product)
@@ -74,30 +75,42 @@ def insert_data_order(path):
 
 def insert_data_user():
 
-    #users = []
-    #for id in range(len(user_data)):
-    user = User()
-    user.username = "Овсянов Андрей Борисович"
-    user.email = "ovsyanov@mail.ru"
-    user.login = "andrey"
-    user.set_password("andrey123")
-    user.photo = '/static/users/andrey.jpg'
+    users = []
+    for id in range(len(user_data)):
+        user = User()
+        user.username = user_data[id][0]
+        user.email = user_data[id][1]
+        user.login = user_data[id][2]
+        user.set_password(passwords[id])
+        user.photo = '/static/users/andrey.jpg'
 
-    #users.append(user)
+        users.append(user)
 
-    #db.session.add_all(users)
-    db.session.add(user)
+    db.session.add_all(users)
     db.session.commit()
 
 
+def insert_data_category(category):
+    for id, name in category.items():
+        category = Category(
+            idCategory=id,
+            name=name
+        )
+
+        db.session.add(category)
+        db.session.commit()
+
+
 def insert_data_all_table(path, user_id):
+    insert_data_category(category)
+    print('Insert data category table complited')
     insert_data_product(name_product)
     print('Insert data product table complited')
-    insert_data_user(path=path)
+    insert_data_user()
     print('Insert data user table complited')
     insert_data_order(path=path)
     print('Insert data order table complited')
-    insert_data_items_product(path=path, user_id=-1)
+    insert_data_items_product(path=path, user_id=user_id)
     print('Insert data items_product complited')
 
 
@@ -119,3 +132,5 @@ def insert_dataset_data(itemsinbag, client_id):
     db.session.commit()
 
     return order.idOrder
+
+path = 'dataset/orders_v2.csv'
