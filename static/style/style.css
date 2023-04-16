@@ -35,3 +35,7 @@
 .btn .btn-dark:hover {
     cursor: crosshair;
 }
+
+.input-group {
+    padding-left: 100px;
+}

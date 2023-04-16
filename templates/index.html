@@ -6,60 +6,68 @@
 
 {% block body %}
 <main>
-  {% if current_user.is_authenticated %}
-    {% if recomendations %}
-      <section class="py-5 text-center container">
-        <b><p>Специальные предложения</p></b>
-        <div class="album py-5 bg-light">
-        <div class="container">
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            {% for recomendation in recomendations %}
-            <div class="col">
-              <div class="card shadow-sm">
-                <img src={{recomendation.img}}>
-                <div class="card-body">
-                  <p class="card-text">{{recomendation.title}}</p>
-                  <p class="card-text">{{recomendation.desc}}</p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <form action="/index/{{recomendation.idItem}}" method="post">
-                      <input type="hidden" name="index" value="{{recomendation.idItem}}">
-                      <button type="submit" class="btn btn-dark" onclick="">Купить</button>
-                    </form>
-                  </div>
+    {% if current_user.is_authenticated %}
+        {% if recomendations %}
+            <section class="py-5 text-center container">
+                <b><p>Специальные предложения</p></b>
+                <div class="album py-5 bg-light">
+                    <div class="container">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                            {% for recomendation in recomendations %}
+                                <div class="col">
+                                    <div class="card shadow-sm">
+                                        <img src={{recomendation.img}}>
+                                        <div class="card-body">
+                                            <p class="card-text">{{recomendation.title}}</p>
+                                            <p class="card-text">{{recomendation.desc}}</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <form action="/index/{{recomendation.idItem}}" method="post">
+                                                  <input type="hidden" name="index" value="{{recomendation.idItem}}">
+                                                  <button type="submit" class="btn btn-dark" onclick="">Купить</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            {% endfor %}
-
-          </div>
-        </div>
-      </div>
-      </section>
+            </section>
+        {% endif %}
     {% endif %}
-  {% endif %}
 
-   <div class="album py-5 bg-light">
-      <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-          {% for product in products %}
-          <div class="col">
-            <div class="card shadow-sm">
-              <img src={{product.img}}>
-              <div class="card-body">
-                <p class="card-text">{{product.title}}</p>
-                <p class="card-text">{{product.desc}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <form action="/index/{{product.idItem}}" method="post">
-                      <input type="hidden" name="index" value="{{product.idItem}}">
-                      <button type="submit" class="btn btn-dark" onclick="">Купить</button>
-                    </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endfor %}
-
+   <div class="input-group">
+        <div class="form-outline">
+            <input id="search-focus" type="search" id="form1" class="form-control" placeholder="Search"/>
         </div>
+        <button type="button" class="btn btn-primary" onclick="searchItItems()">
+            <i id="fas fa-search"></i>
+        </button>
+   </div>
+
+   <div id="album py-5 bg-light">
+      <div class="container">
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+              {% for product in products %}
+                  <div class="col">
+                      <div class="card shadow-sm">
+                          <img src={{product.img}}>
+                          <div class="card-body">
+                              <p class="card-text">{{product.title}}</p>
+                              <p class="card-text">{{product.desc}}</p>
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <form action="/index/{{product.idItem}}" method="post">
+                                      <input type="hidden" name="index" value="{{product.idItem}}">
+                                      <button type="submit" class="btn btn-dark" onclick="">Купить</button>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              {% endfor %}
+
+          </div>
       </div>
     </div>
 
