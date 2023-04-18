@@ -45,7 +45,7 @@ def get_valid_time(hour, minute):
 
 def create_beautiful_history(history):
 
-    beautiful_history = {} #list years
+    beautiful_history = {} #icons years
 
     for (order_id, date_time) in history.keys():
         cur_date = datetime.datetime.strptime(date_time, "%Y-%m-%d %H:%M:%S")
@@ -53,15 +53,15 @@ def create_beautiful_history(history):
             (cur_date.date(), cur_date.time())
 
         if cur_date.year not in beautiful_history:
-            beautiful_history[cur_date.year] = {} # list months
+            beautiful_history[cur_date.year] = {} # icons months
 
         months = beautiful_history[cur_date.year]
         if month[cur_date.month] not in months:
-            months[month[cur_date.month]] = {} # list days
+            months[month[cur_date.month]] = {} # icons days
 
         days = months[month[cur_date.month]]
         if cur_date.day not in days:
-            days[(cur_date.day, get_valid_time(cur_date_time.hour, cur_date_time.minute))] = [] # list months
+            days[(cur_date.day, get_valid_time(cur_date_time.hour, cur_date_time.minute))] = [] # icons months
 
         day = days[(cur_date.day, get_valid_time(cur_date_time.hour, cur_date_time.minute))]
         for order in history[(order_id, date_time)]:

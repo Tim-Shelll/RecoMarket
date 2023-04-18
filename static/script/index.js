@@ -45,7 +45,7 @@ function check() {
 
 
 search.oninput = function () {
-    check();
+    searchItItems()
 }
 
 
@@ -59,9 +59,8 @@ function searchItItems() {
             if (text.toLowerCase().indexOf(search.value.trim().toLowerCase()) > -1) {
                 element.style.display = '';
                 count++;
-            } else {
+            } else
                 element.style.display = 'none'
-            }
         }
     });
     console.log(count)
@@ -71,9 +70,8 @@ function searchItItems() {
 
 function onload() {
     container.forEach(function(element) {
-        if (element.tagName == 'DIV') {
+        if (element.tagName == 'DIV')
              element.style.display = ''
-        }
     })
 
     statistics.innerHTML = "25 / 25"
@@ -81,20 +79,17 @@ function onload() {
 
 
 function filterItems(idCategory) {
-    onload();
+    check()
     let count = 0
-    if (idCategory == -1)
-        return;
+    if (idCategory == -1) return;
     container.forEach(function(element) {
         if (element.tagName == 'DIV' && element.style.display != 'none') {
-            let text = element.childNodes[1].childNodes[3].childNodes[5]
-                .childNodes[1].childNodes[1].value
-            if (text == idCategory) {
+            let text = element.childNodes[1].childNodes[3].childNodes[5].childNodes[1].childNodes[1].value
+            if (text == idCategory ) {
                 element.style.display = '';
                 count++;
-            } else {
+            } else
                 element.style.display = 'none'
-            }
         }
     });
     statistics.innerHTML = `${count} / 25`
