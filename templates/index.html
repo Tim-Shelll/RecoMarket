@@ -9,14 +9,14 @@
     {% if current_user.is_authenticated %}
         {% if recomendations %}
             <section class="py-5 text-center container">
-                <b><p>Специальные предложения</p></b>
+                <b style="font-size: 24px;">Специальные предложения</b>
                 <div class="album py-5 bg-light">
                     <div class="container">
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                             {% for recomendation in recomendations %}
-                                <div class="col">
+                                <div class="flex_row">
                                     <div class="card shadow-sm">
-                                        <img src={{recomendation.img}}>
+                                        <img class="img" src={{recomendation.img}}>
                                         <div class="card-body">
                                             <p class="card-text">{{recomendation.title}}</p>
                                             <p class="card-text">{{recomendation.desc}}</p>
@@ -37,12 +37,13 @@
         {% endif %}
     {% endif %}
 
-    <div class="input-group">
+    <div class="input-group" style="margin-bottom: 20px">
         <div class="form-outline">
             <input id="search-focus" type="search" id="form1" class="form-control" placeholder="Search"/>
         </div>
-        <button type="button" class="btn btn-primary" onclick="searchItItems()">
+        <button type="button" class="btn btn-primary" style="margin-right: 5px" onclick="searchItItems()">
             <i id="fas fa-search"></i>
+            Найти
         </button>
         <button type="button" class="btn btn-primary"
                 onclick="filterItems(-1)">Все</button>
@@ -59,9 +60,9 @@
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for product in products %}
-                    <div class="col">
+                    <div class="flex_row">
                         <div class="card shadow-sm">
-                            <img src={{product.img}}>
+                            <img class="img" src={{product.img}}>
                             <div class="card-body">
                                 <p class="card-text">{{product.title}}</p>
                                 <p class="card-text">{{product.desc}}</p>

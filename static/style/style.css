@@ -1,7 +1,10 @@
 .card {
-    height: 300px;
-    width: 200px;
-    margin-left: 10px
+    height: 400px;
+    width: 400px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: rgba(201, 196, 196, 0.5);
+    background-blend-mode: multiply;
 }
 
 .col {
@@ -30,6 +33,7 @@
 .flex_row {
     display: flex;
     flex-direction: row;
+    flex: 0 0 33.333333%
 }
 
 .btn .btn-dark:hover {
@@ -40,3 +44,7 @@
     padding: 100px 0 0 100px
 }
 
+.img {
+    object-fit: contain;
+    height: 250px;
+}
