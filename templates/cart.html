@@ -18,11 +18,11 @@
                 </div>
             </div>
             {% if items_in_bag_with_num %}
-                <div class="col-sm-6">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     {% for (item, num) in items_in_bag_with_num %}
-                        <div class="col">
+                        <div class="flex_row">
                             <div class="card shadow-sm">
-                                <img src={{item[4]}}>
+                                <img class="img" src={{item[4]}}>
                                 <div class="card-body">
                                     <p class="card-text">{{item[1]}}</p>
                                     <p class="card-text">{{item[2]}}</p>
