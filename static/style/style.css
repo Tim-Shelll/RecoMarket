@@ -48,3 +48,12 @@
     object-fit: contain;
     height: 250px;
 }
+
+.card {
+    transition: 1s;
+}
+
+.card:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+}

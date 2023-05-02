@@ -98,7 +98,7 @@ def history_order():
 
 @app.route('/login', methods=['POST', 'GET'])
 def signin():
-    form = LoginForm()
+
     if not current_user.is_authenticated:
         form = LoginForm()
         if request.method == 'POST':
@@ -140,7 +140,6 @@ def cart():
             if itemsinbag:
                 orderId = insert_dataset_data(itemsinbag, current_user.id)
                 orders_update(itemsinbag, orderId)
-
 
         items_in_cart = ItemsInBag.query.filter_by(idUser=current_user.id).all()
         prod_ids = "(" + ", ".join([str(item.idItem) for item in items_in_cart]) + ")"

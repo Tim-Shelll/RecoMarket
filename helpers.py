@@ -26,6 +26,7 @@ def product_with_numItems(products, numItems):
     return [(product, numItem) for product, numItem in zip(products, numItems)]
 
 
+
 month = {
     1: 'января',    7: 'июля',
     2: 'февраля',   8: 'августа',

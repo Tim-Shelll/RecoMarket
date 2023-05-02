@@ -18,29 +18,36 @@
                 </div>
             </div>
             {% if items_in_bag_with_num %}
-                <div class="col-sm-6">
-                    {% for (item, num) in items_in_bag_with_num %}
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <img src={{item[4]}}>
-                                <div class="card-body">
-                                    <p class="card-text">{{item[1]}}</p>
-                                    <p class="card-text">{{item[2]}}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted">Количество: {{num}}</small>
+                <section class="py-5 text-center container">
+                    <div class="album py-5 bg-light">
+                        <div class="container">
+                            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                                {% for (item, num) in items_in_bag_with_num %}
+                                    <div class="flex_row">
+                                        <div class="card shadow-sm">
+                                            <img class="img" src={{item[4]}}>
+                                            <div class="card-body">
+                                                <p class="card-text"><b>{{item[1]}}</b></p>
+                                                <p class="card-text">{{item[3] * num}} руб.</p>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <small class="text-muted"><h5>Количество: {{num}}</h5></small>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
-                    {% endfor %}
-                </div>
+                    </div>
+                </section>
             {% endif %}
         </div>
     </section>
 
     <form action="/cart" enctype="application/json" method="POST">
-        <input type="hidden" name="index" value="1">
         <input type="submit" class="btn btn-dark" value="Совершить заказ">
     </form>
 </main>
+
+<script src="static/script/cart.js"></script>
 {% endblock %}

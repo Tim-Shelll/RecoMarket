@@ -36,13 +36,6 @@ let search = document.getElementById('search-focus')
 let statistics = document.getElementsByClassName('input-group')[0]
 statistics = statistics.childNodes[statistics.childNodes.length - 2]
 
-function check() {
-    if (search.value == "") {
-        onload()
-        return;
-    }
-}
-
 
 search.oninput = function () {
     searchItItems()
@@ -50,7 +43,7 @@ search.oninput = function () {
 
 
 function searchItItems() {
-    check();
+    onload()
     let count = 0
     container.forEach(function(element) {
         if (element.tagName == 'DIV' && element.style.display != 'none') {
@@ -79,7 +72,7 @@ function onload() {
 
 
 function filterItems(idCategory) {
-    check()
+    onload()
     let count = 0
     if (idCategory == -1) return;
     container.forEach(function(element) {
