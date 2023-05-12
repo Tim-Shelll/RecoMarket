@@ -1,15 +1,18 @@
 {% extends 'base.html' %}
+{% block style %}
+<link rel="stylesheet" href='/static/style/style.css'/>
+{% endblock %}
 
 {% block title %}
 <title>Online Market</title>
 {% endblock %}
 
 {% block body %}
-<main>
+<main class="bgbw">
     {% if current_user.is_authenticated %}
         {% if recomendations %}
-            <section class="py-5 text-center container bgbw">
-                <b style="font-size: 24px;" class="bg-white rounded-pill">Может вам понравиться</b>
+            <section class="py-5 text-center container bg-white">
+                <b style="font-size: 35px;" class=" rounded-pill">Может вам понравиться</b>
                 <div class="album py-5">
                     <div class="container">
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 rounded">
@@ -37,27 +40,30 @@
         {% endif %}
     {% endif %}
 
-    <div class="input-group" style="margin-bottom: 20px">
+    <div class="input-group d-flex align-items-center bg-light">
+        <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 35px">
+            <strong>Поиск товара</strong>
+        </div>
         <div class="form-outline">
             <input id="search-focus" type="search" id="form1" class="form-control" placeholder="Поиск"/>
         </div>
-        <button type="button" class="btn btn-primary" style="margin-right: 5px" onclick="searchItItems()">
+        <button type="button" class="btn btn-dark rounded-end" style="margin-right: 5px" onclick="searchItItems()">
             <i id="fas fa-search"></i>
             Найти
         </button>
-        <button type="button" class="btn btn-primary"
+        <button type="button" class="btn btn-dark rounded-start"
                 onclick="filterItems(-1)">Все</button>
         {% for category in categories %}
-            <button type="button" class="btn btn-primary"
+            <button type="button" class="btn btn-dark"
                 onclick="filterItems('{{category.idCategory}}')">{{category.name}}</button>
         {% endfor %}
 
-        <p class="card-text bg-white rounded" style="margin: 7.5px">25 / 25</p>
+        <p class="card-text bg-light text-dark rounded" style="margin: 7.5px">25 / 25</p>
 
     </div>
 
     <div class="album py-5">
-        <div class="container">
+        <div class="container bg-white">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for product in products %}
                     <div class="flex_row">
