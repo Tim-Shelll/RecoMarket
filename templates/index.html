@@ -8,14 +8,14 @@
 <main>
     {% if current_user.is_authenticated %}
         {% if recomendations %}
-            <section class="py-5 text-center container">
-                <b style="font-size: 24px;">Может вам понравится</b>
-                <div class="album py-5 bg-light">
+            <section class="py-5 text-center container bgbw">
+                <b style="font-size: 24px;" class="bg-white rounded-pill">Может вам понравиться</b>
+                <div class="album py-5">
                     <div class="container">
-                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 rounded">
                             {% for recomendation in recomendations %}
                                 <div class="flex_row">
-                                    <div class="card shadow-sm">
+                                    <div class="card shadow-sm bg-white rounded border">
                                         <img class="img" src={{recomendation.img}}>
                                         <div class="card-body">
                                             <p class="card-text"><b>{{recomendation.title}} </b></p>
@@ -52,16 +52,16 @@
                 onclick="filterItems('{{category.idCategory}}')">{{category.name}}</button>
         {% endfor %}
 
-        <p class="card-text" style="margin: 7.5px">25 / 25</p>
+        <p class="card-text bg-white rounded" style="margin: 7.5px">25 / 25</p>
 
     </div>
 
-    <div id="album py-5 bg-light">
+    <div class="album py-5">
         <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for product in products %}
                     <div class="flex_row">
-                        <div class="card shadow-sm">
+                        <div class="card shadow-sm bg-white rounded border">
                             <img class="img" src={{product.img}}>
                             <div class="card-body">
                                 <p class="card-text"><b>{{product.title}} </b></p>

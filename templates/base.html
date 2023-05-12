@@ -21,21 +21,21 @@
         <strong>Online Market</strong>
       </a>
         {% if not current_user.is_authenticated %}
-        <h4 class="d-flex justify-content-around align-items-center mb-3">
+        <h4 class="d-flex justify-content-around align-self-center navbar-brand">
             <a href="/login">
-                <button class="badge bg-primary rounded-pill">Войти</button>
+                <button class="badge bg-dark rounded-pill">Войти</button>
             </a>
             <a href="/registration">
-                <button class="badge bg-primary rounded-pill">Регистрация</button>
+                <button class="badge bg-dark rounded-pill">Регистрация</button>
             </a>
         </h4>
         {% else %}
-        <h4 class="d-flex justify-content-around align-items-center mb-3">
+        <h4 class="d-flex justify-content-around align-self-center navbar-brand">
             <a href="/profile">
-                <button class="badge bg-primary rounded-pill">Профиль</button>
+                <button class="badge bg-dark rounded-pill">Профиль</button>
             </a>
             <a href="/cart">
-                <button class="badge bg-primary rounded-pill">Корзина</button>
+                <button class="badge bg-dark rounded-pill">Корзина</button>
             </a>
         </h4>
         {% endif %}
@@ -45,7 +45,7 @@
 
 {% block body %}{% endblock %}
 
-<footer class="text-muted py-5">
+<footer class="text-muted py-5 bg-white rounded">
   <div class="container">
     <p class="float-end mb-1">
       <a href="#">Back to top</a>
