@@ -57,7 +57,7 @@
     cursor: pointer;
 }
 
-bgbw {
+.bgbw {
     background-image: url(/static/images/BG.png);
     background-repeat: repeat;
     background-size: 40%;
