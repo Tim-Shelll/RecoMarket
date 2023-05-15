@@ -11,8 +11,10 @@
 <main class="bgbw">
     {% if current_user.is_authenticated %}
         {% if recomendations %}
-            <section class="py-5 text-center container bg-white">
-                <b style="font-size: 35px;" class=" rounded-pill">Может вам понравиться</b>
+            <section class="py-5 text-center container">
+                <div class="bg-white rounded-circle">
+                    <b style="font-size: 35px;" class=" rounded-pill">Может вам понравиться</b>
+                </div>
                 <div class="album py-5">
                     <div class="container">
                         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 rounded">
@@ -63,7 +65,7 @@
     </div>
 
     <div class="album py-5">
-        <div class="container bg-white">
+        <div class="container">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 {% for product in products %}
                     <div class="flex_row">
