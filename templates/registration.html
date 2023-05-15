@@ -2,23 +2,37 @@
 
 {% block body %}
 <div class="form bg-white rounded">
-    <h1>Регистрация</h1>
-    <form action="" method="post" enctype="multipart/form-data" validate>
-        {{ form.hidden_tag() }}
-        <p> {{ form.firstname.label }}<br> {{ form.firstname(size=32) }} </p>
-        <p> {{ form.surname.label }}<br> {{ form.surname(size=32) }} </p>
-        <p> {{ form.lastname.label }}<br> {{ form.lastname(size=32) }} </p>
-        <p> {{ form.email.label }}<br> {{ form.email(size=32) }} </p>
-        <p> {{ form.login.label }}<br> {{ form.login(size=32) }} </p>
-        <p> {{ form.password.label }}<br> {{ form.password(size=120) }} </p>
-        <p> {{ form.password_repeat.label }}<br> {{ form.password_repeat(size=120) }} </p>
-        <p> {{ form.remember_me() }} {{ form.remember_me.label }} </p>
-        <div>
-           <label for="file">Choose file</label>
-           <input type="file" id="file" name="file" multiple>
+    <h1 align="center">Регистрация</h1>
+
+    <section class=" text-center text-lg-start">
+  <div class="card mb-3">
+    <div class="row g-0 d-flex align-items-center">
+      <div class="col-lg-4 d-none d-lg-flex">
+        <img src="static/images/backAuth.jpeg"
+          class="w-100 rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5"  alt=""/>
+      </div>
+      <div class="col-lg-8">
+        <div class="card-body py-5 px-md-5">
+          <form action="" method="post" enctype="multipart/form-data" validate>
+            {{ form.hidden_tag() }}
+            <p> {{ form.firstname.label }}<br> {{ form.firstname(size=32) }} </p>
+            <p> {{ form.surname.label }}<br> {{ form.surname(size=32) }} </p>
+            <p> {{ form.lastname.label }}<br> {{ form.lastname(size=32) }} </p>
+            <p> {{ form.email.label }}<br> {{ form.email(size=32) }} </p>
+            <p> {{ form.login.label }}<br> {{ form.login(size=32) }} </p>
+            <p> {{ form.password.label }}<br> {{ form.password(size=32) }} </p>
+            <p> {{ form.password_repeat.label }}<br> {{ form.password_repeat(size=32) }} </p>
+            <p> {{ form.remember_me() }} {{ form.remember_me.label }} </p>
+            <div>
+               <input type="file" id="file" name="file" multiple>
+            </div>
+            <p class="p-3"> {{ form.submit() }} </p>
+          </form>
         </div>
-        <p> {{ form.submit() }} </p>
-    </form>
+      </div>
+    </div>
+  </div>
+</section>
     {% if message %}
     <b><i>{{ message }}</i></b>
     {% endif %}

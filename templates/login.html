@@ -4,18 +4,31 @@
 
 <title>Login Form</title>
 
-<div class="form">
-    <h1>Вход</h1>
+<h1 align="center">Вход</h1>
 
-    {% if message %}
+{% if message %}
       {{ message }}
     {% endif %}
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p> {{ form.login.label }}<br> {{ form.login(size=32) }} </p>
-        <p> {{ form.password.label }}<br> {{ form.password(size=32) }} </p>
-        <p> {{ form.remember_me() }} {{ form.remember_me.label }} </p>
-        <p> {{ form.submit() }} </p>
-    </form>
-</div>
+
+<section class=" text-center text-lg-start">
+  <div class="card mb-3">
+    <div class="row g-0 d-flex align-items-center">
+      <div class="col-lg-4 d-none d-lg-flex">
+        <img src="static/images/backAuth.jpeg"
+          class="rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5"  alt=""/>
+      </div>
+      <div class="col-lg-8">
+        <div class="card-body py-5 px-md-5">
+          <form class="" action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p> {{ form.login.label }}<br> {{ form.login(size=32) }} </p>
+            <p> {{ form.password.label }}<br> {{ form.password(size=32) }} </p>
+            <p> {{ form.remember_me() }} {{ form.remember_me.label }} </p>
+            <p> {{ form.submit() }} </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
