@@ -8,6 +8,7 @@
     box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
     border: none;
     border-radius: 0;
+    transition: .5s;
 }
 
 .col {
@@ -15,9 +16,10 @@
     width: auto;
     margin: 25px 5px 0 5px;
     transition: .5s;
+    text-align: center;
 }
 
-.col:hover {
+.card:hover {
     transform: scale(1.025);
     cursor: pointer;
 }

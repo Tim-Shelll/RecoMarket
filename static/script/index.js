@@ -87,3 +87,16 @@ function filterItems(idCategory) {
     });
     statistics.innerHTML = `${count} / 25`
 }
+
+
+function addCart(idItem) {
+    $.ajax({
+        type: 'POST',
+        url: `index/${idItem}`,
+        data: {},
+        success: function(response) {
+            $('#cart').text(response['quantity'])
+        },
+        error: function(error) {}
+    })
+}

@@ -90,5 +90,15 @@ class ItemsInBag(db.Model):
     idItem = db.Column(db.Integer, primary_key=True, unique=False)
     numItems = db.Column(db.Integer, nullable=False)
 
+    @staticmethod
+    def get_count_products(idUser):
+        return ItemsInBag.query.filter_by(idUser=idUser).all()
+
+
     def __repr__(self):
-        return "< {} : {} : {} >".format(self.idUser, self.idItem, self.numItems)
+        return "<{}:{}:{}>".format(self.idUser, self.idItem, self.numItems)
+
+
+class ItemsInLikes(db.Model):
+    idOrder = db.Column(db.Integer, primary_key=True, unique=False)
+    idItem = db.Column(db.Integer, primary_key=True, unique=False)

@@ -30,13 +30,19 @@
         </div>
         {% else %}
         <div class="d-flex justify-content-around">
+            <a href="/likes" class="align-self-center">
+                <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Избранное</button>
+            </a>>
+            <a href="/cart" class="align-self-center">
+                <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Корзина
+                    {% if quantity != 0 %}<span id='cart' class="badge badge-primary">{{quantity}}</span>{% endif %}
+                </button>
+            </a>
             <a href="/profile" class="align-self-center">
                 <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Профиль</button>
             </a>
-            <a href="/cart" class="align-self-center">
-                <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Корзина</button>
-            </a>
         </div>
+
         {% endif %}
     </div>
   </div>

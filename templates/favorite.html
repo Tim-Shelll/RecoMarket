@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href='/static/style/style.css'/>
+{% endblock %}
+
+{% block title %}
+<title>Понравившиеся</title>
+{% endblock %}
+
+
+{% block body %}
+    {% if current_user.is_authenticated %}
+        <section class="py-5 text-center container">
+            <div class="bg-white rounded-circle">
+                <b style="font-size: 35px;" class="rounded-pill">Понравившиеся товары</b>
+            </div>
+            <div class="album py-5">
+                <div class="container">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 rounded">
+                        {% for favorite in favorites %}
+                        <div class="flex_row">
+                            <div class="card shadow-sm bg-white rounded border">
+                                <img class="img" src={{favorite[0]}}>
+                                <div class="card-body">
+                                    <p class="card-text"><b>{{favorite[1]}} </b></p>
+                                    <p class="card-text"><h5>{{favorite[2]}} руб. </h5></p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button type="submit" class="btn btn-dark"
+                                                onclick="addCart('{{favorite[3]}}')">
+                                            В корзину
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+{% endblock %}

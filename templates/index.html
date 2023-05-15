@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block title %}
-<title>Online Market</title>
+<title>Рекомендации</title>
 {% endblock %}
 
 {% block body %}
@@ -26,10 +26,10 @@
                                             <p class="card-text"><b>{{recomendation.title}} </b></p>
                                             <p class="card-text"><h5>{{recomendation.price}} руб. </h5></p>
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <form action="/index/{{recomendation.idItem}}" method="post">
-                                                  <input type="hidden" name="index" value="{{recomendation.idItem}}">
-                                                  <button type="submit" class="btn btn-dark" onclick="">В корзину</button>
-                                                </form>
+                                                <button type="submit" class="btn btn-dark"
+                                                        onclick="addCart('{{recomendation.idItem}}')">
+                                                    В корзину
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -75,11 +75,10 @@
                                 <p class="card-text"><b>{{product.title}} </b></p>
                                 <p class="card-text"><b>{{product.price}} руб.</b></p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <form action="/index/{{product.idItem}}" method="post">
-                                        <input type="hidden" name="category" value="{{product.idCategory}}">
-                                        <input type="hidden" name="index" value="{{product.idItem}}">
-                                        <button type="submit" class="btn btn-dark" onclick="">В корзину</button>
-                                    </form>
+                                    <button type="submit" class="btn btn-dark"
+                                            onclick="addCart('{{product.idItem}}')">
+                                        В корзину
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -91,6 +90,7 @@
 
 </main>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 <script src="static/script/index.js"></script>
 
 {% endblock %}

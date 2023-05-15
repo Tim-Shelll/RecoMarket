@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, jsonify
 from flask_login import logout_user, current_user, login_user, LoginManager
 
 from app import app, db, User, Product, Order, ItemsInOrder, ItemsInBag, Category
@@ -42,6 +42,7 @@ def index():
         rec_cur_user = recs[recs.user_id == current_user.id]
         prod_ids = "(" + ", ".join([str(rec) for rec in rec_cur_user['prod_id'].values]) + ")"
         recomendations = Product.select_data_product_by_ids(prod_ids)
+        quantity = len(ItemsInBag.get_count_products(current_user.id))
 
     else:
         recomendations = None
@@ -60,7 +61,10 @@ def item(idItem):
 
         db.session.commit()
 
-    return redirect('/')
+        quantity = len(ItemsInBag.get_count_products(current_user.id))
+
+
+    return jsonify({'quantity': quantity})
 
 
 @app.route('/profile')
@@ -150,10 +154,15 @@ def cart():
     else:
         return render_template('cart.html')
 
+
+@app.route('/likes')
+def likes():
+    return render_template('favorite.html', favorites=[])
+
 #endregion
 
 
 #endregion
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port='8080' ,debug=True)
+    app.run(host='192.168.1.43', port='8080' ,debug=True)
