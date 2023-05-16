@@ -36,20 +36,20 @@
                                   </div>
                                   <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                     <button class="btn btn-link px-2"
-                                      onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            onclick="actionItem('{{item[0]}}', -1, '{{item[3]}}')">
                                       <img src="/static/icons/minus.svg" width="15" height="15">
                                     </button>
-
-                                    <input id="{{num}}" min="0" name="quantity" value="{{num}}" type="number"
-                                      class="form-control form-control-sm" />
-
+                                    <span id='{{item[0]}}' class="badge bg-dark rounded-pill"
+                                          style="line-height: 50px; font-size: 20px">
+                                        {{num}}
+                                    </span>
                                     <button class="btn btn-link px-2"
-                                      onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            onclick="actionItem('{{item[0]}}', 1, '{{item[3]}}')">
                                       <img src="/static/icons/plus.svg" width="15" height="15">
                                     </button>
                                   </div>
                                   <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h5 class="mb-0">{{item[3] * num}}  руб.</h5>
+                                    <h5 id='{{item[0]}}-price' class="mb-0"></h5>
                                   </div>
                                   <div class="col-md-1 col-lg-1 col-xl-1 text-end">
                                     <a href="#!" class="text-danger">

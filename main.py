@@ -168,6 +168,23 @@ def cart():
         return render_template('cart.html')
 
 
+@app.route('/cart/<int:idItem>', methods=['POST', 'GET'])
+def action_cart(idItem):
+    if current_user.is_authenticated:
+        if request.method == 'POST':
+            itemsinbag = ItemsInBag.query.filter_by(idUser=current_user.id, idItem=idItem).first()
+            change = int(request.values['change'])
+            if itemsinbag.numItems + change > 0:
+                itemsinbag.numItems += change
+            else:
+                itemsinbag.numItems = 1
+
+            db.session.commit()
+
+    return jsonify({idItem: itemsinbag.numItems})
+
+
+
 @app.route('/likes')
 def likes():
     if current_user.is_authenticated:
