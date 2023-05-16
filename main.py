@@ -52,7 +52,7 @@ def index():
         cart, like = cart_and_like()
 
     else:
-        recomendations = None
+        recomendations, cart, like = None, None, None
 
     return render_template('index.html', categories=categories, products=products,
                                          recomendations=recomendations, cart=cart, like=like)

@@ -27,4 +27,4 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password')
     password_repeat = PasswordField('Repeat Password')
     remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Registry')
+    submit = SubmitField('Sign up')
