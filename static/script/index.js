@@ -100,3 +100,15 @@ function addCart(idItem) {
         error: function(error) {}
     })
 }
+
+function addLikes(idItem) {
+    $.ajax({
+        type: 'POST',
+        url: `likes/${idItem}`,
+        data: {},
+        success: function(response) {
+            $('#likes').text(response['like'])
+        },
+        error: function(error) {}
+    })
+}

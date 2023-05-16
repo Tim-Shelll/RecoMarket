@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, redirect, jsonify
 from flask_login import logout_user, current_user, login_user, LoginManager
 
-from app import app, db, User, Product, Order, ItemsInOrder, ItemsInBag, Category
+from app import app, db, User, Product, Order, ItemsInOrder, ItemsInBag, Category, ItemsInFavorite
 from forms import LoginForm, RegistrationForm
 from helpers import get_valid_order, product_with_numItems, create_beautiful_history
 from refactor_data import insert_dataset_data
@@ -15,6 +15,13 @@ from manipulation_data import orders_update, recomendations_all
 recs = pd.read_csv('dataset/recomendations.csv', sep=',')
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+def cart_and_like():
+    cart = len(ItemsInBag.query.filter_by(idUser=current_user.id).all())
+    like = len(ItemsInFavorite.query.filter_by(idUser=current_user.id).all())
+    return cart, like
+
 
 #endregion
 
@@ -42,12 +49,13 @@ def index():
         rec_cur_user = recs[recs.user_id == current_user.id]
         prod_ids = "(" + ", ".join([str(rec) for rec in rec_cur_user['prod_id'].values]) + ")"
         recomendations = Product.select_data_product_by_ids(prod_ids)
-        quantity = len(ItemsInBag.get_count_products(current_user.id))
+        cart, like = cart_and_like()
 
     else:
         recomendations = None
 
-    return render_template('index.html', categories=categories, products=products, recomendations=recomendations)
+    return render_template('index.html', categories=categories, products=products,
+                                         recomendations=recomendations, cart=cart, like=like)
 
 
 @app.route('/index/<int:idItem>', methods=['POST', 'GET'])
@@ -71,7 +79,9 @@ def item(idItem):
 def profile_current():
     if current_user.is_authenticated:
         user = User.query.get(int(current_user.id))
-        return render_template('profile.html', user=user)
+        cart, like = cart_and_like()
+
+        return render_template('profile.html', user=user, cart=cart, like=like)
     else:
         return redirect('/')
 
@@ -96,8 +106,9 @@ def history_order():
     purchases = Order.select_data_order_to_user(current_user.id)
     history = get_valid_order(purchases)
     beautiful_history = create_beautiful_history(history)
+    cart, like = cart_and_like()
 
-    return render_template('history.html', history=beautiful_history)
+    return render_template('history.html', history=beautiful_history, cart=cart, like=like)
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -150,19 +161,41 @@ def cart():
         items_in_bag = Product.select_data_product_by_ids(prod_ids)
         iib_with_num = product_with_numItems(items_in_bag, (item.numItems for item in items_in_cart))
 
-        return render_template('cart.html', items_in_bag_with_num=iib_with_num)
+        cart, like = cart_and_like()
+
+        return render_template('cart.html', items_in_bag_with_num=iib_with_num, cart=cart, like=like)
     else:
         return render_template('cart.html')
 
 
 @app.route('/likes')
 def likes():
-    return render_template('favorite.html', favorites=[])
+    if current_user.is_authenticated:
+        prod_ids = [str(item.idItem) for item in ItemsInFavorite.get_count_products(idUser=current_user.id)]
+        favorites = Product.select_data_product_by_ids(prod_ids="(" + ", ".join(prod_ids) + ")")
+        cart = len(ItemsInBag.get_count_products(current_user.id))
+
+        return render_template('favorite.html', favorites=favorites, like=len(prod_ids), cart=cart)
+    else:
+        return render_template('favorite.html')
+
+
+
+@app.route('/likes/<int:idItem>', methods=['POST', 'GET'])
+def like(idItem):
+    if request.method == 'POST':
+        items_in_favorite = ItemsInFavorite.query.filter_by(idUser=current_user.id, idItem=idItem).all()
+        if not items_in_favorite:
+            db.session.add(ItemsInFavorite(idUser=current_user.id, idItem=idItem))
+            db.session.commit()
+
+        like = len(ItemsInFavorite.get_count_products(current_user.id))
+
+
+    return jsonify({'like': like})
 
 #endregion
 
-
-#endregion
 
 if __name__ == "__main__":
     app.run(host='192.168.1.43', port='8080' ,debug=True)
