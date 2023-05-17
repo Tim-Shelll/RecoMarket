@@ -4,12 +4,6 @@
 
 <title>Login Form</title>
 
-<h1 align="center">Вход</h1>
-
-{% if message %}
-      {{ message }}
-    {% endif %}
-
 <section class=" text-center text-lg-start">
   <div class="card mb-3">
     <div class="row g-0 d-flex align-items-center">
@@ -25,6 +19,9 @@
             <p> {{ form.password.label }}<br> {{ form.password(size=32) }} </p>
             <p> {{ form.remember_me() }} {{ form.remember_me.label }} </p>
             <p> {{ form.submit() }} </p>
+            {% if message %}
+              {{ message }}
+            {% endif %}
           </form>
         </div>
       </div>

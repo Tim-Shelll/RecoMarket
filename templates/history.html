@@ -8,7 +8,8 @@
 <main>
     <br>
     <div class="cor">
-        <h4><a href="/profile" class="badge bg-primary rounded-pill">Назад в профиль</a></h4>
+        <h4><a href="/profile" class="badge bg-primary rounded-pill"
+               style="margin-left: 7.5%">Назад в профиль</a></h4>
     </div>
     <br><br>
     {% if history %}
@@ -36,10 +37,10 @@
                             <p class="lead fw-normal mb-2">{{item[3]}}</p>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xl-3">
-                            <p class="lead fw-normal mb-2">1 шт.</p>
+                            <p class="lead fw-normal mb-2">{{item[7]}} шт.</p>
                         </div>
                         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                            <p class="mb-0">{{item[5]}} руб.</p>
+                            <p class="mb-0">{{item[5] * item[7]}} руб.</p>
                         </div>
                     </div>
                 </div>
