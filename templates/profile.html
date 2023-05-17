@@ -1,40 +1,70 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<link rel="stylesheet" href='/static/style/profile.css'/>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js" rel="stylesheet" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" rel="stylesheet" crossorigin="anonymous">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css" rel="stylesheet" crossorigin="anonymous">
+{% endblock %}
+
 {% block title %}
 <title>Профиль</title>
 {% endblock %}
 
 {% block body %}
 <body class="bg-light">
-
-<div class="container">
-    <main class="bg-light rounded">
-
-        <b> Имя пользователя: </b> {{ user.username }} <br>
-        <b> Электронная почта: </b> {{ user.email }} <br>
-        <b> Никнейм: </b> {{ user.login }} <br>
-        <b> <img src="{{ user.photo }}"> </b> <br>
-        <b> Аккаунт создан: </b> {{ user.created_on}} <br>
-
-        <h4><a href="/history_orders">
-            <button class="badge bg-primary rounded-pill">История покупок</button>
-        </a></h4>
-        <h4>
-        <a href="/logout">
-            <button class="badge bg-primary rounded-pill">Выход</button>
-        </a></h4>
-
-    </main>
-
-    <footer class="my-5 text-muted text-center text-small bg-light rounded-pill">
-      <p class="mb-1">© 2023 Company Name</p>
-      <ul class="list-inline">
-        <li class="list-inline-item"><a href="#">Privacy</a></li>
-        <li class="list-inline-item"><a href="#">Terms</a></li>
-        <li class="list-inline-item"><a href="#">Support</a></li>
-      </ul>
-    </footer>
-</div>
-
+    <div class="container-fluid">
+        <div class="card mb-3">
+            <div class="row m-l-0 m-r-0">
+                <div class="col-sm-4 bg-c-lite-green user-profile">
+                    <div class="card-block text-center text-white">
+                        <div class="m-b-25">
+                            <img src="{{ user.photo }}" class="img-radius" width="70%" alt="User-Profile-Image">
+                        </div>
+                        <h5 class="f-w-600">{{ user.username }}</h5>
+                        <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="card-block">
+                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Информация</h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Электронная почта</p>
+                                <h6 class="text-muted f-w-400">{{ user.email }}</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Логин</p>
+                                <h6 class="text-muted f-w-400">{{ user.login }}</h6>
+                            </div>
+                        </div>
+                        <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Дополнительная информация</h6>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p class="m-b-10 f-w-600">Аккаунт создан</p>
+                                <h6 class="text-muted f-w-400">{{ user.created_on}}</h6>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-evenly row pt-5 align-items-end">
+                            <div class="col-sm-6">
+                                <h4>
+                                    <a href="/history_orders">
+                                        <button class="badge bg-primary rounded-pill">История покупок</button>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4>
+                                    <a href="/logout">
+                                        <button class="badge bg-primary rounded-pill">Выход</button>
+                                    </a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 {% endblock %}
