@@ -1,40 +1,77 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="form bg-white rounded">
-    <h1 align="center">Регистрация</h1>
 
-    <section class=" text-center text-lg-start">
-  <div class="card mb-3">
-    <div class="row g-0 d-flex align-items-center">
-      <div class="col-lg-4 d-none d-lg-flex">
-        <img src="static/images/backAuth.jpeg"
-          class="w-100 rounded-t-5 rounded-tr-lg-0 rounded-bl-lg-5"  alt=""/>
+<title>Регистрация</title>
+
+
+<section class="vh-auto">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-sm-6 px-0 d-none d-sm-block">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img3.webp"
+          alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: right;">
       </div>
-      <div class="col-lg-8">
-        <div class="card-body py-5 px-md-5">
-          <form action="" method="post" enctype="multipart/form-data" validate>
+
+      <div class="col-sm-6 text-black">
+
+        <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+
+          <form style="width: 23rem;">
+
             {{ form.hidden_tag() }}
-            <p> {{ form.firstname.label }}<br> {{ form.firstname(size=32) }} </p>
-            <p> {{ form.surname.label }}<br> {{ form.surname(size=32) }} </p>
-            <p> {{ form.lastname.label }}<br> {{ form.lastname(size=32) }} </p>
-            <p> {{ form.email.label }}<br> {{ form.email(size=32) }} </p>
-            <p> {{ form.login.label }}<br> {{ form.login(size=32) }} </p>
-            <p> {{ form.password.label }}<br> {{ form.password(size=32) }} </p>
-            <p> {{ form.password_repeat.label }}<br> {{ form.password_repeat(size=32) }} </p>
-            <p> {{ form.remember_me() }} {{ form.remember_me.label }} </p>
+
+            <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Регистрация</h3>
+
+            <div class="form-outline mb-4">
+              {{ form.firstname.label(class_='form-label') }}<br> {{ form.firstname(size=32, class_='form-control form-control-lg') }}
+            </div>
+
+            <div class="form-outline mb-4">
+              {{ form.surname.label(class_='form-label') }}<br> {{ form.surname(size=32, class_='form-control form-control-lg') }}
+            </div>
+
+            <div class="form-outline mb-4">
+              {{ form.lastname.label(class_='form-label') }}<br> {{ form.lastname(size=32, class_='form-control form-control-lg') }}
+            </div>
+
+            <div class="form-outline mb-4">
+              {{ form.email.label(class_='form-label') }}<br> {{ form.email(size=32, class_='form-control form-control-lg') }}
+            </div>
+
+            <div class="form-outline mb-4">
+              {{ form.login.label(class_='form-label') }}<br> {{ form.login(size=32, class_='form-control form-control-lg') }}
+            </div>
+
+            <div class="form-outline mb-4">
+              {{ form.password.label(class_='form-label') }}<br> {{ form.password(size=32, class_='form-control form-control-lg') }}
+            </div>
+
+            <div class="form-outline mb-4">
+              {{ form.password_repeat.label(class_='form-label') }}<br> {{ form.password_repeat(size=32, class_='form-control form-control-lg') }}
+            </div>
+
+            <div class="form-outline mb-4">
+              {{ form.remember_me() }} {{ form.remember_me.label(class_='form-label') }}
+            </div>
+
             <div>
                <input type="file" id="file" name="file" multiple>
             </div>
-            <p class="p-3"> {{ form.submit() }} </p>
+
+            <div class="pt-1 mb-4 row">
+                {{ form.submit() }}
+              <p>Уже есть аккаунт? <a href="/login" class="link-info">Войти</a></p>
+            </div>
+
+
+
           </form>
         </div>
       </div>
     </div>
   </div>
 </section>
-    {% if message %}
-    <b><i>{{ message }}</i></b>
-    {% endif %}
-</div>
+
 {% endblock %}

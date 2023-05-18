@@ -5,26 +5,26 @@ from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
 
-    firstname = StringField('Firstname')
-    surname = StringField('Surname')
-    lastname = StringField('Lastname')
+    firstname = StringField('Имя')
+    surname = StringField('Фамилия')
+    lastname = StringField('Отчество')
 
-    login = StringField('Login', validators=[DataRequired()])
-    password = PasswordField('Password')
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign In')
+    login = StringField('Логин', validators=[DataRequired()])
+    password = PasswordField('Пароль')
+    remember_me = BooleanField('Запомнить меня')
+    submit = SubmitField('Войти')
 
 
 class RegistrationForm(FlaskForm):
 
-    firstname = StringField('Firstname')
-    surname = StringField('Surname')
-    lastname = StringField('Lastname')
+    firstname = StringField('Имя')
+    surname = StringField('Фамилия')
+    lastname = StringField('Отчество')
 
-    email = StringField('Email', validators=[DataRequired()])
-    login = StringField('Login')
+    email = StringField('Электронная почта', validators=[DataRequired()])
+    login = StringField('Логин')
 
-    password = PasswordField('Password')
-    password_repeat = PasswordField('Repeat Password')
-    remember_me = BooleanField('Remember Me')
-    submit = SubmitField('Sign up')
+    password = PasswordField('Пароль')
+    password_repeat = PasswordField('Повторите пароль')
+    remember_me = BooleanField('Запомнить меня')
+    submit = SubmitField('Зарегистрироваться')
