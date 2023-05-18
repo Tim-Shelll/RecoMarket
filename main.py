@@ -122,6 +122,7 @@ def signin():
                 message = 'Invalid username or password'
                 return render_template('login.html', message=message, form=form)
 
+            print(user)
             login_user(user, remember=form.remember_me.data)
             return redirect('/index')
 

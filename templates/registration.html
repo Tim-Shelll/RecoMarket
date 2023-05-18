@@ -18,7 +18,7 @@
 
         <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
 
-          <form style="width: 23rem;">
+          <form style="width: 23rem;" method="post">
 
             {{ form.hidden_tag() }}
 
@@ -56,16 +56,10 @@
               {{ form.remember_me() }} {{ form.remember_me.label(class_='form-label') }}
             </div>
 
-            <div>
-               <input type="file" id="file" name="file" multiple>
-            </div>
-
             <div class="pt-1 mb-4 row">
                 {{ form.submit() }}
               <p>Уже есть аккаунт? <a href="/login" class="link-info">Войти</a></p>
             </div>
-
-
 
           </form>
         </div>
