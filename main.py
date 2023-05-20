@@ -219,7 +219,7 @@ def likes_delete():
     favorites = Product.select_data_product_by_ids(prod_ids="(" + ", ".join(prod_ids) + ")")
     favorites = [{'idItem': fv[0], 'title': fv[1], 'price': fv[3], 'img': fv[4]} for fv in favorites]
 
-    return jsonify({'favorites': favorites, 'likes': len(favorites)})
+    return jsonify({'likes': len(favorites)})
 
 
 @app.route('/delete/item', methods=['POST', 'GET'])
@@ -234,17 +234,7 @@ def cart_delete():
     items_in_bag = Product.select_data_product_by_ids(prod_ids)
     iib_with_num = product_with_numItems(items_in_bag, (item.numItems for item in items_in_cart))
 
-    cart = []
-    for item, cnt in iib_with_num:
-        cart.append({
-            'idItem': item[0],
-            'title': item[1],
-            'price': item[3],
-            'img': item[4],
-            'numItem': cnt
-        })
-
-    return jsonify({'cart': cart, 'quantity': len(iib_with_num)})
+    return jsonify({'quantity': len(iib_with_num)})
 
 #endregion
 

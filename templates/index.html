@@ -26,13 +26,13 @@
                                             <p class="card-text"><b>{{recomendation.title}} </b></p>
                                             <p class="card-text"><h5>{{recomendation.price}} руб. </h5></p>
                                             <div class="d-flex justify-content-between align-items-center">
-                                                <button type="submit" class="btn btn-dark"
+                                                <button class="btn btn-link px-2"
                                                         onclick="addCart('{{recomendation.idItem}}')">
-                                                    В корзину
+                                                    <img src="/static/icons/cart.svg" width="40" height="40">
                                                 </button>
-                                                <button type="submit" class="btn btn-dark"
+                                                <button class="btn btn-link px-2"
                                                         onclick="addLikes('{{recomendation.idItem}}')">
-                                                    В избранное
+                                                    <img src="/static/icons/favorite.svg" width="40" height="40">
                                                 </button>
                                             </div>
                                         </div>
@@ -79,13 +79,13 @@
                                 <p class="card-text"><b>{{product.title}} </b></p>
                                 <p class="card-text"><b>{{product.price}} руб.</b></p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <button type="submit" class="btn btn-dark"
+                                    <button class="btn btn-link px-2"
                                             onclick="addCart('{{product.idItem}}')">
-                                        В корзину
+                                        <img src="/static/icons/cart.svg" width=40 height="40">
                                     </button>
-                                    <button type="submit" class="btn btn-dark"
+                                    <button class="btn btn-link px-2"
                                             onclick="addLikes('{{product.idItem}}')">
-                                        В избранное
+                                        <img src="/static/icons/favorite.svg" width="40" height="40">
                                     </button>
                                 </div>
                             </div>
