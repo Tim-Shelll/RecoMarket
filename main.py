@@ -122,7 +122,6 @@ def signin():
                 message = 'Invalid username or password'
                 return render_template('login.html', message=message, form=form)
 
-            print(user)
             login_user(user, remember=form.remember_me.data)
             return redirect('/index')
 
@@ -171,19 +170,16 @@ def cart():
 
 @app.route('/cart/<int:idItem>', methods=['POST', 'GET'])
 def action_cart(idItem):
-    if current_user.is_authenticated:
-        if request.method == 'POST':
-            itemsinbag = ItemsInBag.query.filter_by(idUser=current_user.id, idItem=idItem).first()
-            change = int(request.values['change'])
-            if itemsinbag.numItems + change > 0:
-                itemsinbag.numItems += change
-            else:
-                itemsinbag.numItems = 1
+    if request.method == 'POST':
+        itemsinbag = ItemsInBag.query.filter_by(idUser=current_user.id, idItem=idItem).first()
+        change = int(request.values['change'])
+        itemsinbag.numItems += change
+        if not itemsinbag.numItems:
+            db.session.delete(itemsinbag)
 
-            db.session.commit()
+        db.session.commit()
 
     return jsonify({idItem: itemsinbag.numItems})
-
 
 
 @app.route('/likes')
@@ -198,7 +194,6 @@ def likes():
         return render_template('favorite.html')
 
 
-
 @app.route('/likes/<int:idItem>', methods=['POST', 'GET'])
 def like(idItem):
     if request.method == 'POST':
@@ -209,11 +204,50 @@ def like(idItem):
 
         like = len(ItemsInFavorite.get_count_products(current_user.id))
 
-
     return jsonify({'like': like})
+
+
+@app.route('/likes/delete', methods=['POST', 'GET'])
+def likes_delete():
+    if request.method == 'POST':
+        idItem = int(request.values['idItem'])
+        items_in_favorite = ItemsInFavorite.query.filter_by(idUser=current_user.id, idItem=idItem).first()
+        db.session.delete(items_in_favorite)
+        db.session.commit()
+
+    prod_ids = [str(item.idItem) for item in ItemsInFavorite.get_count_products(idUser=current_user.id)]
+    favorites = Product.select_data_product_by_ids(prod_ids="(" + ", ".join(prod_ids) + ")")
+    favorites = [{'idItem': fv[0], 'title': fv[1], 'price': fv[3], 'img': fv[4]} for fv in favorites]
+
+    return jsonify({'favorites': favorites, 'likes': len(favorites)})
+
+
+@app.route('/delete/item', methods=['POST', 'GET'])
+def cart_delete():
+    if request.method == 'POST':
+        items_in_bag = ItemsInBag.query.filter_by(idUser=current_user.id, idItem=int(request.values['idItem'])).first()
+        db.session.delete(items_in_bag)
+        db.session.commit()
+
+    items_in_cart = ItemsInBag.query.filter_by(idUser=current_user.id).all()
+    prod_ids = "(" + ", ".join([str(item.idItem) for item in items_in_cart]) + ")"
+    items_in_bag = Product.select_data_product_by_ids(prod_ids)
+    iib_with_num = product_with_numItems(items_in_bag, (item.numItems for item in items_in_cart))
+
+    cart = []
+    for item, cnt in iib_with_num:
+        cart.append({
+            'idItem': item[0],
+            'title': item[1],
+            'price': item[3],
+            'img': item[4],
+            'numItem': cnt
+        })
+
+    return jsonify({'cart': cart, 'quantity': len(iib_with_num)})
 
 #endregion
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port='8080' ,debug=True)
+    app.run(host='192.168.1.43', port='8080' ,debug=True)

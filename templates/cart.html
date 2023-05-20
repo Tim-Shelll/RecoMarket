@@ -18,12 +18,12 @@
                 </div>
             </div>
             {% if items_in_bag_with_num %}
-                    <section class="h-100" style="background-color: #eee;">
+                    <section class="h-100" style="background-color: #eee;", id="iibwn">
                       <div class="container h-100 py-5">
                         <div class="row d-flex justify-content-center align-items-center h-100">
-                          <div class="col-10">
+                          <div class="col-10" id="items">
                               {% for (item, num) in items_in_bag_with_num %}
-                            <div class="card rounded-3 mb-4">
+                            <div class="card rounded-3 mb-4", id="{{item[0]}}-item">
                               <div class="card-body p-4">
                                 <div class="row d-flex justify-content-between align-items-center">
                                   <div class="col-md-2 col-lg-2 col-xl-2">
@@ -37,7 +37,7 @@
                                   <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                     <button class="btn btn-link px-2"
                                             onclick="actionItem('{{item[0]}}', -1, '{{item[3]}}')">
-                                      <img src="/static/icons/minus.svg" width="15" height="15">
+                                    <img src="/static/icons/minus.svg" width="15" height="15">
                                     </button>
                                     <span id='{{item[0]}}' class="badge bg-dark rounded-pill"
                                           style="line-height: 50px; font-size: 20px">
@@ -52,9 +52,10 @@
                                     <h5 id='{{item[0]}}-price' class="mb-0">{{item[3] * num}} руб.</h5>
                                   </div>
                                   <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    <a href="#!" class="text-danger">
+                                    <button style="font-size : 100%;" class="badge bg-light rounded-pill"
+                                        onclick="deleteItem('{{item[0]}}')">
                                         <img src="/static/icons/trash.svg" width="20" height="20">
-                                    </a>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
