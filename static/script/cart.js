@@ -45,7 +45,7 @@ function deleteItem(idItem) {
             let cart = ""
             response['cart'].forEach(function(item) {
                 cart += "" +
-                    "<div class=\"card rounded-3 mb-4\">\n" +
+                    `<div class=\"card rounded-3 mb-4\" id=\"${item['idItem']}-item\">\n` +
                     "   <div class=\"card-body p-4\">\n" +
                     "       <div class=\"row d-flex justify-content-between align-items-center\">\n" +
                     "           <div class=\"col-md-2 col-lg-2 col-xl-2\">\n" +
