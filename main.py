@@ -1,13 +1,14 @@
+import socket
 import pandas as pd
-from datetime import datetime
+
 from flask import render_template, request, redirect, jsonify
 from flask_login import logout_user, current_user, login_user, LoginManager
 
-from app import app, db, User, Product, Order, ItemsInOrder, ItemsInBag, Category, ItemsInFavorite
+from app import app, db, User, Product, Order, ItemsInBag, Category, ItemsInFavorite
 from forms import LoginForm, RegistrationForm
 from helpers import get_valid_order, product_with_numItems, create_beautiful_history
 from refactor_data import insert_dataset_data
-from manipulation_data import orders_update, recomendations_all
+from manipulation_data import orders_update
 
 
 #region Initializate
@@ -16,6 +17,8 @@ recs = pd.read_csv('dataset/recomendations.csv', sep=',')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+host = socket.gethostbyname(socket.gethostname())
+port = '8080'
 
 def cart_and_like():
     cart = len(ItemsInBag.query.filter_by(idUser=current_user.id).all())
@@ -216,10 +219,8 @@ def likes_delete():
         db.session.commit()
 
     prod_ids = [str(item.idItem) for item in ItemsInFavorite.get_count_products(idUser=current_user.id)]
-    favorites = Product.select_data_product_by_ids(prod_ids="(" + ", ".join(prod_ids) + ")")
-    favorites = [{'idItem': fv[0], 'title': fv[1], 'price': fv[3], 'img': fv[4]} for fv in favorites]
 
-    return jsonify({'likes': len(favorites)})
+    return jsonify({'likes': len(prod_ids)})
 
 
 @app.route('/delete/item', methods=['POST', 'GET'])
@@ -240,4 +241,4 @@ def cart_delete():
 
 
 if __name__ == "__main__":
-    app.run(host='192.168.1.43', port='8080' ,debug=True)
+    app.run(host=host, port=port, debug=True)
