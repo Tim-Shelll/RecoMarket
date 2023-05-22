@@ -2,24 +2,21 @@ import cv2
 import os
 import datetime
 
+
 def get_valid_order(purchases):
     orders = {}
+
     for purchase in purchases:
         if (purchase[1], purchase[4]) not in orders:
             orders[(purchase[1], purchase[4])] = [purchase]
         else:
             orders[(purchase[1], purchase[4])].append(purchase)
 
+    for order in list(orders.keys()):
+        orders[(*order, sum([item[-1] * item[-3] for item in orders[order]]))] = orders[order]
+        orders.pop(order)
+
     return orders
-
-
-def refactor_img(path):
-    img = cv2.imread(path)
-    if img is None:
-        print('img is None')
-    else:
-        ref_img = cv2.resize(img, (img.shape[1] // 3 * 2, img.shape[0] // 3 * 2))
-        cv2.imwrite(os.getcwd() + r'/static/users/andrey.jpg', ref_img)
 
 
 def product_with_numItems(products, numItems):
@@ -48,7 +45,7 @@ def create_beautiful_history(history):
 
     beautiful_history = {} #icons years
 
-    for (order_id, date_time) in history.keys():
+    for (order_id, date_time, amount) in history.keys():
         cur_date = datetime.datetime.strptime(date_time, "%Y-%m-%d %H:%M:%S")
         cur_date, cur_date_time = \
             (cur_date.date(), cur_date.time())
@@ -62,10 +59,10 @@ def create_beautiful_history(history):
 
         days = months[month[cur_date.month]]
         if cur_date.day not in days:
-            days[(cur_date.day, get_valid_time(cur_date_time.hour, cur_date_time.minute))] = [] # icons months
+            days[(cur_date.day, get_valid_time(cur_date_time.hour, cur_date_time.minute), amount)] = [] # icons months
 
-        day = days[(cur_date.day, get_valid_time(cur_date_time.hour, cur_date_time.minute))]
-        for order in history[(order_id, date_time)]:
+        day = days[(cur_date.day, get_valid_time(cur_date_time.hour, cur_date_time.minute), amount)]
+        for order in history[(order_id, date_time, amount)]:
             day.append(order)
 
     return beautiful_history

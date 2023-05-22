@@ -110,9 +110,11 @@ function addLikes(idItem) {
             $('#likes').text(response['like'])
             let template = "<img src=\"/static/icons/favorite-success.svg\" width=\"40\" height=\"40\">"
             $('#button-p-' + idItem).html(template)
-            if ($('#button-r-' + idItem).length) {
+            if ($('#button-r-' + idItem).length)
                 $('#button-r-' + idItem).html(template)
-            }
+
+            if ($('#button-s-' + idItem).length)
+                $('#button-s-' + idItem).html(template)
         },
         error: function(error) {}
     })

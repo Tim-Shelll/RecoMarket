@@ -21,7 +21,7 @@
             </button>
         </h3>
         {% for month, days in months.items() %}
-            {% for (day, time), orders in days.items() %}
+            {% for (day, time, amount), orders in days.items() %}
         <div class="card rounded-3 mb-4 " style="display: none">
             <button class='btn-dark' style='border-radius: 5px' type="button" onclick="onClickHistory(this)">
                 {{day}} {{month}} {{time}}
@@ -47,7 +47,7 @@
                 {% endfor %}
             </div>
             <div style="display: none">
-                <h6 class="mb-0">(Сумма заказа) руб.</h6>
+                <h6 class="mb-0">Сумма заказа: {{amount}} руб.</h6>
             </div>
         </div>
             {% endfor %}

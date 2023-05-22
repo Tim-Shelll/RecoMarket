@@ -114,6 +114,7 @@ def history_order():
     history = get_valid_order(purchases)
     beautiful_history = create_beautiful_history(history)
     cart, like = cart_and_like()
+    print(beautiful_history)
 
     return render_template('history.html', history=beautiful_history, cart=len(cart), like=len(like))
 
