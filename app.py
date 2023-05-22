@@ -4,7 +4,7 @@ from sqlalchemy.sql import text
 from flask_sqlalchemy import SQLAlchemy
 
 from datetime import datetime, timezone
-from templates import ORDERS_TO_USER, PRODUCTS_IN_PROD_IDS, DISTINCT_USERS, DISTINCT_PRODUCTS
+from templates import ORDERS_TO_USER, PRODUCTS_IN_PROD_IDS, DISTINCT_USERS, DISTINCT_PRODUCTS, PRODUCTS_FOR_SALE
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -53,6 +53,12 @@ class Product(db.Model):
     def select_data_product_by_ids(prod_ids):
         sql = PRODUCTS_IN_PROD_IDS.format(prod_ids=prod_ids)
         cursor = db.session.execute(text(sql))
+
+        return cursor.all()
+
+    @staticmethod
+    def select_best_sales_products():
+        cursor = db.session.execute(text(PRODUCTS_FOR_SALE))
 
         return cursor.all()
 

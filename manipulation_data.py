@@ -121,7 +121,6 @@ def create_pivot_table(orders_train):
 def recomendations(model_LightFM, sData):
     pred = model_LightFM.predict_rank(sData)
     ar = pred.toarray()
-    print(ar)
     predict = []
     timer_ids = range(n_user)
     prod_ids = range(n_product)

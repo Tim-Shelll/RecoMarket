@@ -9,11 +9,53 @@
 
 {% block body %}
 <main class="bgbw">
+    {% if products_sales %}
+    <section class="py-5 text-center container">
+        <div class="bg-white" style="border-radius: 10px">
+            <b style="font-size: 35px;" class=" rounded-pill">Чаще всего покупаемые</b>
+        </div>
+        <div class="album py-5">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 rounded">
+                    {% for product in products_sales %}
+                    <div class="flex_row">
+                        <div class="card shadow-sm bg-white rounded border">
+                            <img class="img" src={{product[3]}}>
+                            <div class="card-body">
+                                <p class="card-text"><b>{{product[1]}} </b></p>
+                                <p class="card-text"><h5>{{product[2]}} руб. </h5></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-link px-2"
+                                            onclick="addCart('{{product[0]}}')">
+                                        <img src="/static/icons/cart.svg" width="40" height="40">
+                                    </button>
+                                    {% if product[0] in items_favorite %}
+                                    <button class="btn btn-link px-2"
+                                            onclick="">
+                                        <img src="/static/icons/favorite-success.svg" width="40" height="40">
+                                    </button>
+                                    {% else %}
+                                    <button class="btn btn-link px-2" id="button-s-{{product[0]}}"
+                                            onclick="addLikes('{{product[0]}}')">
+                                        <img src="/static/icons/favorite-plus.svg" width="40" height="40">
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
     {% if current_user.is_authenticated %}
     {% if recomendations %}
     <section class="py-5 text-center container">
         <div class="bg-white" style="border-radius: 10px">
-            <b style="font-size: 35px;" class=" rounded-pill">Может вам понравиться</b>
+            <b style="font-size: 35px;" class=" rounded-pill">Персонально вам</b>
         </div>
         <div class="album py-5">
             <div class="container">

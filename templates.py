@@ -10,6 +10,15 @@ ORDERS_TO_USER = """
     ORDER BY 5 DESC
 """
 
+PRODUCTS_FOR_SALE = """
+    SELECT best.idItem, p.title, p.price, p.img, best.sales FROM (
+        SELECT idItem, SUM(numItems) sales FROM items_in_order
+        GROUP BY idItem
+        ORDER BY 2 DESC LIMIT 5
+                  ) best
+    INNER JOIN product p ON p.idItem = best.idItem
+"""
+
 PRODUCTS_IN_PROD_IDS = """
     SELECT * FROM product
     WHERE idItem in {prod_ids}

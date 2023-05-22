@@ -47,6 +47,8 @@ def logout():
 def index():
     products = Product.query.order_by(Product.idItem).all()
     categories = Category.query.all()
+    products_sales = Product.select_best_sales_products()
+
     if current_user.is_authenticated:
         recs = pd.read_csv('dataset/recomendations.csv', sep=',')
         rec_cur_user = recs[recs.user_id == current_user.id]
@@ -57,11 +59,11 @@ def index():
         items_favorite = [item.idItem for item in like]
 
     else:
-        recomendations, cart, like, items_favorite = None, None, None, None
+        recomendations, cart, like, items_favorite = None, [], [], []
 
     return render_template('index.html', categories=categories, products=products,
-                                         recomendations=recomendations, cart=len(cart),
-                                         like=len(like), items_favorite=items_favorite)
+                                         recomendations=recomendations, cart=len(cart), like=len(like),
+                                         items_favorite=items_favorite, products_sales=products_sales)
 
 
 @app.route('/index/<int:idItem>', methods=['POST', 'GET'])
@@ -76,7 +78,6 @@ def item(idItem):
         db.session.commit()
 
         quantity = len(ItemsInBag.get_count_products(current_user.id))
-
 
     return jsonify({'quantity': quantity})
 
