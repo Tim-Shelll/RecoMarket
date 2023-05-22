@@ -29,13 +29,9 @@ window.addEventListener('keyup', (e) => {
 });
 
 
-let storage = document.getElementById('album py-5 bg-light')
-let container = storage.childNodes[1].childNodes[1].childNodes
-
+let storage = document.getElementById('items')
+let statistic = document.getElementById('statistic')
 let search = document.getElementById('search-focus')
-let statistics = document.getElementsByClassName('input-group')[0]
-statistics = statistics.childNodes[statistics.childNodes.length - 2]
-
 
 search.oninput = function () {
     searchItItems()
@@ -43,9 +39,10 @@ search.oninput = function () {
 
 
 function searchItItems() {
-    onload()
+    if (search.value == "")
+        onload()
     let count = 0
-    container.forEach(function(element) {
+    storage.childNodes.forEach(function(element) {
         if (element.tagName == 'DIV' && element.style.display != 'none') {
             let text = element.childNodes[1].childNodes[3].childNodes[1].textContent
 
@@ -56,36 +53,37 @@ function searchItItems() {
                 element.style.display = 'none'
         }
     });
-    console.log(count)
-    statistics.innerHTML = `${count} / 25`
+
+    statistic.textContent = `${count} / 25`
 }
 
 
 function onload() {
-    container.forEach(function(element) {
+    storage.childNodes.forEach(function(element) {
         if (element.tagName == 'DIV')
              element.style.display = ''
     })
 
-    statistics.innerHTML = "25 / 25"
+    statistic.textContent = `25 / 25`
+
 }
 
 
 function filterItems(idCategory) {
-    onload()
+    if (search.value == "")
+        onload()
     let count = 0
     if (idCategory == -1) return;
-    container.forEach(function(element) {
+    storage.childNodes.forEach(function(element) {
         if (element.tagName == 'DIV' && element.style.display != 'none') {
-            let text = element.childNodes[1].childNodes[3].childNodes[5].childNodes[1].childNodes[1].value
-            if (text == idCategory ) {
-                element.style.display = '';
-                count++;
-            } else
+            if (element.id.split('-')[2] != idCategory) {
                 element.style.display = 'none'
+            } else
+                count++
         }
     });
-    statistics.innerHTML = `${count} / 25`
+    statistic.textContent = `${count} / 25`
+
 }
 
 

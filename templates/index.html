@@ -122,16 +122,17 @@
                         </li>
                         {% endfor %}
                         <li>
-                            <p class="card-text bg-dark text-light rounded" style="margin: 7.5px">25 / 25</p>
+                            <p class="card-text bg-dark text-light rounded" id="statistic"
+                               style="margin: 7.5px">25 / 25</p>
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="album py-5 w-75">
                 <div class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="items">
                         {% for product in products %}
-                        <div class="flex_row">
+                        <div class="flex_row" id="items-{{product.idItem}}-{{product.idCategory}}">
                             <div class="card shadow-sm bg-white rounded border">
                                 <img class="img" src={{product.img}}>
                                 <div class="card-body">

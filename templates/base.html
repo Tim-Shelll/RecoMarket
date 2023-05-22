@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<header style="position: sticky; top: 0px; z-index: 2;">
+<header style="position: sticky; top: 0px; z-index: 1000;">
   <div class="navbar navbar-dark bg-dark shadow-sm">
     <div class="d-flex container justify-content-between">
       <a href="/" class="navbar-brand d-flex align-items-center">
@@ -51,6 +51,7 @@
 </header>
 
 {% block body %}{% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
 <footer class="text-muted py-5 bg-dark">
   <div class="container">
@@ -62,7 +63,7 @@
   </div>
 </footer>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
 
 </body>
 </html>
