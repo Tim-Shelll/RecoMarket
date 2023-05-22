@@ -95,64 +95,74 @@
     {% endif %}
     {% endif %}
 
-    <div class="input-group d-flex align-items-center bg-light">
-        <div class="position-absolute top-50 start-50 translate-middle" style="font-size: 35px">
-            <strong>Поиск товара</strong>
+
+    <div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" style="position: sticky; top: 56px;">
+                <ul class="nav nav-pills flex-column mb-sm-auto align-items-center align-items-sm-start" id="menu">
+                    <li class="mb-1">
+                        <input id="search-focus" type="search" id="form1" class="form-control" placeholder="Поиск"/>
+                    </li>
+                    <li class="mb-5">
+                        <button type="button" class="btn btn-dark rounded-end" style="margin-right: 5px" onclick="searchItItems()">
+                            <i id="fas fa-search"></i>Найти
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-dark rounded-start"
+                                onclick="filterItems(-1)">Все
+                        </button>
+                    </li>
+                    {% for category in categories %}
+                    <li>
+                        <button type="button" class="btn btn-dark"
+                                onclick="filterItems('{{category.idCategory}}')">{{category.name}}
+                        </button>
+                    </li>
+                    {% endfor %}
+                    <li>
+                        <p class="card-text bg-dark text-light rounded" style="margin: 7.5px">25 / 25</p>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="form-outline">
-            <input id="search-focus" type="search" id="form1" class="form-control" placeholder="Поиск"/>
-        </div>
-        <button type="button" class="btn btn-dark rounded-end" style="margin-right: 5px" onclick="searchItItems()">
-            <i id="fas fa-search"></i>
-            Найти
-        </button>
-        <button type="button" class="btn btn-dark rounded-start"
-                onclick="filterItems(-1)">Все
-        </button>
-        {% for category in categories %}
-        <button type="button" class="btn btn-dark"
-                onclick="filterItems('{{category.idCategory}}')">{{category.name}}
-        </button>
-        {% endfor %}
-
-        <p class="card-text bg-light text-dark rounded" style="margin: 7.5px">25 / 25</p>
-
-    </div>
-
-    <div class="album py-5">
-        <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for product in products %}
-                <div class="flex_row">
-                    <div class="card shadow-sm bg-white rounded border">
-                        <img class="img" src={{product.img}}>
-                        <div class="card-body">
-                            <p class="card-text"><b>{{product.title}} </b></p>
-                            <p class="card-text"><b>{{product.price}} руб.</b></p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <button class="btn btn-link px-2"
-                                        onclick="addCart('{{product.idItem}}')">
-                                    <img src="/static/icons/cart.svg" width=40 height="40">
-                                </button>
-                                {% if product.idItem in items_favorite %}
-                                <button class="btn btn-link px-2"
-                                        onclick="">
-                                    <img src="/static/icons/favorite-success.svg" width="40" height="40">
-                                </button>
-                                {% else %}
-                                <button class="btn btn-link px-2" id="button-p-{{product.idItem}}"
-                                        onclick="addLikes('{{product.idItem}}')">
-                                    <img src="/static/icons/favorite-plus.svg" width="40" height="40">
-                                </button>
-                                {% endif %}
+        <div class="album py-5">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    {% for product in products %}
+                    <div class="flex_row">
+                        <div class="card shadow-sm bg-white rounded border">
+                            <img class="img" src={{product.img}}>
+                            <div class="card-body">
+                                <p class="card-text"><b>{{product.title}} </b></p>
+                                <p class="card-text"><b>{{product.price}} руб.</b></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-link px-2"
+                                            onclick="addCart('{{product.idItem}}')">
+                                        <img src="/static/icons/cart.svg" width=40 height="40">
+                                    </button>
+                                    {% if product.idItem in items_favorite %}
+                                    <button class="btn btn-link px-2"
+                                            onclick="">
+                                        <img src="/static/icons/favorite-success.svg" width="40" height="40">
+                                    </button>
+                                    {% else %}
+                                    <button class="btn btn-link px-2" id="button-p-{{product.idItem}}"
+                                            onclick="addLikes('{{product.idItem}}')">
+                                        <img src="/static/icons/favorite-plus.svg" width="40" height="40">
+                                    </button>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>
+</div>
 
 </main>
 
