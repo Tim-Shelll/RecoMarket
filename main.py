@@ -21,8 +21,8 @@ host = socket.gethostbyname(socket.gethostname())
 port = '8080'
 
 def cart_and_like():
-    cart = len(ItemsInBag.query.filter_by(idUser=current_user.id).all())
-    like = len(ItemsInFavorite.query.filter_by(idUser=current_user.id).all())
+    cart = ItemsInBag.query.filter_by(idUser=current_user.id).all()
+    like = ItemsInFavorite.query.filter_by(idUser=current_user.id).all()
     return cart, like
 
 
@@ -52,13 +52,16 @@ def index():
         rec_cur_user = recs[recs.user_id == current_user.id]
         prod_ids = "(" + ", ".join([str(rec) for rec in rec_cur_user['prod_id'].values]) + ")"
         recomendations = Product.select_data_product_by_ids(prod_ids)
+
         cart, like = cart_and_like()
+        items_favorite = [item.idItem for item in like]
 
     else:
-        recomendations, cart, like = None, None, None
+        recomendations, cart, like, items_favorite = None, None, None, None
 
     return render_template('index.html', categories=categories, products=products,
-                                         recomendations=recomendations, cart=cart, like=like)
+                                         recomendations=recomendations, cart=len(cart),
+                                         like=len(like), items_favorite=items_favorite)
 
 
 @app.route('/index/<int:idItem>', methods=['POST', 'GET'])
@@ -84,7 +87,7 @@ def profile_current():
         user = User.query.get(int(current_user.id))
         cart, like = cart_and_like()
 
-        return render_template('profile.html', user=user, cart=cart, like=like)
+        return render_template('profile.html', user=user, cart=len(cart), like=len(like))
     else:
         return redirect('/')
 
@@ -111,7 +114,7 @@ def history_order():
     beautiful_history = create_beautiful_history(history)
     cart, like = cart_and_like()
 
-    return render_template('history.html', history=beautiful_history, cart=cart, like=like)
+    return render_template('history.html', history=beautiful_history, cart=len(cart), like=len(like))
 
 
 @app.route('/login', methods=['POST', 'GET'])
@@ -166,7 +169,7 @@ def cart():
 
         cart, like = cart_and_like()
 
-        return render_template('cart.html', items_in_bag_with_num=iib_with_num, cart=cart, like=like)
+        return render_template('cart.html', items_in_bag_with_num=iib_with_num, cart=len(cart), like=len(like))
     else:
         return render_template('cart.html')
 
@@ -231,11 +234,8 @@ def cart_delete():
         db.session.commit()
 
     items_in_cart = ItemsInBag.query.filter_by(idUser=current_user.id).all()
-    prod_ids = "(" + ", ".join([str(item.idItem) for item in items_in_cart]) + ")"
-    items_in_bag = Product.select_data_product_by_ids(prod_ids)
-    iib_with_num = product_with_numItems(items_in_bag, (item.numItems for item in items_in_cart))
 
-    return jsonify({'quantity': len(iib_with_num)})
+    return jsonify({'quantity': len(items_in_cart)})
 
 #endregion
 
