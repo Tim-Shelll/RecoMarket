@@ -11,15 +11,15 @@
 <main class="bgbw">
     {% if products_sales %}
     <section class="py-5 text-center container">
-        <div class="bg-white" style="border-radius: 10px">
+        <div class="bg-white text-left">
             <b style="font-size: 35px;" class=" rounded-pill">Чаще всего покупаемые</b>
         </div>
         <div class="album py-5">
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 rounded">
                     {% for product in products_sales %}
-                    <div class="flex_row">
-                        <div class="card shadow-sm bg-white rounded border">
+                    <div class="flex_row line">
+                        <div class="card shadow-sm bg-white rounded border advanced">
                             <img class="img" src={{product[3]}}>
                             <div class="card-body">
                                 <p class="card-text"><b>{{product[1]}} </b></p>
@@ -54,15 +54,15 @@
     {% if current_user.is_authenticated %}
     {% if recomendations %}
     <section class="py-5 text-center container">
-        <div class="bg-white" style="border-radius: 10px">
+        <div class="bg-white text-left">
             <b style="font-size: 35px;" class=" rounded-pill">Персонально вам</b>
         </div>
         <div class="album py-5">
             <div class="container">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 rounded">
                     {% for recomendation in recomendations %}
-                    <div class="flex_row">
-                        <div class="card shadow-sm bg-white rounded border">
+                    <div class="flex_row line">
+                        <div class="card shadow-sm bg-white rounded border advanced">
                             <img class="img" src={{recomendation.img}}>
                             <div class="card-body">
                                 <p class="card-text"><b>{{recomendation.title}} </b></p>
