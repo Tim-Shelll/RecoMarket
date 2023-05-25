@@ -62,7 +62,7 @@
 .bgbw {
     background-image: url(/static/images/BG.png);
     background-repeat: repeat;
-    background-size: 40%;
+    background-size: 75%;
     position: relative;
     z-index: 0;
 }
