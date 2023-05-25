@@ -66,11 +66,16 @@ def personal_favorite(personal):
         else:
             person_favorite[favorite.idUser] = [favorite.idItem]
 
-    for key in person_favorite.keys():
-        for value in person_favorite[key]:
-            current_p = personal[(personal.user_id == key) & (personal.prod_id == value - 1)]
-            current_p.values[0][3] = 10
-            personal[(personal.user_id == key) & (personal.prod_id == value - 1)] = current_p.values
+    for user_id in person_favorite.keys():
+        for prod_id in person_favorite[user_id]:
+            current_p = personal[(personal.user_id == user_id) & (personal.prod_id == prod_id - 1)]
+            if not len(current_p):
+                psnl = pd.DataFrame({'user_id': [user_id], 'prod_id': [prod_id], 'purchase': [0], 'rank': [10]})
+                personal = personal.append(psnl, ignore_index=True)
+                print(psnl)
+            else:
+                current_p.values[0][3] = 10
+                personal[(personal.user_id == user_id) & (personal.prod_id == prod_id - 1)] = current_p.values
 
     return personal
 
@@ -99,7 +104,6 @@ def set_rank_product(orders_purch_sort: pd.DataFrame):
         count_bay.append(n)
 
     orders_purch_sort.loc[:, 'rank'] = count_bay
-
     orders_purch_sort = personal_favorite(orders_purch_sort)
     orders_purch_sort = orders_purch_sort[orders_purch_sort['rank'] < 11]
     orders_purch_sort['rank_baseline'] = 11 - orders_purch_sort['rank']
