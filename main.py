@@ -8,7 +8,7 @@ from app import app, db, User, Product, Order, ItemsInBag, Category, ItemsInFavo
 from forms import LoginForm, RegistrationForm
 from helpers import get_valid_order, product_with_numItems, create_beautiful_history
 from refactor_data import insert_dataset_data
-from manipulation_data import orders_update
+from manipulation_data import orders_update, recomendations_all
 
 
 #region Initializate
@@ -164,6 +164,8 @@ def cart():
                 orderId = insert_dataset_data(itemsinbag, current_user.id)
                 orders_update(itemsinbag, orderId)
 
+            recomendations_all()
+
         items_in_cart = ItemsInBag.query.filter_by(idUser=current_user.id).all()
         prod_ids = "(" + ", ".join([str(item.idItem) for item in items_in_cart]) + ")"
         items_in_bag = Product.select_data_product_by_ids(prod_ids)
@@ -209,6 +211,8 @@ def like(idItem):
         if not items_in_favorite:
             db.session.add(ItemsInFavorite(idUser=current_user.id, idItem=idItem))
             db.session.commit()
+
+        recomendations_all()
 
         like = len(ItemsInFavorite.get_count_products(current_user.id))
 

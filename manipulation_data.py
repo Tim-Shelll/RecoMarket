@@ -5,7 +5,7 @@ from lightfm import cross_validation
 from datetime import datetime
 
 from model import model_LightFM
-from app import app, User, Product, Order
+from app import app, User, Product, Order, ItemsInFavorite
 from constant import price_product
 
 path = 'dataset/orders_v2.csv'
@@ -13,6 +13,7 @@ path = 'dataset/orders_v2.csv'
 with app.app_context():
     n_user = User.select_distinct_users()[0]
     n_product = Product.select_distinct_products()[0]
+    favorites = ItemsInFavorite.query.all()
 
 #region manipulationData
 
@@ -45,8 +46,6 @@ def orders_update(itemsinbag, orderId):
 
     orders.to_csv('dataset/orders_v2.csv', index=False)
 
-    recomendations_all()
-
 
 def validate_data(path):
     orders = pd.read_csv(path, sep=',')
@@ -56,6 +55,24 @@ def validate_data(path):
     orders_purch_sort = orders_purch.sort_values(['user_id', 'purchase'], ascending=False).copy()
 
     return orders_purch_sort
+
+
+def personal_favorite(personal):
+    person_favorite = {}
+
+    for favorite in favorites:
+        if favorite.idUser in person_favorite:
+            person_favorite[favorite.idUser].append(favorite.idItem)
+        else:
+            person_favorite[favorite.idUser] = [favorite.idItem]
+
+    for key in person_favorite.keys():
+        for value in person_favorite[key]:
+            current_p = personal[(personal.user_id == key) & (personal.prod_id == value - 1)]
+            current_p.values[0][3] = 10
+            personal[(personal.user_id == key) & (personal.prod_id == value - 1)] = current_p.values
+
+    return personal
 
 
 def set_rank_product(orders_purch_sort: pd.DataFrame):
@@ -82,6 +99,8 @@ def set_rank_product(orders_purch_sort: pd.DataFrame):
         count_bay.append(n)
 
     orders_purch_sort.loc[:, 'rank'] = count_bay
+
+    orders_purch_sort = personal_favorite(orders_purch_sort)
     orders_purch_sort = orders_purch_sort[orders_purch_sort['rank'] < 11]
     orders_purch_sort['rank_baseline'] = 11 - orders_purch_sort['rank']
 

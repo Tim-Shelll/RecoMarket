@@ -90,7 +90,8 @@
 .line {
     display: flex;
     flex-direction: row;
-    flex: 15%;
+    flex: 10%;
+    justify-content: flex-start;
 }
 
 .text-left {
