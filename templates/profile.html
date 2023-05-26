@@ -11,7 +11,13 @@
 {% block body %}
 <body class="bg-light wrapper">
     <div style="height: calc(100% - 156px)">
-        <div class="card mb-3 h-100">
+            <div class="container">
+                <ul class="breadcrumb">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="#">Профиль</a></li>
+                </ul>
+            </div>
+        <div class="card mb-3 ">
             <div class="row m-l-0 m-r-0 h-100">
                 <div class="col-sm-4 bg-c-lite-green user-profile">
                     <div class="card-block text-center text-white h-100">
@@ -48,14 +54,14 @@
                             <div class="col-sm-6">
                                 <h4>
                                     <a href="/history_orders">
-                                        <button class="badge bg-primary rounded-pill">История покупок</button>
+                                        <button class="text-decoration-none p-1 border text-dark border-dark rounded" style="font-weight: bold">История покупок</button>
                                     </a>
                                 </h4>
                             </div>
                             <div class="col-sm-6">
                                 <h4>
                                     <a href="/logout">
-                                        <button class="badge bg-primary rounded-pill">Выход</button>
+                                        <button class="text-decoration-none p-1 border text-dark border-dark rounded" style="font-weight: bold">Выход</button>
                                     </a>
                                 </h4>
                             </div>

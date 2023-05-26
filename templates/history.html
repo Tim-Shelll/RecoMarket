@@ -6,10 +6,17 @@
 
 {% block body %}
 <main>
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Главная</a></li>
+            <li><a href="/profile">Профиль</a></li>
+            <li><a href="#">История покупок</a></li>
+        </ul>
+    </div>
     <br>
     <div class="cor">
-        <h4><a href="/profile" class="badge bg-primary rounded-pill"
-               style="margin-left: 7.5%">Назад в профиль</a></h4>
+        <h5><a href="/profile" class="text-decoration-none p-1 border text-dark border-dark rounded"
+               style="margin-left: 7.5%; font-weight: bold">Назад в профиль</a></h5>
     </div>
     <br><br>
     {% if history %}
