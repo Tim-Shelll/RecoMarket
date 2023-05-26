@@ -12,6 +12,12 @@
 {% block body %}
     {% if current_user.is_authenticated %}
         <section class="py-5 text-center container">
+            <div>
+                <ul class="breadcrumb">
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="#">Избранное</a></li>
+                </ul>
+            </div>
             <div class="bg-white rounded-circle">
                 <b style="font-size: 35px;" class="rounded-pill">Понравившиеся товары</b>
             </div>
