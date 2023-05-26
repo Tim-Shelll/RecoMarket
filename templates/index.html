@@ -10,7 +10,7 @@
 {% block body %}
 <main class="bgbw">
     {% if products_sales %}
-    <section class="py-5 text-center container">
+    <section class="py-5 text-center container bg-white">
         <div class="bg-white text-left">
             <b style="font-size: 35px;" class=" rounded-pill">Чаще всего покупаемые</b>
         </div>
@@ -53,7 +53,7 @@
 
     {% if current_user.is_authenticated %}
     {% if recomendations %}
-    <section class="py-5 text-center container">
+    <section class="py-5 text-center container bg-white">
         <div class="bg-white text-left">
             <b style="font-size: 35px;" class=" rounded-pill">Персонально вам</b>
         </div>
@@ -95,8 +95,15 @@
     {% endif %}
     {% endif %}
 
+    <div class="bg-dark">
+        <br>
+        <div class="text-white text-left">
+            <b style="font-size: 30px;" class="ms-5 rounded-pill">Каталог товаров</b>
+        </div>
+        <br>
+    </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid bg-white">
         <div class="row flex-nowrap">
             <div class="col-auto col-md-2 px-sm-2 px-0 bg-dark">
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100" style="position: sticky; top: 56px;">
