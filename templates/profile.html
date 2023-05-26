@@ -9,14 +9,14 @@
 {% endblock %}
 
 {% block body %}
-<body class="bg-light">
-    <div class="container-fluid">
-        <div class="card mb-3">
-            <div class="row m-l-0 m-r-0">
+<body class="bg-light wrapper">
+    <div style="height: calc(100% - 156px)">
+        <div class="card mb-3 h-100">
+            <div class="row m-l-0 m-r-0 h-100">
                 <div class="col-sm-4 bg-c-lite-green user-profile">
-                    <div class="card-block text-center text-white">
+                    <div class="card-block text-center text-white h-100">
                         <div class="m-b-25">
-                            <img src="{{ user.photo }}" class="img-radius" width="70%" alt="User-Profile-Image">
+                            <img src="{{ user.photo }}" class="img-radius" width="100%" alt="User-Profile-Image">
                         </div>
                         <h5 class="f-w-600">{{ user.username }}</h5>
                         <!--<i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>-->
@@ -42,7 +42,9 @@
                                 <h6 class="text-muted f-w-400" id="date">{{ user.created_on}}</h6>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-evenly row pt-5 align-items-end">
+
+                    </div>
+                    <div class="d-flex justify-content-evenly row py-5 align-content-start ">
                             <div class="col-sm-6">
                                 <h4>
                                     <a href="/history_orders">
@@ -58,7 +60,6 @@
                                 </h4>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
