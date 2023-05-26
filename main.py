@@ -180,7 +180,7 @@ def cart():
                 orderId = insert_dataset_data(itemsinbag, current_user.id)
                 orders_update(itemsinbag, orderId)
 
-            recomendations_all()
+                recomendations_all()
 
         items_in_cart = ItemsInBag.query.filter_by(idUser=current_user.id).all()
         prod_ids = "(" + ", ".join([str(item.idItem) for item in items_in_cart]) + ")"

@@ -6,7 +6,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href='/static/style/base.css'/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     {% block style %}{% endblock %}
     {% block title %}{% endblock %}
 
@@ -14,41 +15,46 @@
 <body class="h-100">
 
 <header style="position: sticky; top: 0px; z-index: 1000;">
-  <div class="navbar navbar-dark bg-dark shadow-sm">
-    <div class="d-flex container justify-content-between">
-      <a href="/" class="navbar-brand d-flex align-items-center">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
-        <strong>Рекомендации</strong>
-      </a>
-        {% if not current_user.is_authenticated %}
-        <div class="d-flex justify-content-around">
-            <a href="/login" class="align-self-center">
-                <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Войти</button>
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="d-flex container justify-content-between">
+            <a href="/" class="navbar-brand d-flex align-items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
+                     stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
+                     viewBox="0 0 24 24">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <strong>Рекомендации</strong>
             </a>
-            <a href="/registration" class="align-self-center">
-                <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Регистрация</button>
-            </a>
-        </div>
-        {% else %}
-        <div class="d-flex justify-content-around">
-            <a href="/likes" class="align-self-center">
-                <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Избранное
-                    <span id='likes' class="badge badge-primary">{% if like != 0 %}{{like}}{% endif %}</span>
-                </button>
-            </a>
-            <a href="/cart" class="align-self-center">
-                <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Корзина
-                    <span id='cart' class="badge badge-primary">{% if cart != 0 %}{{cart}}{% endif %}</span>
-                </button>
-            </a>
-            <a href="/profile" class="align-self-center">
-                <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Профиль</button>
-            </a>
-        </div>
+            {% if not current_user.is_authenticated %}
+            <div class="d-flex justify-content-around">
+                <a href="/login" class="align-self-center">
+                    <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Войти</button>
+                </a>
+                <a href="/registration" class="align-self-center">
+                    <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Регистрация</button>
+                </a>
+            </div>
+            {% else %}
+            <div class="d-flex justify-content-around">
+                <a href="/likes" class="align-self-center">
+                    <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Избранное
+                        <span id='likes' class="badge badge-primary">{% if like != 0 %}{{like}}{% endif %}</span>
+                    </button>
+                </a>
+                <a href="/cart" class="align-self-center">
+                    <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Корзина
+                        <span id='cart' class="badge badge-primary">{% if cart != 0 %}{{cart}}{% endif %}</span>
+                    </button>
+                </a>
+                <a href="/profile" class="align-self-center">
+                    <button style="font-size : 100%;" class="badge bg-dark rounded-pill">Профиль</button>
+                </a>
+            </div>
 
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-  </div>
 </header>
 
 {% block body %}{% endblock %}
@@ -56,15 +62,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 
 <footer class="text-muted py-4 bg-dark">
-  <div class="container">
-    <p class="float-end mb-1">
-      <a href="#">Back to top</a>
-    </p>
-    <p class="mb-1 text-light">Enjoy yourself!</p>
-    <p class="mb-0"> <a href="/">Visit the homepage</a>.</p>
-  </div>
+    <div class="container">
+        <p class="float-end mb-1">
+            <a href="#">Back to top</a>
+        </p>
+        <p class="mb-1 text-light">Enjoy yourself!</p>
+        <p class="mb-0"><a href="/">Visit the homepage</a>.</p>
+    </div>
 </footer>
-
 
 
 </body>
