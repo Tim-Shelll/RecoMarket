@@ -21,6 +21,8 @@ class RegistrationForm(FlaskForm):
     surname = StringField('Фамилия')
     lastname = StringField('Отчество')
 
+    sex = SelectField('Пол', choices=['Мужской', 'Женский'])
+
     email = StringField('Электронная почта', validators=[DataRequired()])
     login = StringField('Логин')
 

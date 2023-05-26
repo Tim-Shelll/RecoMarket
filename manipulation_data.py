@@ -145,10 +145,10 @@ def recomendations(model_LightFM, sData):
     pred = model_LightFM.predict_rank(sData)
     ar = pred.toarray()
     predict = []
-    timer_ids = range(n_user)
-    prod_ids = range(n_product)
+    timer_ids = range(1, n_user + 1)
+    prod_ids = range(1, n_product + 1)
 
-    for i in timer_ids:
+    for i in range(len(timer_ids)):
         for m in range(ar.shape[1]):
             ar_list = []
             if ar[i, m] > 0:
@@ -159,7 +159,7 @@ def recomendations(model_LightFM, sData):
 
     predict_df = pd.DataFrame(predict, columns=['user_id', 'prod_id', 'pred_rang'])
 
-    recom_users = {i: [] for i in range(n_user)}
+    recom_users = {i: [] for i in timer_ids}
 
     for user_id, product_id, rank in predict_df.values:
         if len(recom_users[user_id]) < 5:

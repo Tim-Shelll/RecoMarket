@@ -13,7 +13,6 @@ from manipulation_data import orders_update, recomendations_all
 
 #region Initializate
 
-recs = pd.read_csv('dataset/recomendations.csv', sep=',')
 login_manager = LoginManager()
 login_manager.init_app(app)
 
@@ -50,7 +49,9 @@ def index():
     products_sales = Product.select_best_sales_products()
 
     if current_user.is_authenticated:
+
         recs = pd.read_csv('dataset/recomendations.csv', sep=',')
+
         rec_cur_user = recs[recs.user_id == current_user.id]
         prod_ids = "(" + ", ".join([str(rec) for rec in rec_cur_user['prod_id'].values]) + ")"
         recomendations = Product.select_data_product_by_ids(prod_ids)
@@ -142,16 +143,31 @@ def signin():
 
 @app.route('/registration', methods=['POST', 'GET'])
 def registration():
-    form = RegistrationForm()
-    """if not current_user.is_authenticated:
+    if not current_user.is_authenticated:
         form = RegistrationForm()
-        message = ""
         if request.method == 'POST':
-            return redirect('/index')
+            user = User()
+            user.username = " ".join([form.firstname.data, form.surname.data, form.lastname.data])
+            user.email = form.email.data
+            user.login = form.login.data
+            user.photo = '/static/users/avatar-{}.png'.format('man' if form.sex.data == 'Мужской' else 'woman')
+            user.set_password(form.password.data)
+
+            if form.password.data == form.password_repeat.data:
+                db.session.add(user)
+                db.session.commit()
+                login_user(user, remember=form.remember_me.data)
+
+                return redirect('/index')
+
+            else:
+                message = 'Invalid data enviroment'
+                return render_template('registration.html', message=message, form=form)
 
         return render_template('registration.html', form=form)
     else:
-        return redirect('/index')"""
+        return redirect('/index')
+
     return render_template('registration.html', form=form)
 
 

@@ -25,15 +25,19 @@
             <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Регистрация</h3>
 
             <div class="form-outline mb-4">
-              {{ form.firstname.label(class_='form-label') }}<br> {{ form.firstname(size=32, class_='form-control form-control-lg') }}
-            </div>
-
-            <div class="form-outline mb-4">
               {{ form.surname.label(class_='form-label') }}<br> {{ form.surname(size=32, class_='form-control form-control-lg') }}
             </div>
 
             <div class="form-outline mb-4">
+              {{ form.firstname.label(class_='form-label') }}<br> {{ form.firstname(size=32, class_='form-control form-control-lg') }}
+            </div>
+
+            <div class="form-outline mb-4">
               {{ form.lastname.label(class_='form-label') }}<br> {{ form.lastname(size=32, class_='form-control form-control-lg') }}
+            </div>
+
+            <div class="form-outline mb-4">
+              {{ form.sex.label(class_='form-label') }}<br> {{ form.sex(class_='form-control form-control-lg') }}
             </div>
 
             <div class="form-outline mb-4">
