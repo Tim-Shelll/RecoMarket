@@ -147,9 +147,9 @@ def registration():
         form = RegistrationForm()
         if request.method == 'POST':
             user = User()
-            user.username = " ".join([form.firstname.data, form.surname.data, form.lastname.data])
-            user.email = form.email.data
+            user.username = " ".join([form.surname.data, form.firstname.data, form.lastname.data])
             user.login = form.login.data
+            user.email = form.email.data
             user.photo = '/static/users/avatar-{}.png'.format('man' if form.sex.data == 'Мужской' else 'woman')
             user.set_password(form.password.data)
 

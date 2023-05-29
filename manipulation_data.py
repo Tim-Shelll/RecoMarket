@@ -10,11 +10,6 @@ from constant import price_product
 
 path = 'dataset/orders_v2.csv'
 
-with app.app_context():
-    n_user = User.select_distinct_users()[0]
-    n_product = Product.select_distinct_products()[0]
-    favorites = ItemsInFavorite.query.all()
-
 #region manipulationData
 
 def orders_update(itemsinbag, orderId):
@@ -57,7 +52,7 @@ def validate_data(path):
     return orders_purch_sort
 
 
-def personal_favorite(personal):
+def personal_favorite(personal, favorites):
     person_favorite = {}
 
     for favorite in favorites:
@@ -80,7 +75,7 @@ def personal_favorite(personal):
     return personal
 
 
-def set_rank_product(orders_purch_sort: pd.DataFrame):
+def set_rank_product(orders_purch_sort: pd.DataFrame, favorites):
     orders_purch_sort_data = orders_purch_sort.values
     user_id = orders_purch_sort_data[0][0]
     prod_id = orders_purch_sort_data[0][1]
@@ -104,7 +99,7 @@ def set_rank_product(orders_purch_sort: pd.DataFrame):
         count_bay.append(n)
 
     orders_purch_sort.loc[:, 'rank'] = count_bay
-    orders_purch_sort = personal_favorite(orders_purch_sort)
+    orders_purch_sort = personal_favorite(orders_purch_sort, favorites)
     orders_purch_sort = orders_purch_sort[orders_purch_sort['rank'] < 11]
     orders_purch_sort['rank_baseline'] = 11 - orders_purch_sort['rank']
 
@@ -141,7 +136,7 @@ def create_pivot_table(orders_train):
     return sData, orders_train_pivot, orders_test_pivot
 
 
-def recomendations(model_LightFM, sData):
+def recomendations(model_LightFM, sData, n_user, n_product):
     pred = model_LightFM.predict_rank(sData)
     ar = pred.toarray()
     predict = []
@@ -180,13 +175,20 @@ def convert_data_to_tuple(rec_users):
 #endregion
 
 def recomendations_all():
-    global path, n_user
+    with app.app_context():
+        n_user = User.select_distinct_users()[0]
+        n_product = Product.select_distinct_products()[0]
+        favorites = ItemsInFavorite.query.all()
+
     orders_purch_sort = validate_data(path)
-    orders_purch_sort = set_rank_product(orders_purch_sort)
+    orders_purch_sort = set_rank_product(orders_purch_sort, favorites)
     orders_train, orders_test = split_data(orders_purch_sort)
     sData, orders_train_pivot, orders_test_pivot = create_pivot_table(orders_train)
 
-    rec_users = recomendations(model_LightFM, sData)
+    rec_users = recomendations(model_LightFM, sData, n_user, n_product)
+    for key, value in rec_users.items():
+        print(key)
+        print(value)
 
     recoms = pd.DataFrame(columns=['user_id', 'prod_id'], data=convert_data_to_tuple(rec_users))
 
