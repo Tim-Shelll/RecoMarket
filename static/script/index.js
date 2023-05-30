@@ -86,8 +86,39 @@ function filterItems(idCategory) {
 
 }
 
+const { Toast } = bootstrap;
 
-function addCart(idItem) {
+function toast(title) {
+    var template = document.createElement('template')
+    html = `
+          <div aria-atomic="true" aria-live="assertive" class="toast position-absolute end-0 bottom-0 m-3"
+           role="alert" id="myAlert">
+              <div class="toast-header">
+                    <strong class="me-auto">Корзина</strong>
+                    <small>Только что</small>
+                    <button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="toast" type="button">
+                    </button>
+              </div>
+              <div class="toast-body">
+                  Продукт добавлен в корзину.
+              </div>
+          </div>
+        `.trim()
+    template.innerHTML = html
+    return template.content.firstChild
+}
+
+function addCart(idItem, title) {
+
+    var toastTrigger = document.getElementById('liveToastBtn-' + idItem)
+    if (toastTrigger) {
+        var toastEl = toast(title);
+        document.body.appendChild(toastEl)
+        const myToast = new Toast(toastEl);
+        myToast.show();
+    }
+
     $.ajax({
         type: 'POST',
         url: `index/${idItem}`,
