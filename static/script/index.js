@@ -92,7 +92,7 @@ const { Toast } = bootstrap;
 function toast(title, to) {
     var template = document.createElement('template')
     html = `
-          <div aria-atomic="true" aria-live="assertive" class="toast position-absolute end-0 bottom-0 m-3"
+          <div aria-atomic="true" aria-live="assertive" class="toast position-fixed end-0 bottom-0 m-3"
            role="alert" id="myAlert">
               <div class="toast-header">
                     <strong class="me-auto">${to}</strong>
