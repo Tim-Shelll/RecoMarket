@@ -54,11 +54,6 @@
     height: 200px;
 }
 
-.card:hover {
-    transform: scale(1.01);
-    cursor: pointer;
-}
-
 .bgbw {
     background-image: url(/static/images/BG.png);
     background-repeat: repeat;
