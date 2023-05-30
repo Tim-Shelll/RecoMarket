@@ -2,6 +2,17 @@
     padding: 3rem !important
 }
 
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+@media screen and (max-width: 600px) {
+  footer {
+    visibility: hidden;
+  }
+}
+
 .user-card-full {
     overflow: hidden;
 }

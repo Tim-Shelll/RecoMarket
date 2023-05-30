@@ -29,3 +29,14 @@ form {
   justify-content: end;
   margin-right: 125px
 }
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+@media screen and (max-width: 600px) {
+  footer {
+    visibility: hidden;
+  }
+}
