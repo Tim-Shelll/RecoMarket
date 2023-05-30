@@ -17,6 +17,7 @@
     </div>
     <section class="">
         <div class="container-fluid">
+            {% if items_in_bag_with_num %}
             <div class="row justify-content-center">
                 <div class="col-sm-6 bg-white rounded-pill">
                     <div class="cart-wrap">
@@ -24,7 +25,6 @@
                     </div>
                 </div>
             </div>
-            {% if items_in_bag_with_num %}
             <section class="h-100" style="background-color: #eee;" id="iibwn">
                 <div class="container h-100 py-5">
                     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -72,6 +72,14 @@
                     </div>
                 </div>
             </section>
+            {% else %}
+            <div class="row justify-content-center">
+                <div class="col-sm-6 bg-white rounded-pill">
+                    <div class="cart-wrap">
+                        <h2>У вас нет товаров в корзине</h2>
+                    </div>
+                </div>
+            </div>
             {% endif %}
         </div>
     </section>

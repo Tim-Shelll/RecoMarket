@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
 {% block style %}
+<link rel="stylesheet" href='/static/style/favorite.css'/>
 <link rel="stylesheet" href='/static/style/style.css'/>
-<link rel="stylesheet" href='/static/style/cart_style.css'/>
 {% endblock %}
 
 {% block title %}
@@ -12,7 +12,7 @@
 
 {% block body %}
 {% if current_user.is_authenticated %}
-<section class="py-5 text-center container">
+<section class="text-center container">
     <div>
         <ul class="breadcrumb">
             <li><a href="/">Главная</a></li>
@@ -24,9 +24,9 @@
     </div>
     <div class="album py-5">
         <div class="container">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 rounded" id="favorites">
+            <div class="row row-cols-1 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 rounded" id="favorites">
                 {% for favorite in favorites %}
-                <div class="flex_row" id="{{favorite[0]}}-item">
+                <div class="flex_row line" id="{{favorite[0]}}-item">
                     <div class="card shadow-sm bg-white rounded border">
                         <img class="img" src={{favorite[4]}}>
                         <div class="card-body">

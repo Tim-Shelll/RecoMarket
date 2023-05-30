@@ -67,7 +67,6 @@ def personal_favorite(personal, favorites):
             if not len(current_p):
                 psnl = pd.DataFrame({'user_id': [user_id], 'prod_id': [prod_id], 'purchase': [0], 'rank': [10]})
                 personal = personal.append(psnl, ignore_index=True)
-                print(psnl)
             else:
                 current_p.values[0][3] = 10
                 personal[(personal.user_id == user_id) & (personal.prod_id == prod_id - 1)] = current_p.values
@@ -186,10 +185,6 @@ def recomendations_all():
     sData, orders_train_pivot, orders_test_pivot = create_pivot_table(orders_train)
 
     rec_users = recomendations(model_LightFM, sData, n_user, n_product)
-    for key, value in rec_users.items():
-        print(key)
-        print(value)
-
     recoms = pd.DataFrame(columns=['user_id', 'prod_id'], data=convert_data_to_tuple(rec_users))
 
     recoms.to_csv('dataset/recomendations.csv')
