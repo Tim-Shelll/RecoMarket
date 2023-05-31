@@ -92,7 +92,7 @@ const { Toast } = bootstrap;
 function toast(title, to) {
     var template = document.createElement('template')
     html = `
-          <div aria-atomic="true" aria-live="assertive" class="toast position-fixed end-0 bottom-0 m-3"
+          <div aria-atomic="true" aria-live="assertive" data-bs-delay="5000" class="toast position-fixed end-0 bottom-0 m-3"
            role="alert" id="myAlert">
               <div class="toast-header">
                     <strong class="me-auto">${to}</strong>
@@ -111,7 +111,7 @@ function toast(title, to) {
 }
 
 function eventMSG(to, object) {
-    const title = object.parentNode.parentNode.childNodes[1].childNodes[0].textContent
+    const title = object.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].textContent
 
     var toastEl = toast(title, to);
     document.body.appendChild(toastEl)
