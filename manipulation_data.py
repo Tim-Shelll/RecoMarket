@@ -138,6 +138,7 @@ def create_pivot_table(orders_train):
 def recomendations(model_LightFM, sData, n_user, n_product):
     pred = model_LightFM.predict_rank(sData)
     ar = pred.toarray()
+    print(ar)
     predict = []
     timer_ids = range(1, n_user + 1)
     prod_ids = range(1, n_product + 1)
@@ -156,8 +157,7 @@ def recomendations(model_LightFM, sData, n_user, n_product):
     recom_users = {i: [] for i in timer_ids}
 
     for user_id, product_id, rank in predict_df.values:
-        if len(recom_users[user_id]) < 5:
-            recom_users[user_id].append((product_id, rank))
+        recom_users[user_id].append((product_id, rank))
 
     return recom_users
 
@@ -170,6 +170,26 @@ def convert_data_to_tuple(rec_users):
             recs.append([user_id, row[0]])
 
     return recs
+
+
+def validate_recomendations(rec_users, favorites):
+    for user, prod_ids in rec_users.items():
+        prod_ids = sorted(prod_ids, key=lambda _:_[1])
+        prod_ids_validate = []
+        for prod_id in prod_ids:
+            if prod_id[0] in favorites and len(prod_ids_validate) < 5:
+                prod_ids_validate.append(prod_id)
+
+        for prod_id in prod_ids:
+            if prod_id[0] not in favorites and len(prod_ids_validate) < 5:
+                prod_ids_validate.append(prod_id)
+
+        print(prod_ids_validate)
+
+        rec_users[user] = prod_ids_validate
+
+    return rec_users
+
 
 #endregion
 
@@ -185,6 +205,7 @@ def recomendations_all():
     sData, orders_train_pivot, orders_test_pivot = create_pivot_table(orders_train)
 
     rec_users = recomendations(model_LightFM, sData, n_user, n_product)
+    rec_users = validate_recomendations(rec_users, reversed(favorites))
     recoms = pd.DataFrame(columns=['user_id', 'prod_id'], data=convert_data_to_tuple(rec_users))
 
     recoms.to_csv('dataset/recomendations.csv')

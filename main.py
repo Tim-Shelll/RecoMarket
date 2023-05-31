@@ -242,6 +242,8 @@ def likes_delete():
         db.session.delete(items_in_favorite)
         db.session.commit()
 
+        recomendations_all()
+
     prod_ids = [str(item.idItem) for item in ItemsInFavorite.get_count_products(idUser=current_user.id)]
 
     return jsonify({'likes': len(prod_ids)})
