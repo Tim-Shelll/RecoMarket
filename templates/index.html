@@ -109,76 +109,48 @@
     {% endif %}
     {% endif %}
 
-    <div class="bg-dark" id="catalog" style="position: sticky; top: 0; z-index: 1000;">
-            <div class="text-white text-left">
-                <b style="font-size: 30px;" class="ms-5 rounded-pill">Товары</b>
-            </div>
+    <div class="bg-white text-left border-top border-dark">
+        <div class="container">
+            <b style="font-size: 35px;" class="rounded-pill">Каталог товаров</b>
+        </div>
+    </div>
 
-            <div id="mobnavbar" class="container-fluid">
-                <label class="mb-1 ">
-                    <input type="search" class="form-control" placeholder="Поиск"/>
+    <div class="bg-dark" id="catalog" style="position: sticky; top: 0; z-index: 1000;">
+            <div class="d-flex container-fluid justify-content-center">
+                <label class="my-2">
+                    <input id="search-focus" type="search" class="form-control" placeholder="Поиск"/>
                 </label>
-                <button type="button" class="btn btn-dark rounded-end" style="margin-right: 5px"
+                <button type="button" class="btn btn-dark rounded " style="margin-right: 5px"
                         onclick="searchItItems()">
-                    Найти
+                    <img style="width: 32px" src="/static/icons/lupa.png">
                 </button>
-                <button class="btn btn-secondary dropdown-toggle mb-1" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                Фильтр
+                <button class="btn btn-secondary btn-lg dropdown-toggle my-1" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Каталог
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <ul class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton1">
                     <li>
-                        <button type="button" class="btn btn-dark rounded-start"
+                        <div type="button" class="btn btn-secondary d-block"
                                 onclick="filterItems(-1)">Все
-                        </button>
+                        </div>
                     </li>
                     {% for category in categories %}
                     <li>
-                        <button type="button" class="btn btn-dark"
+                        <div type="button" class="btn btn-secondary d-block"
                                 onclick="filterItems('{{category.idCategory}}')">{{category.name}}
-                        </button>
+                        </div>
                     </li>
                     {% endfor %}
                 </ul>
+                <p class="card-text text-light rounded align-self-center" id="statistic"
+                               style="margin: 7.5px">25 / 25</p>
             </div>
     </div>
 
     <div class="container-fluid bg-white">
         <div class="row flex-wrap">
-            <div class="col-auto col-md-2 px-sm-2 px-0 bg-dark" id="navbar">
-                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
-                     style="position: sticky; top: 56px;">
-                    <ul class="nav nav-pills flex-column mb-sm-auto align-items-center align-items-sm-start" id="menu">
-                        <li class="mb-1">
-                            <input id="search-focus" type="search" class="form-control" placeholder="Поиск"/>
-                        </li>
-                        <li class="mb-5">
-                            <button type="button" class="btn btn-dark rounded-end" style="margin-right: 5px"
-                                    onclick="searchItItems()">
-                                <i id="fas fa-search"></i>Найти
-                            </button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-dark rounded-start"
-                                    onclick="filterItems(-1)">Все
-                            </button>
-                        </li>
-                        {% for category in categories %}
-                        <li>
-                            <button type="button" class="btn btn-dark"
-                                    onclick="filterItems('{{category.idCategory}}')">{{category.name}}
-                            </button>
-                        </li>
-                        {% endfor %}
-                        <li>
-                            <p class="card-text bg-dark text-light rounded" id="statistic"
-                               style="margin: 7.5px">25 / 25</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="album py-5 w-75">
+            <div class="album py-5">
                 <div class="container">
-                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="items">
+                    <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3" id="items">
                         {% for product in products %}
                         <div class="flex_row" id="items-{{product.idItem}}-{{product.idCategory}}">
                             <div class="card shadow-sm bg-white rounded border">

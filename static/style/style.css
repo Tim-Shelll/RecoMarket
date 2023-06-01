@@ -97,16 +97,6 @@
     padding-left: 15px
 }
 
-@media screen and (max-width: 600px) {
-  #navbar {
-      display: none;
-      visibility: hidden;
-  }
-}
-
-@media screen and (min-width: 601px) {
-  #mobnavbar {
-      display: none;
-      visibility: hidden;
-  }
+body {
+      min-width: 375px
 }

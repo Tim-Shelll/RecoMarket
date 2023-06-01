@@ -45,3 +45,7 @@ footer {
       min-height: calc(100% - 169px);
   }
 }
+
+body {
+      min-width: 375px
+}

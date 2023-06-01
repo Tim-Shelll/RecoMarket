@@ -40,3 +40,6 @@ footer {
     justify-content: flex-start;
 }
 
+body {
+      min-width: 375px
+}
