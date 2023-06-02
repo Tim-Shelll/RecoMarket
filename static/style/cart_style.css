@@ -39,8 +39,13 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
 @media screen and (max-width: 600px) {
-  footer {
-    visibility: hidden;
+  main {
+      min-height: calc(100% - 169px);
   }
+}
+
+body {
+      min-width: 375px
 }

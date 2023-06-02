@@ -8,9 +8,13 @@ footer {
     width: 100%;
 }
 @media screen and (max-width: 600px) {
-  footer {
-    visibility: hidden;
+  section {
+    min-height: calc(100% - 169px);
   }
+}
+
+.card {
+    width: 100%;
 }
 
 .card:hover {
@@ -36,3 +40,6 @@ footer {
     justify-content: flex-start;
 }
 
+body {
+      min-width: 375px
+}
