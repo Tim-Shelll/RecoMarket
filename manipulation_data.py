@@ -184,8 +184,6 @@ def validate_recomendations(rec_users, favorites):
             if prod_id[0] not in favorites and len(prod_ids_validate) < 5:
                 prod_ids_validate.append(prod_id)
 
-        print(prod_ids_validate)
-
         rec_users[user] = prod_ids_validate
 
     return rec_users
