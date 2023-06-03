@@ -58,11 +58,12 @@ def index():
 
         cart, like = cart_and_like()
         items_favorite = [item.idItem for item in like]
+        items_cart = [item.idItem for item in cart]
 
     else:
-        recomendations, cart, like, items_favorite = None, [], [], []
+        recomendations, cart, like, items_favorite, items_cart = None, [], [], [], []
 
-    return render_template('index.html', categories=categories, products=products,
+    return render_template('index.html', categories=categories, products=products, items_cart=items_cart,
                                          recomendations=recomendations, cart=len(cart), like=len(like),
                                          items_favorite=items_favorite, products_sales=products_sales)
 
@@ -227,7 +228,7 @@ def like(idItem):
             db.session.add(ItemsInFavorite(idUser=current_user.id, idItem=idItem))
             db.session.commit()
 
-        recomendations_all()
+            recomendations_all()
 
         like = len(ItemsInFavorite.get_count_products(current_user.id))
 

@@ -33,21 +33,28 @@
                             <div class="card-body mb-4">
                                 <p class="card-text"><b>{{product[1]}} </b></p>
                                 <p class="card-text"><h5>{{product[2]}} руб. </h5></p>
-                                <div class="w-75 height-30px position-absolute bottom-0 display-flex align-items-center justify-content-center;">
+                                <div class="w-75 height-30px position-absolute bottom-0 display-flex align-items-center justify-content-center">
                                     <div class="d-flex justify-content-between align-items-center">
+                                        {% if product[0] in items_cart %}
                                         <button class="btn btn-link px-2"
                                                 onclick="addCart('{{product[0]}}', this)">
-                                            <img alt="" src="/static/icons/cart.svg" width="40" height="40">
+                                            <img src="/static/icons/cart-check.svg" width=40 height="40">
                                         </button>
+                                        {% else %}
+                                        <button class="btn btn-link px-2" id="button-cart-ps-{{product[0]}}"
+                                                onclick="addCart('{{product[0]}}', this)">
+                                            <img src="/static/icons/cart-plus.svg" width=40 height="40">
+                                        </button>
+                                        {% endif %}
                                         {% if product[0] in items_favorite %}
                                         <button class="btn btn-link px-2"
                                                 onclick="">
-                                            <img alt="" src="/static/icons/favorite-success.svg" width="40" height="40">
+                                            <img alt="" src="/static/icons/heart-fill.svg" width="40" height="40">
                                         </button>
                                         {% else %}
-                                        <button class="btn btn-link px-2" id="button-s-{{product[0]}}"
+                                        <button class="btn btn-link px-2" id="button-like-ps-{{product[0]}}"
                                                 onclick="addLikes('{{product[0]}}', this)">
-                                            <img alt="" src="/static/icons/favorite-plus.svg" width="40" height="40">
+                                            <img alt="" src="/static/icons/heart.svg" width="40" height="40">
                                         </button>
                                         {% endif %}
                                     </div>
@@ -81,19 +88,26 @@
                                 <p class="card-text"><h5>{{recomendation.price}} руб. </h5></p>
                                 <div class="w-75 height-30px position-absolute bottom-0 display-flex align-items-center justify-content-center;">
                                     <div class="d-flex justify-content-between align-items-center">
+                                        {% if recomendation.idItem in items_cart %}
                                         <button class="btn btn-link px-2"
                                                 onclick="addCart('{{recomendation.idItem}}', this)">
-                                            <img src="/static/icons/cart.svg" width="40" height="40">
+                                            <img src="/static/icons/cart-check.svg" width=40 height="40">
                                         </button>
+                                        {% else %}
+                                        <button class="btn btn-link px-2" id="button-cart-p-{{recomendation.idItem}}"
+                                                onclick="addCart('{{recomendation.idItem}}', this)">
+                                            <img src="/static/icons/cart-plus.svg" width=40 height="40">
+                                        </button>
+                                        {% endif %}
                                         {% if recomendation.idItem in items_favorite %}
                                         <button class="btn btn-link px-2"
                                                 onclick="">
-                                            <img src="/static/icons/favorite-success.svg" width="40" height="40">
+                                            <img src="/static/icons/heart-fill.svg" width="40" height="40">
                                         </button>
                                         {% else %}
-                                        <button class="btn btn-link px-2" id="button-r-{{recomendation.idItem}}"
+                                        <button class="btn btn-link px-2" id="button-like-p-{{recomendation.idItem}}"
                                                 onclick="addLikes('{{recomendation.idItem}}', this)">
-                                            <img src="/static/icons/favorite-plus.svg" width="40" height="40">
+                                            <img src="/static/icons/heart.svg" width="40" height="40">
                                         </button>
                                         {% endif %}
                                     </div>
@@ -109,39 +123,40 @@
     {% endif %}
     {% endif %}
 
-    <div class="bg-white text-left border-top border-dark">
+    <div class="bg-white text-center border-top border-dark">
         <div class="container">
             <b style="font-size: 35px;" class="rounded-pill">Каталог товаров</b>
         </div>
     </div>
 
-    <div class="bg-dark" id="catalog" style="position: sticky; top: 0; z-index: 1000;">
+    <div class="bg-light" id="catalog" style="position: sticky; top: 0; z-index: 1000;">
             <div class="d-flex container-fluid justify-content-center">
                 <label class="my-2">
                     <input id="search-focus" type="search" class="form-control" placeholder="Поиск"/>
                 </label>
-                <button type="button" class="btn btn-dark rounded " style="margin-right: 5px"
+                <button type="button" class="btn btn-light rounded" style="margin-right: 5px"
                         onclick="searchItItems()">
-                    <img style="width: 32px" src="/static/icons/lupa.png">
+                    <img style="width: 32px" src="/static/icons/lupa.avif">
                 </button>
-                <button class="btn btn-secondary btn-lg dropdown-toggle my-1" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                Каталог
+                <button class="btn btn-secondary btn-lg dropdown-toggle my-1" type="button"
+                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Каталог
                 </button>
                 <ul class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton1">
                     <li>
                         <div type="button" class="btn btn-secondary d-block"
-                                onclick="filterItems(-1)">Все
+                                onclick="filterItems(-1, 'Все')">Все
                         </div>
                     </li>
                     {% for category in categories %}
                     <li>
                         <div type="button" class="btn btn-secondary d-block"
-                                onclick="filterItems('{{category.idCategory}}')">{{category.name}}
+                                onclick="filterItems('{{category.idCategory}}', '{{category.name}}')">{{category.name}}
                         </div>
                     </li>
                     {% endfor %}
                 </ul>
-                <p class="card-text text-light rounded align-self-center" id="statistic"
+                <p class="card-text text-dark rounded align-self-center" id="statistic"
                                style="margin: 7.5px">25 / 25</p>
             </div>
     </div>
@@ -160,19 +175,26 @@
                                     <p class="card-text"><b>{{product.price}} руб.</b></p>
                                     <div class="w-75 position-absolute bottom-0 display-flex align-items-center justify-content-center">
                                         <div class="d-flex justify-content-between align-items-center">
+                                            {% if product.idItem in items_cart %}
                                             <button class="btn btn-link px-2"
                                                     onclick="addCart('{{product.idItem}}', this)">
-                                                <img src="/static/icons/cart.svg" width=40 height="40">
+                                                <img src="/static/icons/cart-check.svg" width=40 height="40">
                                             </button>
+                                            {% else %}
+                                            <button class="btn btn-link px-2" id="button-cart-c-{{product.idItem}}"
+                                                    onclick="addCart('{{product.idItem}}', this)">
+                                                <img src="/static/icons/cart-plus.svg" width=40 height="40">
+                                            </button>
+                                            {% endif %}
                                             {% if product.idItem in items_favorite %}
                                             <button class="btn btn-link px-2"
                                                     onclick="">
-                                                <img src="/static/icons/favorite-success.svg" width="40" height="40">
+                                                <img src="/static/icons/heart-fill.svg" width="40" height="40">
                                             </button>
                                             {% else %}
-                                            <button class="btn btn-link px-2" id="button-p-{{product.idItem}}"
+                                            <button class="btn btn-link px-2" id="button-like-c-{{product.idItem}}"
                                                     onclick="addLikes('{{product.idItem}}', this)">
-                                                <img src="/static/icons/favorite-plus.svg" width="40" height="40">
+                                                <img src="/static/icons/heart.svg" width="40" height="40">
                                             </button>
                                             {% endif %}
                                         </div>

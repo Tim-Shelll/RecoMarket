@@ -5,7 +5,14 @@ function deleteLikes(idItem) {
         data: {'idItem': idItem},
         success: function(response) {
             $('#' + idItem + '-item').remove()
-            $('#likes').text(response['likes'] == 0 ? "" : response['likes'])
+
+            count = response['likes'] == 0 ? "" : response['likes'] + (response['likes'] == 1 ? ' item' : ' items')
+            let iconBag = `<img src="/static/icons/bag.svg" width="40" height="40">`
+            if (response['likes'] != 0) {
+                $('#likes').text(count)
+            } else {
+                $('#container-like').html(iconBag)
+            }
         },
         error: function(error) {}
     })

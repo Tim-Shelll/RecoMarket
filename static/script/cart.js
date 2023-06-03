@@ -24,7 +24,8 @@ function actionItem(idItem, change, price) {
                 if ($("#items").children().length == 0)
                     $("#iibwn").remove()
 
-                $('#cart').text($("#items").children().length != 0 ? $("#items").children().length : "")
+                let text = $("#items").children().length == 1 ? ' item' : ' items'
+                $('#cart').text($("#items").children().length != 0 ? $("#items").children().length + text : "")
             } else {
                 $('#' + idItem).text(response[idItem])
                 $('#' + idItem + '-price').text(response[idItem] * Number(price) + ' руб')
@@ -46,7 +47,8 @@ function deleteItem(idItem) {
             if (response['quantity'] == 0)
                 $("#iibwn").remove()
 
-            $('#cart').text(response['quantity'] != 0 ? response['quantity'] : "")
+            let text = response['quantity'] == 1 ? ' item' : ' items'
+            $('#cart').text(response['quantity'] != 0 ? response['quantity'] + text : "")
             setAmount()
         },
         error: function(error) {}
