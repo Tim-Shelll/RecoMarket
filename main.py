@@ -222,17 +222,21 @@ def likes():
 
 @app.route('/likes/<int:idItem>', methods=['POST', 'GET'])
 def like(idItem):
-    if request.method == 'POST':
-        items_in_favorite = ItemsInFavorite.query.filter_by(idUser=current_user.id, idItem=idItem).all()
-        if not items_in_favorite:
-            db.session.add(ItemsInFavorite(idUser=current_user.id, idItem=idItem))
-            db.session.commit()
+    if current_user.is_authenticated:
+        if request.method == 'POST':
+            items_in_favorite = ItemsInFavorite.query.filter_by(idUser=current_user.id, idItem=idItem).all()
+            if not items_in_favorite:
+                db.session.add(ItemsInFavorite(idUser=current_user.id, idItem=idItem))
+                db.session.commit()
 
-            recomendations_all()
+                recomendations_all()
 
-        like = len(ItemsInFavorite.get_count_products(current_user.id))
+            like = len(ItemsInFavorite.get_count_products(current_user.id))
 
-    return jsonify({'like': like})
+        return jsonify({'like': like})
+    else:
+        return jsonify({'message': '<a href="/login">Войдите</a> или '
+                                   '<a href="/registration">Зарегистрируйтесь</a>, чтобы добавлять товар в избранное'})
 
 
 @app.route('/likes/delete', methods=['POST', 'GET'])

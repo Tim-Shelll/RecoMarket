@@ -93,20 +93,20 @@ const { Toast } = bootstrap;
 function toast(title, to) {
     var template = document.createElement('template')
     html = `
-          <div aria-atomic="true" aria-live="assertive" data-bs-delay="5000" class="toast position-fixed end-0 bottom-0 m-3"
-           role="alert" id="myAlert">
-              <div class="toast-header">
-                    <strong class="me-auto">${to}</strong>
-                    <small>Только что</small>
-                    <button aria-label="Close" class="btn-close"
-                            data-bs-dismiss="toast" type="button">
-                    </button>
-              </div>
-              <div class="toast-body">
-                  ${title} добавлен в ${to.toLowerCase()}.
-              </div>
+      <div aria-atomic="true" aria-live="assertive" data-bs-delay="2500" class="toast position-fixed end-0 bottom-0 m-3"
+       role="alert" id="myAlert">
+          <div class="toast-header">
+                <strong class="me-auto">${to}</strong>
+                <small>Только что</small>
+                <button aria-label="Close" class="btn-close"
+                        data-bs-dismiss="toast" type="button">
+                </button>
           </div>
-        `.trim()
+          <div class="toast-body text-success">
+              ${title}
+          </div>
+      </div>
+    `.trim()
     template.innerHTML = html
     return template.content.firstChild
 }
@@ -114,7 +114,7 @@ function toast(title, to) {
 function eventMSG(to, object) {
     const title = object.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].textContent
 
-    var toastEl = toast(title, to);
+    var toastEl = toast(`${title} добавлен в ${to.toLowerCase()}.`, to);
     document.body.appendChild(toastEl)
     const myToast = new Toast(toastEl);
     myToast.show();
@@ -159,31 +159,39 @@ function addCart(idItem, object) {
 
 function addLikes(idItem, object) {
 
-    eventMSG('Избранное', object)
+
 
     $.ajax({
         type: 'POST',
         url: `likes/${idItem}`,
         data: {},
         success: function(response) {
-            $('#likes').text()
-            heartFill = "<img src=\"/static/icons/heart-fill.svg\" width=\"40\" height=\"40\">"
-            $(`#${object.id}`).html(heartFill)
+            if (response['message']) {
+                var toastEl = toast(response['message'], 'Избранное');
+                document.body.appendChild(toastEl)
+                const myToast = new Toast(toastEl);
+                myToast.show();
+            } else {
+                eventMSG('Избранное', object)
+                $('#likes').text()
+                heartFill = "<img src=\"/static/icons/heart-fill.svg\" width=\"40\" height=\"40\">"
+                $(`#${object.id}`).html(heartFill)
 
-            if ($('#button-like-ps-' + idItem).length && `button-like-ps-${idItem}` != `${object.id}`)
-                $('#button-like-ps-' + idItem).html(heartFill)
+                if ($('#button-like-ps-' + idItem).length && `button-like-ps-${idItem}` != `${object.id}`)
+                    $('#button-like-ps-' + idItem).html(heartFill)
 
-            if ($('#button-like-p-' + idItem).length && `button-like-p-${idItem}` != `${object.id}`)
-                $('#button-like-p-' + idItem).html(heartFill)
+                if ($('#button-like-p-' + idItem).length && `button-like-p-${idItem}` != `${object.id}`)
+                    $('#button-like-p-' + idItem).html(heartFill)
 
-            if ($('#button-like-c-' + idItem).length && `button-like-c-${idItem}` != `${object.id}`)
-                $('#button-like-c-' + idItem).html(heartFill)
+                if ($('#button-like-c-' + idItem).length && `button-like-c-${idItem}` != `${object.id}`)
+                    $('#button-like-c-' + idItem).html(heartFill)
 
-            let iconFill = `<img src="/static/icons/bag-heart.svg" width="40" height="40">`
-            let count = response['like'] + (response['like'] == 1 ? ' item' : ' items')
-            let text = `<p span id='likes' class="badge text-dark">${count}</p>`
+                let iconFill = `<img src="/static/icons/bag-heart.svg" width="40" height="40">`
+                let count = response['like'] + (response['like'] == 1 ? ' item' : ' items')
+                let text = `<p span id='likes' class="badge text-dark">${count}</p>`
 
-            response['like'] == 1 ? $('#container-like').html(iconFill + text) : $('#likes').text(count)
+                response['like'] == 1 ? $('#container-like').html(iconFill + text) : $('#likes').text(count)
+            }
         },
         error: function(error) {}
     })
