@@ -83,71 +83,67 @@
         </div>
     </section>
     <br>
-
+    {% if items_in_bag_with_num %}
+    <div style="margin: 0px 5% 50px 0">
+        <button style="font-size: 100%; margin: 50px" class="badge bg-dark" onclick="Processing(this)">
+            <span class="badge badge-primary" style="font-size: 20px">Перейти к оформлению</span>
+        </button>
+    </div>
+    {% endif %}
     <!-- Оформление заказа -->
-    <div class="container" id="corob">
-        <form class="row g-3" method="post">
+    <section id="corob" style="display: none">
+        <div class="container">
+            <form class="row g-3" method="post">
 
-            {{ form.hidden_tag() }}
+                {{ form.hidden_tag() }}
 
-            <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Оформление заказа</h3>
+                <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Оформление заказа</h3>
 
-            <div class="col-md-6 form-outline mb-4">
-                {{ form.firstname.label(class_='form-label') }}<br> {{ form.firstname(size=32,
-                class_='form-control form-control-lg') }}
-            </div>
+                <div class="col-md-6 form-outline mb-4">
+                    {{ form.firstname(size=32, class_='form-control form-control-lg', placeholder="Имя") }}
+                </div>
 
-            <div class="col-md-6 form-outline mb-4">
-                {{ form.phone.label(class_='form-label') }}<br> {{ form.phone(size=32,
-                class_='form-control form-control-lg') }}
-            </div>
+                <div class="col-md-6 form-outline mb-4">
+                    {{ form.phone(size=32, class_='form-control form-control-lg', placeholder="Телефон") }}
+                </div>
 
-            <div class="col-md-6 form-outline mb-4">
-                {{ form.city.label(class_='form-label') }}<br> {{ form.city(size=32,
-                class_='form-control form-control-lg') }}
-            </div>
+                <div class="col-md-6 form-outline mb-4">
+                    {{ form.city(size=32, class_='form-control form-control-lg', placeholder="Город") }}
+                </div>
 
+                <div class="col-md-6 form-outline mb-4">
+                    {{ form.street(class_='form-control form-control-lg', placeholder="Улица") }}
+                </div>
 
-            <div class="col-md-6 form-outline mb-4">
-                {{ form.street.label(class_='form-label') }}<br> {{ form.street(class_='form-control
-                form-control-lg') }}
-            </div>
+                <div class="col-md-3 form-outline mb-4">
+                    {{ form.house(size=32, class_='form-control form-control-lg', placeholder="Дом") }}
+                </div>
 
-            <div class="col-md-3 form-outline mb-4">
-                {{ form.house.label(class_='form-label') }}<br> {{ form.house(size=32,
-                class_='form-control form-control-lg') }}
-            </div>
+                <div class="col-md-3 form-outline mb-4">
+                    {{ form.apartment(size=32, class_='form-control form-control-lg', placeholder="Квартира") }}
+                </div>
 
-            <div class="col-md-3 form-outline mb-4">
-                {{ form.apartment.label(class_='form-label') }}<br> {{ form.apartment(size=32,
-                class_='form-control form-control-lg') }}
-            </div>
+                <div class="col-md-3 form-outline mb-4">
+                    {{ form.entrance(size=32, class_='form-control form-control-lg', placeholder="Подъезд") }}
+                </div>
 
-            <div class="col-md-3 form-outline mb-4">
-                {{ form.entrance.label(class_='form-label') }}<br> {{ form.entrance(size=32,
-                class_='form-control form-control-lg') }}
-            </div>
+                <div class="col-md-3 form-outline mb-4">
+                    {{ form.floor(size=32, class_='form-control form-control-lg', placeholder="Этаж") }}
+                </div>
 
-            <div class="col-md-3 form-outline mb-4">
-                {{ form.floor.label(class_='form-label') }}<br> {{ form.floor(size=32,
-                class_='form-control form-control-lg') }}
-            </div>
-
-            <div class="col-12 pt-1 mb-4 row">
-                {{ form.submit() }}
-            </div>
+                <br>
 
             </form>
-    </div>
+        </div>
 
         {% if items_in_bag_with_num %}
         <form action="/cart" enctype="application/json" method="POST" style="margin: 0px 5% 50px 0">
             <button style="font-size : 100%;" class="badge bg-dark rounded-pill">
-                <span id='amount' class="badge badge-primary" style="font-size: 20px">Оплатить</span>
+                <span id='amount' class="badge badge-primary" style="font-size: 20px">Совершить заказ</span>
             </button>
         </form>
         {% endif %}
-    </div>
+    </section>
 
 </main>
 

@@ -10,7 +10,7 @@ function setAmount() {
             sum += Number(block.text().split(' ')[0])
     }
 
-    $('#amount').text(`Оплатить` + (sum == 0 ? `` : `: ${sum} руб`))
+    $('#amount').text(`Совершить заказ` + (sum == 0 ? `` : `: ${sum} руб`))
 }
 
 function actionItem(idItem, change, price) {
@@ -53,4 +53,9 @@ function deleteItem(idItem) {
         },
         error: function(error) {}
     })
+}
+
+function Processing(object) {
+    object.parentNode.style.display = 'none'
+    document.getElementById('corob').style.display = ""
 }
