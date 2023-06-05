@@ -111,10 +111,9 @@ function toast(title, to) {
     return template.content.firstChild
 }
 
-function eventMSG(to, object) {
-    const title = object.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].textContent
+function eventMSG(message, to) {
 
-    var toastEl = toast(`${title} добавлен в ${to.toLowerCase()}.`, to);
+    var toastEl = toast(message, to)
     document.body.appendChild(toastEl)
     const myToast = new Toast(toastEl);
     myToast.show();
@@ -122,8 +121,6 @@ function eventMSG(to, object) {
 
 
 function addCart(idItem, object) {
-
-    eventMSG('Корзина', object)
 
     $.ajax({
         type: 'POST',
@@ -152,27 +149,29 @@ function addCart(idItem, object) {
                 $('#cart').text(count)
             }
 
+            let message= object.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].textContent
+            let to = `Корзина`
+            eventMSG(`${message} добавлен в ${to.toLowerCase()}.`, to)
+
         },
         error: function(error) {}
     })
+
+
 }
 
 function addLikes(idItem, object) {
-
-
-
     $.ajax({
         type: 'POST',
         url: `likes/${idItem}`,
         data: {},
         success: function(response) {
             if (response['message']) {
-                var toastEl = toast(response['message'], 'Избранное');
-                document.body.appendChild(toastEl)
-                const myToast = new Toast(toastEl);
-                myToast.show();
+                eventMSG(response['message'], 'Войдите в систему')
             } else {
-                eventMSG('Избранное', object)
+                let message= object.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].textContent
+                let to = 'Избранное'
+                eventMSG(`${message} добавлен в ${to.toLowerCase()}.`, to)
                 $('#likes').text()
                 heartFill = "<img src=\"/static/icons/heart-fill.svg\" width=\"40\" height=\"40\">"
                 $(`#${object.id}`).html(heartFill)
