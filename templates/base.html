@@ -55,7 +55,7 @@
                     {% endif %}
                 </a>
                 <a href="/profile" class="align-self-center">
-                    <img src="{{current_user.photo}}" width="40" height="40">
+                    <img src="{{current_user.photo}}" class="border border-2 border-secondary" width="40" height="40">
                 </a>
             </div>
             {% endif %}
@@ -70,11 +70,13 @@
 <footer class="text-muted py-4 bg-dark">
     <div class="container">
         <p class="float-end mb-1">
-            <a class="text-decoration-none text-light" href="#">Back to top</a>
+            <a class="text-decoration-none text-light" href="#">
+                <img src="static/icons/up.png" width="20" height="20" class="me-2">
+                Back to top</a>
         </p>
         <p class="mb-0">
             <a class="text-decoration-none text-light" href="/">
-                <img src="static/icons/home.svg" width="20" height="20"  aria-hidden="true" class="me-2">
+                <img src="static/icons/home.png" width="20" height="20" class="me-2">
                 Visit the homepage
             </a>
         </p>

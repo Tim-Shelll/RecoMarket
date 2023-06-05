@@ -29,32 +29,41 @@
             </div>
             <div class="col-sm-8">
                 <div class="card-block">
-                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Информация</h6>
+                    <h6 class="m-b-20 p-b-5 b-b-default">Информация</h6>
                     <div class="row">
                         <div class="col-sm-6">
                             <p class="m-b-10 f-w-600">Электронная почта</p>
-                            <h6 class="text-muted f-w-400">{{ user.email }}</h6>
+                            <h6 class="text-muted">{{ user.email }}</h6>
                         </div>
                         <div class="col-sm-6">
                             <p class="m-b-10 f-w-600">Логин</p>
-                            <h6 class="text-muted f-w-400">{{ user.login }}</h6>
+                            <h6 class="text-muted">{{ user.login }}</h6>
                         </div>
                     </div>
                     <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Дополнительная информация</h6>
                     <div class="row">
                         <div class="col-sm-6">
+                            <p class="m-b-10 f-w-600">Способы оплаты</p>
+                            <h6 class="text-muted">Наличными при получении</h6>
+                        </div>
+                        <div class="col-sm-6">
                             <p class="m-b-10 f-w-600">Аккаунт создан</p>
-                            <h6 class="text-muted f-w-400" id="date">{{ user.created_on}}</h6>
+                            <h6 class="text-muted " id="date">{{ user.created_on}}</h6>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p class="m-b-10 f-w-600">Мои адреса</p>
+                            <h6 class="text-muted">Кострома, ул. Зеленая, д.3</h6>
+                        </div>
+                    </div>
                 </div>
                 <div class="d-flex justify-content-between row py-5 align-content-start ">
                     <div class="col-sm-6">
                         <h4>
                             <a href="/history_orders">
                                 <button class="text-decoration-none p-1 border text-dark border-dark rounded"
-                                        style="font-weight: bold">История покупок
+                                        style="font-weight: bold">Мои заказы
                                 </button>
                             </a>
                         </h4>
