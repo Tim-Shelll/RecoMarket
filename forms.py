@@ -30,3 +30,19 @@ class RegistrationForm(FlaskForm):
     password_repeat = PasswordField('Повторите пароль')
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Зарегистрироваться')
+
+
+class CheckoutForm(FlaskForm):
+    firstname = StringField('Имя')
+
+    phone = StringField('Телефон')
+    city = StringField('Город')
+    street = StringField('Улица')
+
+    house = StringField('Дом')
+    apartment = StringField('Квартира')
+    entrance = StringField('Подъезд')
+    floor = StringField('Этаж')
+
+    submit = SubmitField('Совершить заказ')
+

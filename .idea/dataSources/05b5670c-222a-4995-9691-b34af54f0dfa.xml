@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="shop.db">
   <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.48">
+<<<<<<< HEAD
     <root id="1"/>
+=======
+    <root id="1">
+      <ServerVersion>3.40.1</ServerVersion>
+    </root>
+>>>>>>> 3544bd07a4a04e1a2cb9d20be18815a1351d27f2
     <collation id="2" parent="1" name="BINARY"/>
     <collation id="3" parent="1" name="NOCASE"/>
     <collation id="4" parent="1" name="RTRIM"/>
@@ -1560,6 +1566,7 @@ idOrder</ColNames>
       <DasType>DATETIME|0s</DasType>
       <Position>7</Position>
     </column>
+<<<<<<< HEAD
     <index id="537" parent="508" name="sqlite_autoindex_user_1">
       <ColNames>username</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -1571,6 +1578,24 @@ idOrder</ColNames>
       <Unique>1</Unique>
     </index>
     <key id="539" parent="508">
+=======
+    <column id="553" parent="511" name="address">
+      <DasType>text|0s</DasType>
+      <OnNullConflict>ignore</OnNullConflict>
+      <Position>8</Position>
+    </column>
+    <index id="554" parent="511" name="ix_user_email">
+      <ColNames>email</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="555" parent="511" name="ix_user_username">
+      <ColNames>username</ColNames>
+    </index>
+    <index id="556" parent="511" name="ix_user_login">
+      <ColNames>login</ColNames>
+    </index>
+    <key id="557" parent="511">
+>>>>>>> 3544bd07a4a04e1a2cb9d20be18815a1351d27f2
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>

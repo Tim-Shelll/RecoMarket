@@ -5,7 +5,7 @@ from flask import render_template, request, redirect, jsonify
 from flask_login import logout_user, current_user, login_user, LoginManager
 
 from app import app, db, User, Product, Order, ItemsInBag, Category, ItemsInFavorite
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, CheckoutForm
 from helpers import get_valid_order, product_with_numItems, create_beautiful_history
 from refactor_data import insert_dataset_data
 from manipulation_data import orders_update, recomendations_all
@@ -173,6 +173,7 @@ def registration():
 
 @app.route('/cart', methods=['POST', 'GET'])
 def cart():
+    form = CheckoutForm()
     if current_user.is_authenticated:
         if request.method == 'POST':
             itemsinbag = ItemsInBag.query.filter_by(idUser=current_user.id).all()
@@ -189,9 +190,10 @@ def cart():
 
         cart, like = cart_and_like()
 
-        return render_template('cart.html', items_in_bag_with_num=iib_with_num, cart=len(cart), like=len(like))
+        return render_template('cart.html', items_in_bag_with_num=iib_with_num, cart=len(cart), like=len(like),
+                                            form=form)
     else:
-        return render_template('cart.html')
+        return render_template('cart.html', form=form)
 
 
 @app.route('/cart/<int:idItem>', methods=['POST', 'GET'])
