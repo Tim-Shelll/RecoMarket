@@ -167,26 +167,26 @@
                                 <div class="card-body mb-4">
                                     <p class="card-text"><b>{{product.title}} </b></p>
                                     <p class="card-text"><b>{{product.price}} руб.</b></p>
-                                    <div class="w-75 position-absolute bottom-0 display-flex align-items-center justify-content-center">
+                                    <div class="w-100 position-absolute bottom-0 display-flex align-items-center justify-content-center">
                                         <div class="d-flex justify-content-between align-items-center">
                                             {% if product.idItem in items_cart %}
-                                            <button class="btn btn-link px-2"
+                                            <button class="btn btn-link"
                                                     onclick="addCart('{{product.idItem}}', this)">
                                                 <img src="/static/icons/cart-check.svg" width=40 height="40">
                                             </button>
                                             {% else %}
-                                            <button class="btn btn-link px-2" id="button-cart-c-{{product.idItem}}"
+                                            <button class="btn btn-link" id="button-cart-c-{{product.idItem}}"
                                                     onclick="addCart('{{product.idItem}}', this)">
                                                 <img src="/static/icons/cart-plus.svg" width=40 height="40">
                                             </button>
                                             {% endif %}
                                             {% if product.idItem in items_favorite %}
-                                            <button class="btn btn-link px-2"
+                                            <button class="btn btn-link pe-5"
                                                     onclick="">
                                                 <img src="/static/icons/heart-fill.svg" width="40" height="40">
                                             </button>
                                             {% else %}
-                                            <button class="btn btn-link px-2" id="button-like-c-{{product.idItem}}"
+                                            <button class="btn btn-link pe-5" id="button-like-c-{{product.idItem}}"
                                                     onclick="addLikes('{{product.idItem}}', this)">
                                                 <img src="/static/icons/heart.svg" width="40" height="40">
                                             </button>

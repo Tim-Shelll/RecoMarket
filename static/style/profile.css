@@ -58,12 +58,6 @@ footer {
     border-radius: 5px;
 }
 
-.bgbw {
-    background-image: url(/static/images/BG.png);
-    background-repeat: repeat;
-    background-size: 30%;
-}
-
 h6 {
     font-size: 14px;
 }
