@@ -127,7 +127,7 @@ function addCart(idItem, object) {
         url: `index/${idItem}`,
         data: {},
         success: function(response) {
-            cartFill = "<img src=\"/static/icons/cart-check.svg\" width=\"40\" height=\"40\">"
+            cartFill = "<img src=\"/static/icons/cart-plus-fill.svg\" width=\"40\" height=\"40\">"
             $(`#${object.id}`).html(cartFill)
 
             if ($('#button-cart-ps-' + idItem).length && `button-cart-ps-${idItem}` != `${object.id}`)
