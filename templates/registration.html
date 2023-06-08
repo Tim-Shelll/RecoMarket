@@ -25,43 +25,35 @@
                         <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Регистрация</h3>
 
                         <div class="form-outline mb-4">
-                            {{ form.surname.label(class_='form-label') }}<br> {{ form.surname(size=32,
-                            class_='form-control form-control-lg') }}
+                            {{ form.surname(size=32, class_='form-control form-control-lg', placeholder='Фамилия') }}
                         </div>
 
                         <div class="form-outline mb-4">
-                            {{ form.firstname.label(class_='form-label') }}<br> {{ form.firstname(size=32,
-                            class_='form-control form-control-lg') }}
+                            {{ form.firstname(size=32, class_='form-control form-control-lg', placeholder='Имя') }}
                         </div>
 
                         <div class="form-outline mb-4">
-                            {{ form.lastname.label(class_='form-label') }}<br> {{ form.lastname(size=32,
-                            class_='form-control form-control-lg') }}
+                            {{ form.lastname(size=32, class_='form-control form-control-lg', placeholder='Отчество') }}
                         </div>
 
                         <div class="form-outline mb-4">
-                            {{ form.sex.label(class_='form-label') }}<br> {{ form.sex(class_='form-control
-                            form-control-lg') }}
+                            {{ form.sex(class_='form-control form-control-lg', placeholder='Пол') }}
                         </div>
 
                         <div class="form-outline mb-4">
-                            {{ form.email.label(class_='form-label') }}<br> {{ form.email(size=32, class_='form-control
-                            form-control-lg') }}
+                            {{ form.email(size=32, class_='form-control form-control-lg', placeholder='Почта') }}
                         </div>
 
                         <div class="form-outline mb-4">
-                            {{ form.login.label(class_='form-label') }}<br> {{ form.login(size=32, class_='form-control
-                            form-control-lg') }}
+                            {{ form.login(size=32, class_='form-control form-control-lg', placeholder='Логин') }}
                         </div>
 
                         <div class="form-outline mb-4">
-                            {{ form.password.label(class_='form-label') }}<br> {{ form.password(size=32,
-                            class_='form-control form-control-lg') }}
+                            {{ form.password(size=32, class_='form-control form-control-lg', placeholder='Пароль') }}
                         </div>
 
                         <div class="form-outline mb-4">
-                            {{ form.password_repeat.label(class_='form-label') }}<br> {{ form.password_repeat(size=32,
-                            class_='form-control form-control-lg') }}
+                            {{ form.password_repeat(size=32, class_='form-control form-control-lg', placeholder='Повторите пароль') }}
                         </div>
 
                         <div class="form-outline mb-4">

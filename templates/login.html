@@ -22,13 +22,11 @@
                         {{ form.hidden_tag() }}
 
                         <div class="form-outline mb-4">
-                            {{ form.login.label(class_='form-label') }}<br> {{ form.login(size=32, class_='form-control
-                            form-control-lg') }}
+                            {{ form.login(size=32, class_='form-control form-control-lg', placeholder='Логин') }}
                         </div>
 
                         <div class="form-outline mb-4">
-                            {{ form.password.label(class_='form-label') }}<br> {{ form.password(size=32,
-                            class_='form-control form-control-lg') }}
+                            {{ form.password(size=32, class_='form-control form-control-lg', placeholder='Пароль') }}
                         </div>
 
                         <div class="pt-1 mb-4 row">
