@@ -15,7 +15,6 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="#">Главная</a></li>
-
         </ul>
     </div>
     {% if products_sales %}
@@ -62,7 +61,6 @@
                             </div>
                         </div>
                     </div>
-
                     {% endfor %}
                 </div>
             </div>
@@ -124,80 +122,78 @@
     {% endif %}
 
     <div class="bg-light" id="catalog" style="position: sticky; top: 0; z-index: 1000;">
-            <div class="d-flex container-fluid justify-content-center">
-                <label class="my-2">
-                    <input id="search-focus" type="search" class="form-control" placeholder="Поиск"/>
-                </label>
-                <button type="button" class="btn btn-light rounded" style="margin-right: 5px"
-                        onclick="searchItItems()">
-                    <img style="width: 32px" src="/static/icons/lupa.avif">
-                </button>
-                <button class="btn btn-secondary btn-lg dropdown-toggle my-1" type="button"
-                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Все
-                </button>
-                <ul class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton1">
-                    <li>
-                        <div type="button" class="btn btn-secondary d-block"
-                                onclick="filterItems(-1, 'Все')">Все
-                        </div>
-                    </li>
-                    {% for category in categories %}
-                    <li>
-                        <div type="button" class="btn btn-secondary d-block"
-                                onclick="filterItems('{{category.idCategory}}', '{{category.name}}')">{{category.name}}
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
-                <p class="card-text text-dark rounded align-self-center" id="statistic"
-                               style="margin: 7.5px">25 / 25</p>
-            </div>
+        <div class="d-flex container-fluid justify-content-center">
+            <label class="my-2">
+                <input id="search-focus" type="search" class="form-control" placeholder="Поиск"/>
+            </label>
+            <button type="button" class="btn btn-light rounded" style="margin-right: 5px"
+                    onclick="searchItItems()">
+                <img style="width: 32px" src="/static/icons/lupa.avif">
+            </button>
+            <button class="btn btn-secondary btn-lg dropdown-toggle my-1" type="button"
+                    id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Все
+            </button>
+            <ul class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton1">
+                <li>
+                    <div type="button" class="btn btn-secondary d-block"
+                            onclick="filterItems(-1, 'Все')">Все
+                    </div>
+                </li>
+                {% for category in categories %}
+                <li>
+                    <div type="button" class="btn btn-secondary d-block"
+                            onclick="filterItems('{{category.idCategory}}', '{{category.name}}')">{{category.name}}
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            <p class="card-text text-dark rounded align-self-center" id="statistic"
+                           style="margin: 7.5px">25 / 25</p>
+        </div>
     </div>
 
-    <div class="container-fluid bg-white">
-        <div class="row flex-wrap">
-            <div class="album py-5">
-                <div class="container">
-                    <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3" id="items">
-                        {% for product in products %}
-                        <div class="flex_row" id="items-{{product.idItem}}-{{product.idCategory}}">
-                            <div class="card shadow-sm bg-white rounded border">
-                                <img class="img" src={{product.img}}>
-                                <div class="card-body mb-4">
-                                    <p class="card-text"><b>{{product.title}} </b></p>
-                                    <p class="card-text"><b>{{product.price}} руб.</b></p>
-                                    <div class="w-100 position-absolute bottom-0 display-flex align-items-center justify-content-center">
-                                        <div class="d-flex justify-content-end align-items-center">
-                                            {% if product.idItem in items_cart %}
-                                            <button class="btn btn-link"
-                                                    onclick="addCart('{{product.idItem}}', this)">
-                                                <img src="/static/icons/cart-plus-fill.svg" width=40 height="40">
-                                            </button>
-                                            {% else %}
-                                            <button class="btn btn-link" id="button-cart-c-{{product.idItem}}"
-                                                    onclick="addCart('{{product.idItem}}', this)">
-                                                <img src="/static/icons/cart-plus.svg" width=40 height="40">
-                                            </button>
-                                            {% endif %}
-                                            {% if product.idItem in items_favorite %}
-                                            <button class="btn btn-link me-3"
-                                                    onclick="">
-                                                <img src="/static/icons/heart-fill.svg" width="40" height="40">
-                                            </button>
-                                            {% else %}
-                                            <button class="btn btn-link me-3" id="button-like-c-{{product.idItem}}"
-                                                    onclick="addLikes('{{product.idItem}}', this)">
-                                                <img src="/static/icons/heart.svg" width="40" height="40">
-                                            </button>
-                                            {% endif %}
-                                        </div>
+    <div class="bg-light">
+        <div class="album py-5">
+            <div class="container">
+                <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 rounded" id="items">
+                    {% for product in products %}
+                    <div class="flex_row line" id="items-{{product.idItem}}-{{product.idCategory}}">
+                        <div class="card shadow-sm bg-white rounded border">
+                            <img class="img" src={{product.img}}>
+                            <div class="card-body mb-4">
+                                <p class="card-text"><b>{{product.title}} </b></p>
+                                <p class="card-text"><b>{{product.price}} руб.</b></p>
+                                <div class="w-100 position-absolute bottom-0 display-flex align-items-center justify-content-center">
+                                    <div class="d-flex justify-content-end align-items-center">
+                                        {% if product.idItem in items_cart %}
+                                        <button class="btn btn-link"
+                                                onclick="addCart('{{product.idItem}}', this)">
+                                            <img src="/static/icons/cart-plus-fill.svg" width=40 height="40">
+                                        </button>
+                                        {% else %}
+                                        <button class="btn btn-link" id="button-cart-c-{{product.idItem}}"
+                                                onclick="addCart('{{product.idItem}}', this)">
+                                            <img src="/static/icons/cart-plus.svg" width=40 height="40">
+                                        </button>
+                                        {% endif %}
+                                        {% if product.idItem in items_favorite %}
+                                        <button class="btn btn-link me-3"
+                                                onclick="">
+                                            <img src="/static/icons/heart-fill.svg" width="40" height="40">
+                                        </button>
+                                        {% else %}
+                                        <button class="btn btn-link me-3" id="button-like-c-{{product.idItem}}"
+                                                onclick="addLikes('{{product.idItem}}', this)">
+                                            <img src="/static/icons/heart.svg" width="40" height="40">
+                                        </button>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
