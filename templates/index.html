@@ -38,7 +38,7 @@
                                         {% if product[0] in items_cart %}
                                         <button class="btn btn-link"
                                                 onclick="addCart('{{product[0]}}', this)">
-                                            <img src="/static/icons/cart-check.svg" width=40 height="40">
+                                            <img src="/static/icons/cart-plus-fill.svg" width=40 height="40">
                                         </button>
                                         {% else %}
                                         <button class="btn btn-link" id="button-cart-ps-{{product[0]}}"
@@ -91,7 +91,7 @@
                                         {% if recomendation.idItem in items_cart %}
                                         <button class="btn btn-link"
                                                 onclick="addCart('{{recomendation.idItem}}', this)">
-                                            <img src="/static/icons/cart-check.svg" width=40 height="40">
+                                            <img src="/static/icons/cart-plus-fill.svg" width=40 height="40">
                                         </button>
                                         {% else %}
                                         <button class="btn btn-link" id="button-cart-p-{{recomendation.idItem}}"
@@ -172,7 +172,7 @@
                                             {% if product.idItem in items_cart %}
                                             <button class="btn btn-link"
                                                     onclick="addCart('{{product.idItem}}', this)">
-                                                <img src="/static/icons/cart-check.svg" width=40 height="40">
+                                                <img src="/static/icons/cart-plus-fill.svg" width=40 height="40">
                                             </button>
                                             {% else %}
                                             <button class="btn btn-link" id="button-cart-c-{{product.idItem}}"
