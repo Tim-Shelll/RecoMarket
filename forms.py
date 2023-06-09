@@ -33,16 +33,16 @@ class RegistrationForm(FlaskForm):
 
 
 class CheckoutForm(FlaskForm):
-    firstname = StringField('Имя')
+    firstname = StringField('Имя', validators=[DataRequired()])
 
-    phone = StringField('Телефон')
-    city = StringField('Город')
-    street = StringField('Улица')
+    phone = StringField('Телефон', validators=[DataRequired()])
+    city = StringField('Город', validators=[DataRequired()])
+    street = StringField('Улица', validators=[DataRequired()])
 
-    house = StringField('Дом')
-    apartment = StringField('Квартира')
-    entrance = StringField('Подъезд')
-    floor = StringField('Этаж')
+    house = StringField('Дом', validators=[DataRequired()])
+    apartment = StringField('Квартира', validators=[DataRequired()])
+    entrance = StringField('Подъезд', validators=[DataRequired()])
+    floor = StringField('Этаж', validators=[DataRequired()])
 
     submit = SubmitField('Совершить заказ')
 
