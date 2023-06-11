@@ -51,6 +51,7 @@ class Product(db.Model):
 
     @staticmethod
     def select_data_product_by_ids(prod_ids):
+        prod_ids = "(" + ", ".join(prod_ids) + ")"
         sql = PRODUCTS_IN_PROD_IDS.format(prod_ids=prod_ids)
         cursor = db.session.execute(text(sql))
 

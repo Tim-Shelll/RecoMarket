@@ -53,8 +53,7 @@ def index():
         recs = pd.read_csv('dataset/recomendations.csv', sep=',')
 
         rec_cur_user = recs[recs.user_id == current_user.id]
-        prod_ids = "(" + ", ".join([str(rec) for rec in rec_cur_user['prod_id'].values]) + ")"
-        recomendations = Product.select_data_product_by_ids(prod_ids)
+        recomendations = Product.select_data_product_by_ids([str(rec) for rec in rec_cur_user['prod_id'].values])
 
         cart, like = cart_and_like()
         items_favorite = [item.idItem for item in like]
@@ -184,7 +183,7 @@ def cart():
                 recomendations_all()
 
         items_in_cart = ItemsInBag.query.filter_by(idUser=current_user.id).all()
-        prod_ids = "(" + ", ".join([str(item.idItem) for item in items_in_cart]) + ")"
+        prod_ids = [str(item.idItem) for item in items_in_cart]
         items_in_bag = Product.select_data_product_by_ids(prod_ids)
         iib_with_num = product_with_numItems(items_in_bag, (item.numItems for item in items_in_cart))
 
