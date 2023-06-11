@@ -15,7 +15,7 @@
             <li><a href="#">Корзина</a></li>
         </ul>
     </div>
-    <section class="">
+    <section>
         <div class="container-fluid">
             {% if items_in_bag_with_num %}
             <div class="row justify-content-center">
@@ -82,9 +82,9 @@
             {% endif %}
         </div>
     </section>
-    <br>
+
     {% if items_in_bag_with_num %}
-    <div style="margin: 0px 5% 50px 0">
+    <div class="d-flex justify-content-center container-fluid" style="background-color: #eee; margin: 0px 5% 50px 0">
         <button style="font-size: 100%; margin: 50px" class="badge bg-dark" onclick="Processing(this)">
             <span class="badge badge-primary" style="font-size: 20px">Перейти к оформлению</span>
         </button>

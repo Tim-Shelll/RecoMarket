@@ -57,5 +57,8 @@ function deleteItem(idItem) {
 
 function Processing(object) {
     object.parentNode.style.display = 'none'
-    document.getElementById('corob').style.display = ""
+    let item = document.getElementById("corob");
+    item.style.display = "";
+    let topPos = item.offsetTop;
+    window.scroll({top: topPos, left: 0, behavior: 'smooth'});
 }
