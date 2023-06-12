@@ -160,7 +160,7 @@ function addCart(idItem, object) {
 
 }
 
-function addLikes(idItem, object) {
+function actionLikes(idItem, object) {
     $.ajax({
         type: 'POST',
         url: `likes/${idItem}`,
@@ -171,25 +171,35 @@ function addLikes(idItem, object) {
             } else {
                 let message= object.parentNode.parentNode.parentNode.childNodes[1].childNodes[0].textContent
                 let to = 'Избранное'
-                eventMSG(`${message} добавлен в ${to.toLowerCase()}.`, to)
-                $('#likes').text()
-                heartFill = "<img src=\"/static/icons/heart-fill.svg\" width=\"40\" height=\"40\">"
-                $(`#${object.id}`).html(heartFill)
+                if (response['action'] == 1) {
+                    message = `${message} добавлен в ${to.toLowerCase()}.`
+                    heart = "<img src=\"/static/icons/heart-fill.svg\" width=\"40\" height=\"40\">"
+                } else {
+                    message = `${message} удалён из ${to.toLowerCase()}.`
+                    heart = "<img src=\"/static/icons/heart.svg\" width=\"40\" height=\"40\">"
+                }
 
-                if ($('#button-like-ps-' + idItem).length && `button-like-ps-${idItem}` != `${object.id}`)
-                    $('#button-like-ps-' + idItem).html(heartFill)
+                eventMSG(message, to)
 
-                if ($('#button-like-p-' + idItem).length && `button-like-p-${idItem}` != `${object.id}`)
-                    $('#button-like-p-' + idItem).html(heartFill)
+                if ($('#button-like-ps-' + idItem).length)
+                    $('#button-like-ps-' + idItem).html(heart)
 
-                if ($('#button-like-c-' + idItem).length && `button-like-c-${idItem}` != `${object.id}`)
-                    $('#button-like-c-' + idItem).html(heartFill)
+                if ($('#button-like-p-' + idItem).length)
+                    $('#button-like-p-' + idItem).html(heart)
 
+                if ($('#button-like-c-' + idItem).length)
+                    $('#button-like-c-' + idItem).html(heart)
+
+                let iconEmpty = `<img src="/static/icons/bag.svg" width="40" height="40">`
                 let iconFill = `<img src="/static/icons/bag-heart.svg" width="40" height="40">`
                 let count = response['like'] + (response['like'] == 1 ? ' item' : ' items')
                 let text = `<p span id='likes' class="badge text-dark">${count}</p>`
 
-                response['like'] == 1 ? $('#container-like').html(iconFill + text) : $('#likes').text(count)
+                response['like'] == 0 ?
+                    $('#container-like').html(iconEmpty) :
+                    response['like'] == 1 ?
+                        $('#container-like').html(iconFill + text) :
+                        $('#likes').text(count)
             }
         },
         error: function(error) {}

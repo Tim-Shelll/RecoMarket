@@ -213,7 +213,7 @@ def action_cart(idItem):
 def likes():
     if current_user.is_authenticated:
         prod_ids = [str(item.idItem) for item in ItemsInFavorite.get_count_products(idUser=current_user.id)]
-        favorites = Product.select_data_product_by_ids(prod_ids="(" + ", ".join(prod_ids) + ")")
+        favorites = Product.select_data_product_by_ids([str(prod_id) for prod_id in prod_ids])
         cart = len(ItemsInBag.get_count_products(current_user.id))
 
         return render_template('favorite.html', favorites=favorites, like=len(prod_ids), cart=cart)
@@ -225,16 +225,21 @@ def likes():
 def like(idItem):
     if current_user.is_authenticated:
         if request.method == 'POST':
-            items_in_favorite = ItemsInFavorite.query.filter_by(idUser=current_user.id, idItem=idItem).all()
-            if not items_in_favorite:
+            item_in_favorite = ItemsInFavorite.query.filter_by(idUser=current_user.id, idItem=idItem).first()
+            action: int
+            if not item_in_favorite:
                 db.session.add(ItemsInFavorite(idUser=current_user.id, idItem=idItem))
-                db.session.commit()
+                action = 1
+            else:
+                db.session.delete(item_in_favorite)
+                action = -1
 
-                recomendations_all()
+            db.session.commit()
+            recomendations_all()
 
             like = len(ItemsInFavorite.get_count_products(current_user.id))
 
-        return jsonify({'like': like})
+        return jsonify({'like': like, 'action': action})
     else:
         return jsonify({'message': '<a href="/login">Войдите</a> или '
                                    '<a href="/registration">Зарегистрируйтесь</a>, чтобы добавлять товар в избранное'})
