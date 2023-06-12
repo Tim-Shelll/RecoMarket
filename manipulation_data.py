@@ -139,6 +139,7 @@ def recomendations(model_LightFM, sData, n_user, n_product):
         for m in range(ar.shape[1]):
             ar_list = []
             if ar[i, m] > 0:
+                print(m, prod_ids)
                 ar_list.append(user_ids[i])
                 ar_list.append(prod_ids[m])
                 ar_list.append(ar[i, m])
@@ -198,7 +199,7 @@ def recomendations_all():
     sData, orders_train_pivot, orders_test_pivot = create_pivot_table(orders_train) # Смежная таблица
 
     rec_users = recomendations(model_LightFM, sData, n_user, n_product) # Прогноз рекомендаций
-    #rec_users = validate_recomendations(rec_users, favorites) # Акцент на понравившиеся товары
+    rec_users = validate_recomendations(rec_users, favorites) # Акцент на понравившиеся товары
     recoms = pd.DataFrame(columns=['user_id', 'prod_id'], data=convert_data_to_tuple(rec_users))
 
     recoms.to_csv('dataset/recomendations.csv') # Загрузка рекомендаций в датасет
