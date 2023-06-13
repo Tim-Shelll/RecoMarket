@@ -17,17 +17,17 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
 
-    firstname = StringField('Имя')
-    surname = StringField('Фамилия')
+    firstname = StringField('Имя', validators=[DataRequired()])
+    surname = StringField('Фамилия', validators=[DataRequired()])
     lastname = StringField('Отчество')
 
     sex = SelectField('Пол', choices=['Мужской', 'Женский'])
 
     email = StringField('Электронная почта', validators=[DataRequired()])
-    login = StringField('Логин')
+    login = StringField('Логин', validators=[DataRequired()])
 
-    password = PasswordField('Пароль')
-    password_repeat = PasswordField('Повторите пароль')
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    password_repeat = PasswordField('Повторите пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Зарегистрироваться')
 
