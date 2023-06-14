@@ -56,6 +56,8 @@
                             {{ form.password_repeat(size=32, class_='form-control form-control-lg', placeholder='Повторите пароль') }}
                         </div>
 
+                        {{ message }}
+
                         <div class="form-outline mb-4">
                             {{ form.remember_me() }} {{ form.remember_me.label(class_='form-label') }}
                         </div>

@@ -160,7 +160,7 @@ def registration():
                 return redirect('/index')
 
             else:
-                message = 'Invalid data enviroment'
+                message = 'Пароли не совпадают'
                 return render_template('registration.html', message=message, form=form)
 
         return render_template('registration.html', form=form)
